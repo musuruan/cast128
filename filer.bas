@@ -163,6 +163,4 @@
 30000 rem chain game
 30010 vtab 10: rem no scrolling
 30020 in# 0: pr# 0: call sh: rem unlink hrcg
-30030 if ts then print ch$: call 520"game": rem applesoft
-30040 rem !clear chain
-30050 print br$fg$: rem tasc
+30030 print ch$: call 520"game"

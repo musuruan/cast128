@@ -34,8 +34,8 @@
 510 fv$ = "v": rem variabili
 520 fl$ = "l": rem luoghi
 530 fm$ = "m": rem messaggi
-540 ff$ = "f": rem filer
-550 fg$ = "g": rem gioco
+540 :
+550 :
 560 rem costanti num cast
 570 lu = 61: rem n. luoghi ***
 580 nr = 80: rem n. routine
@@ -93,7 +93,4 @@
 30000 rem chain filer
 30010 in# 0: pr# 0: call sh: rem unlink hrcg
 30020 fc = 0: rem filer command 
-30030 ts = 0: rem tasc
-30040 ts = 1: print ch$: call 520"filer": rem applesoft -- togliere per tasc --
-30050 rem !clear chain
-30060 print br$ff$: rem tasc
+30040 print ch$: call 520"filer"

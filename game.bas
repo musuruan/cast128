@@ -127,8 +127,8 @@
 1440 if c = 96 then c = 39: rem "`"
 1450 if c <123 and c >96 then c = c -32: rem toupper
 1460 if (c = 8 or c = 127) and ll then in$ = left$(in$,ll): print chr$(8)" " chr$(8);: goto 1430: rem delete
-1470 if c = 13 and ll then print :in$ = mid$ (in$,2):ct = ct +9 *ct *ts: return : rem remove blank
-1480 if ll <li then if (ts and c >31) or (c >64 and c <91) or c = 32 or c = 39 or c = 45 then print chr$(c);:in$ = in$ + chr$(c +32 *(c >64)): rem accetta a-z,sp,"'","-" e tolower
+1470 if c = 13 and ll then print :in$ = mid$ (in$,2):ct = ct +9 *ct : return : rem remove blank
+1480 if ll <li then if (c >31) or (c >64 and c <91) or c = 32 or c = 39 or c = 45 then print chr$(c);:in$ = in$ + chr$(c +32 *(c >64)): rem accetta a-z,sp,"'","-" e tolower
 1490 goto 1430
 1500 rem input linea
 1510 rem esce con pp$, sp$
@@ -809,6 +809,4 @@
 30010 rem in: fc=comando filer
 30020 print cl$: rem l,m
 30030 in# 0: pr# 0: call sh: rem unlink hrcg
-30040 if ts then print ch$: call 520"filer": rem applesoft -----
-30050 rem !clear chain
-30060 print br$ff$: rem tasc
+30040 print ch$: call 520"filer"
