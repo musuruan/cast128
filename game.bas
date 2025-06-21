@@ -1,15 +1,15 @@
-100  rem <ctrl-j><ctrl-j>
+100  rem 
 110  rem  #################
 120  rem  #               #
 130  rem  # avventura nel #
 140  rem  #   castello!   #
 150  rem  #               #
-160  rem  #################<ctrl-j><ctrl-j>
-170  rem (c) dinosoft 1982-2001<ctrl-j>
+160  rem  #################
+170  rem (c) dinosoft 1982-2001
 180  rem by: enrico colombini
-190  rem     & chiara tovena<ctrl-j><ctrl-j>
+190  rem     & chiara tovena
 195  rem libera distribuzione
-200  rem purche' non alterata<ctrl-j><ctrl-j>
+200  rem purche' non alterata
 210  rem !usecommon ck,kb,ks,m0,m1
 220  rem !usecommon d$,sh,br$,op$,rd$,wr$,cl$,ve$,ch$
 230  rem !usecommon bs$,cr$,hi$,hn$,hh$
@@ -19,22 +19,22 @@
 270  rem !usecommon be$,nn$,fc,ts
 280  rem !usecommon f(20),t(10),tu%(70),lo%(150),so%(150),vo%(150),pt%(80)
 290  rem !usecommon l,nt,pt,ti,tt,tu,gi,mo
-300  rem <ctrl-j><ctrl-j>- entry (chained):<ctrl-j>
+300  rem - entry (chained):
 310  onerr  goto 3120
 320  goto 5010: rem main prog
-330  rem <ctrl-j><ctrl-j><ctrl-j>### subroutine ###<ctrl-j><ctrl-j>
-340  rem <ctrl-j><ctrl-j>get con cursore<ctrl-j>
+330  rem ### subroutine ###
+340  rem get con cursore
 350  rem out: g=cod.carattere
-360  rem ct+=1 ogni .25 secondi<ctrl-j>
+360  rem ct+=1 ogni .25 secondi
 370 cc = 0: rem cursor counter
 380  if cc = 150  then cc = 0:ct = ct +1
 390  if cc = 0  then  print "_"bs$;
 400  if cc = 75  then  print " "bs$;:ct = ct +1
 410 cc = cc +1:g =  peek(kb) -128: if g <0  then 380
 420  print " "bs$;: poke ks,0: return 
-430  rem <ctrl-j><ctrl-j>stampa messaggio<ctrl-j>
+430  rem stampa messaggio
 440  rem in: m=n.messaggio
-450  rem non esegue cr finale<ctrl-j>
+450  rem non esegue cr finale
 460  speed= 255:vp = 10
 470  if p2 < = pl  or ct <20  then 490: rem no test
 480 p3 = p3 +1: gosub 3240: call 576: poke m1,0:n1 =  peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 =  peek(579): if n1  and   not n2  then p2 = 0:p3 = p3 -1: rem p2 test
@@ -47,7 +47,7 @@
 550  print rd$fm$",r"n1
 560  for c = n1 to n2 -2: get a$
 570  poke m1,0: rem motor on
-580  rem <ctrl-j>analisi comandi:
+580  rem analisi comandi:
 590 a1 =  asc(a$)
 600  if a1 >29  then a1 = 156 -a1: goto 700
 610  if a1 = 14  then  print nn$hn$;: goto 720: rem normal
@@ -58,11 +58,11 @@
 660  if a1 = 25  then  input dy: poke m0,0: gosub 2950:c = c + len( str$(dy)) +1: goto 720: rem delay
 670  if a1 = 12  then  input l:c = c + len( str$(l)) +1: goto 720
 680  if a1 = 19  then  input vp:c = c + len( str$(vp)) +1:vp = ((256 -vp) *rp)/4: goto 720
-690  rem <ctrl-j>stampa su video:
+690  rem stampa su video:
 700  print nn$; chr$(a1);
 710  for i = 1 to vp: next 
 720  next : rem c
-730  rem <ctrl-j><ctrl-j>chiude lettura mantenendo cursore:<ctrl-j>
+730  rem chiude lettura mantenendo cursore:
 740 ph =  pos(ph):pv =  peek(37): rem pos.cursore 
 750  print : print d$: rem finisce read
 760  if pv < >23  then pv = pv +1: rem l'ultima riga scrolla
@@ -71,28 +71,28 @@
 790  poke m0,0: rem motor off
 800  if p2 >pl  then  poke 767,3: call u +15: rem seek t3
 810 ct = 0: return 
-820  rem <ctrl-j><ctrl-j>scansione parola<ctrl-j>
+820  rem scansione parola
 830  rem in: in$=stringa
 840  rem out:a$=parola
-850  rem     annulla apostrofi<ctrl-j>
+850  rem     annulla apostrofi
 860 a$ = "":c = 1:b =  len(in$)
 870  if in$ = ""  then 980
 880 b$ =  mid$ (in$,c,1)
 890  if b$ < >" "  then  if b$ < >"'"  then 930
 900 c = c +1: if c < = b  then 880
 910  goto 970: rem nulla
-920  rem <ctrl-j>inizio parola:
+920  rem inizio parola:
 930 b$ =  mid$ (in$,c,1)
 940  if b$ = " "  or b$ = "'"  then in$ =  right$(in$,b -c +1): goto 980: rem fine parola
 950 a$ = a$ +b$
 960 c = c +1: if c < = b  then 930
 970 in$ = "": rem fine di in$
 980  return 
-990  rem <ctrl-j><ctrl-j>cerca codici pp/sp<ctrl-j>
+990  rem cerca codici pp/sp
 1000  rem in: pp$, sp$ (parole)
 1010  rem     vp$ (vecchia pp$)
 1020  rem out:cp%, cs% (codici)
-1030  rem     cs%=255 se sp in pp<ctrl-j>
+1030  rem     cs%=255 se sp in pp
 1040 a$ = pp$
 1050  gosub 1190: rem diz 1
 1060 cp% = co: if tp < >1  then cp% = 0
@@ -104,21 +104,21 @@
 1120 cs% = co: if tp < >2  then cs% = 0
 1130  if tp = 1  then cs% = 255
 1140 vp$ = "": return 
-1150  rem <ctrl-j><ctrl-j>consulta diz 1<ctrl-j>
+1150  rem consulta diz 1
 1160  rem in:  a$=entry
 1170  rem out: tp=tipo (0=no)
-1180  rem      co=codice<ctrl-j>
+1180  rem      co=codice
 1190  if a$ = ""  then a$ = " "
 1200  for c = 1 to  len(a$): poke 575 +c,125 - asc( mid$ (a$,c,1)): next 
 1210 me = 575 +c -1: poke me, peek(me) +128: rem ultimo char
 1220  call u +3: rem diz.1
 1230 tp =  peek(766):co =  peek(767)
 1240  return 
-1250  rem <ctrl-j><ctrl-j>consulta diz 2<ctrl-j>
+1250  rem consulta diz 2
 1260  rem in:  tp=tipo
 1270  rem      co=codice
 1280  rem out: a$=entry
-1290  rem a$="" se non esiste<ctrl-j>
+1290  rem a$="" se non esiste
 1300  poke 766,tp: poke 767,co
 1310  call u +6: rem diz.2
 1320 a$ = "":me = 576
@@ -126,11 +126,11 @@
 1340  if c <128  then a$ = a$ + chr$(125 -c):me = me +1: goto 1330
 1350  if c < >255  then a$ = a$ + chr$(253 -c): rem 125-(c-128)
 1360  return 
-1370  rem <ctrl-j><ctrl-j>input in$<ctrl-j>
+1370  rem input in$
 1380  rem in: li=len max input
 1390  rem out:ct=tempo input
 1400  rem accetta tutto se test
-1410  rem echo upper, in$ lower<ctrl-j>
+1410  rem echo upper, in$ lower
 1420 in$ = " ":ct = 0
 1430  gosub 370:c = g:ll =  len(in$) -1
 1440  if c = 96  then c = 39: rem "`"
@@ -139,9 +139,9 @@
 1470  if c = 13  and ll  then  print :in$ =  mid$ (in$,2):ct = ct +9 *ct *ts: return : rem remove blank
 1480  if ll <li  then  if (ts  and c >31)  or (c >64  and c <91)  or c = 32  or c = 39  or c = 45  then  print  chr$(c);:in$ = in$ + chr$(c +32 *(c >64)): rem accetta a-z,sp,"'","-" e tolower
 1490  goto 1430
-1500  rem <ctrl-j><ctrl-j>input linea<ctrl-j>
+1500  rem input linea
 1510  rem esce con pp$, sp$
-1520  rem annulla articoli<ctrl-j>
+1520  rem annulla articoli
 1530 li = 60: gosub 1420: rem  input in$
 1540  gosub 860: rem  1. parola
 1550 pp$ = a$
@@ -151,41 +151,41 @@
 1590  gosub 1190: if tp = 3  then 1570
 1600  if p3 >2  then 1600: rem pirata
 1610  return 
-1620  rem <ctrl-j><ctrl-j>da cod. sp a nome<ctrl-j>
+1620  rem da cod. sp a nome
 1630  rem in:  a=codice sp
-1640  rem out: a$=nome sp$<ctrl-j>
+1640  rem out: a$=nome sp$
 1650 tp = 2:co = a
 1660  gosub 1300: rem diz 2
 1670  return 
-1680  rem <ctrl-j><ctrl-j>cerca nome stato<ctrl-j>
+1680  rem cerca nome stato
 1690  rem in:  a=codice sp
 1700  rem      s=stato (0/1/2)
-1710  rem out: s$=nome stato<ctrl-j>
+1710  rem out: s$=nome stato
 1720  if s = 0  then s$ = "": return 
 1730 co = a:tp = 5 +s: rem 6 o 7
 1740  gosub 1300: rem diz 2
 1750 s$ = a$: if s$ = " "  then s$ = ""
 1760  return 
-1770  rem <ctrl-j><ctrl-j>cerca stato ogg.<ctrl-j>
+1770  rem cerca stato ogg.
 1780  rem in: a=codice sp
 1790  rem     l=luogo
 1800  rem out:s=stato (a,l)
 1810  rem      oppure (a,0)
-1820  rem     mb=mobilita'<ctrl-j>
+1820  rem     mb=mobilita'
 1830  for i = 1 to og: if a < > peek(co% +i)  then  next : return 
 1840  if lo%(i) = l  or lo%(i) = 0  then s = so%(i):mb =  peek(mo% +i): return 
 1850  next : return 
-1860  rem <ctrl-j><ctrl-j>cambia stato ogg.<ctrl-j>
+1860  rem cambia stato ogg.
 1870  rem in: a=codice sp
 1880  rem     s=stato voluto
 1890  rem     l=luogo
 1900  rem out:cambia stato (a,l)
-1910  rem     oppure stato (a,0)<ctrl-j>
+1910  rem     oppure stato (a,0)
 1920  for i = 1 to og: if a < > peek(co% +i)  then  next : return 
 1930  if lo%(i) = l  or lo%(i) = 0  then so%(i) = s: return 
 1940  next : return 
-1950  rem <ctrl-j><ctrl-j>ogg. visibili<ctrl-j>
-1960  rem in:  l=luogo<ctrl-j>
+1950  rem ogg. visibili
+1960  rem in:  l=luogo
 1970  for j = 1 to og
 1980  if lo%(j) < >l  then  next : return 
 1990  if vo%(j) = 0  then  next : return 
@@ -195,25 +195,25 @@
 2030  if s$ < >""  then og$ = og$ +" " +s$
 2040  print og$"."
 2050  next : return 
-2060  rem <ctrl-j><ctrl-j>ogg. posseduti<ctrl-j>
+2060  rem ogg. posseduti
 2070  if nt = 0  then m = 154: goto 460: rem nulla
 2080 m = 155: gosub 460
 2090  for i = 1 to og: if lo%(i) = 0  then a =  peek(co% +i): gosub 1650:og$ = "- " +a$:s = so%(i): gosub 1720: print og$" "s$
 2100  next : print : return 
-2110  rem <ctrl-j><ctrl-j>appare oggetto<ctrl-j>
+2110  rem appare oggetto
 2120  rem in:  a=codice sp
-2130  rem      l=luogo<ctrl-j>
+2130  rem      l=luogo
 2140  for i = 1 to og: if lo%(i) = 255  then  if a =  peek(co% +i)  then lo%(i) = l: return 
 2150  next : return 
-2160  rem <ctrl-j><ctrl-j>scompare oggetto<ctrl-j>
+2160  rem scompare oggetto
 2170  rem (anche trasportato)
 2180  rem in:  a=codice sp
-2190  rem      l=luogo<ctrl-j>
+2190  rem      l=luogo
 2200  for i = 1 to og: if a =  peek(co% +i)  then  if lo%(i) = 0  or lo%(i) = l  then 2220
 2210  next : return 
 2220  if lo%(i) = 0  then nt = nt -1
 2230 lo%(i) = 255: return 
-2240  rem <ctrl-j><ctrl-j>ogg. presente ?<ctrl-j>
+2240  rem ogg. presente ?
 2250  rem in:  a=codice sp
 2260  rem      l=luogo
 2270  rem out: s=0 assente
@@ -224,39 +224,39 @@
 2320  rem      e=0 non elencato
 2330  rem      e=1 elencato
 2340  rem se piu' oggetti uguali
-2350  rem devono essere fissi<ctrl-j>
+2350  rem devono essere fissi
 2360 e = 0:mb = 0:s = 0: rem se non lo trova
 2370  for j = 1 to og: if a < > peek(co% +j)  then  next : return 
 2380 mb =  peek(mo% +j):e = 1: rem trovato uno
 2390  if lo%(j) = l  then s = 1: return 
 2400  if lo%(j) = 0  then s = 2: return 
 2410  next : return : rem ne cerca un altro
-2420  rem <ctrl-j><ctrl-j>prende oggetto<ctrl-j>
+2420  rem prende oggetto
 2430  rem in:  a=codice sp
-2440  rem      l=luogo<ctrl-j>
+2440  rem      l=luogo
 2450  for i = 1 to og: if a =  peek(co% +i)  then  if l = lo%(i)  then lo%(i) = 0:vo%(i) = 1:nt = nt +1: return 
 2460  next : return 
-2470  rem <ctrl-j><ctrl-j>lascia oggetto<ctrl-j>
+2470  rem lascia oggetto
 2480  rem in:  a=codice sp
-2490  rem      l=luogo<ctrl-j>
+2490  rem      l=luogo
 2500  for i = 1 to og: if a =  peek(co% +i)  then lo%(i) = l:nt = nt -1: return 
 2510  next : return 
-2520  rem <ctrl-j><ctrl-j>prende se puo'<ctrl-j>
+2520  rem prende se puo'
 2530  rem in:  a=codice sp
-2540  rem      l=luogo<ctrl-j>
+2540  rem      l=luogo
 2550  gosub 2360: if s = 0  then 2640: rem che?
 2560  if s = 2  then  print : print "- Gia' fatto.": return 
 2570  if mb = 0  then m = 157: goto 460: rem impossibile
 2580  if nt > = nm  then m = 156: gosub 460: gosub 2070: return 
 2590  gosub 2450: print : print "Fatto.": return 
-2600  rem <ctrl-j><ctrl-j>lascia se puo'<ctrl-j>
+2600  rem lascia se puo'
 2610  gosub 2360: if s < >2  then m = 158: goto 460: rem non l'hai
 2620  gosub 2500: print : print "Fatto.": return 
-2630  rem <ctrl-j><ctrl-j>che oggetto ?<ctrl-j>
+2630  rem che oggetto ?
 2640  if cs% = 23  then  if l = 22  then a = 142: gosub 1830: if s = 1  then m = 83: goto 460: rem   diam.del nano
 2650  print : print "- Che "sp$" ?": return 
-2660  rem <ctrl-j><ctrl-j>descr. lunga luogo<ctrl-j>
-2670  rem in:  l=luogo<ctrl-j>
+2660  rem descr. lunga luogo
+2670  rem in:  l=luogo
 2680  if p2 < = pl  or ct <20  then 2700: rem no test
 2690 p3 = p3 +1: gosub 3240: call 576: poke m1,0:n1 =  peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 =  peek(579): if n1  and   not n2  then p2 = 0:p3 = p3 -1: rem p2 test
 2700  print rd$;fl$",r"30 +l *6
@@ -267,11 +267,11 @@
 2750  print nn$; chr$(a1);: next 
 2760 p2 = 0: rem (p2 = p2 + 1) protezione disattivata 4/2001
 2770  goto 740: rem chiude e torna
-2780  rem <ctrl-j><ctrl-j>somma punti<ctrl-j>
+2780  rem somma punti
 2790 pt = pt +pt%(re):pt%(re) = 0: return 
-2800  rem <ctrl-j><ctrl-j>stampa punti<ctrl-j>
+2800  rem stampa punti
 2810 m = 187: gosub 460: print pt;:m = 188: goto 460
-2820  rem <ctrl-j><ctrl-j>punti e titolo<ctrl-j>
+2820  rem punti e titolo
 2830  gosub 2810:m = 102: gosub 460
 2840  print : print 
 2850  restore :m = 0
@@ -279,28 +279,28 @@
 2870 m = m +190: gosub 460
 2880  print : print : print 
 2890 dy = 40: goto 2950
-2900  rem <ctrl-j>pt per titoli<ctrl-j>
+2900  rem pt per titoli
 2910  data 35,59,150,300,450
 2920  data 650,899,949,999,1000
-2930  rem <ctrl-j><ctrl-j>ritardo<ctrl-j>
-2940  rem in: dy = n.unita' rit.<ctrl-j>
+2930  rem ritardo
+2940  rem in: dy = n.unita' rit.
 2950  for d1 = 1 to du *dy: next 
 2960  return 
-2970  rem <ctrl-j><ctrl-j>si/no<ctrl-j>
+2970  rem si/no
 2980  rem in:  m=mess.domanda
-2990  rem out: s=1/0 (si/no)<ctrl-j>
+2990  rem out: s=1/0 (si/no)
 3000  print 
 3010 li = 2: gosub 460: rem  mess
 3020  gosub 1420: rem <ctrl-k>input in$ 
 3030  if  left$(in$,1) = "s"  or  left$(in$,1) = "y"  then s = 1: return 
 3040  if  left$(in$,1) = "n"  then s = 0: return 
 3050 s = m:m = 132: gosub 460:m = s: goto 3010
-3060  rem <ctrl-j><ctrl-j>morto<ctrl-j>
+3060  rem morto
 3070 mo = 0:gi = 0
 3080 m = 159: gosub 460
 3090  gosub 2830: rem titolo
 3100 fc = 3: goto 30010: rem chain filer
-3110  rem <ctrl-j><ctrl-j>errori<ctrl-j>
+3110  rem errori
 3120 a =  peek(222)
 3130  if   not gi  then 3180
 3140  call u +9: rem err.recvry
@@ -308,18 +308,18 @@
 3160  if a  and a <16  then  print : print : print be$hi$"PROBLEMI CON IL DISCO!"hn$be$: print : if p3 <2  then 5110: rem not resume if pirate
 3170  if a = 255  then 3200: rem ctrl-c o reset
 3180  print be$: print "ERR "a" IN LOC "; peek(218) +256 * peek(219): goto 3200
-3190  rem <ctrl-j><ctrl-j>stop<ctrl-j>
+3190  rem stop
 3200  poke ks,0
 3210  gosub 370: rem  get
 3220  in# 0: pr# 0: call sh: text : print : print "CIAO!": print d$"fp": rem exit
-3230  rem <ctrl-j><ctrl-j>decri p2 test<ctrl-j>
+3230  rem decri p2 test
 3240 i1 = 7424:i2 = i1 +127
 3250  for i = 576 to 676  step 2
 3260  poke i, peek(i2):i2 = i2 -1
 3270  poke i +1, peek(i1):i1 = i1 +1
 3280  next 
 3290  return 
-5000  rem <ctrl-j><ctrl-j><ctrl-j>### main prog ###<ctrl-j><ctrl-j>
+5000  rem ### main prog ###
 5010  call u: rem link hrcg
 5020  print : print op$fl$: print op$fm$
 5030  print hh$: rem home
@@ -328,98 +328,98 @@
 5060  poke 1008,188: poke 1009,23: rem break
 5070 gi = 1: rem gioco iniziato
 5080  if l = 1  and (fc = 0  or fc = 3)  then t(1) = 8:ti = 1: print hh$;:m = 209: gosub 460: print hh$;:m = 15: gosub 460: rem prologo e precipita
-5090  rem <ctrl-j><ctrl-j><ctrl-j>### main cycle ###<ctrl-j><ctrl-j>
-5100  rem <ctrl-j><ctrl-j>input e descriz.<ctrl-j>
+5090  rem ### main cycle ###
+5100  rem input e descriz.
 5110 tp = 4:co = l: gosub 1300: rem a$=des.corta
 5120  if l < >1  then a$ = "Sei " +a$
 5130  print : if tu%(l)  then  if a$ < >""  then  print a$: goto 5160
 5140  if l >25  and l <33  then  print a$: goto 5160: rem labir.
 5150  gosub 2680: rem descr. lunga
 5160  gosub 1970: rem  vedo oggetti
-5170  rem <ctrl-j><ctrl-j>input e chiede<ctrl-j>
+5170  rem input e chiede
 5180  if ti  then  gosub 15020: if tt  then 5110: rem   event. timer
 5190  if mo  then 3070
 5200 tu%(l) = tu%(l) +1: rem turni luogo
 5210  print : print : print " Cosa devo fare ? ";
-5220  rem <ctrl-j><ctrl-j>input e basta<ctrl-j>
+5220  rem input e basta
 5230  gosub 1530: rem  input 
 5240  gosub 1040: rem  codici
 5250  if cp% = 7  then pp$ = sp$:sp$ = "": goto 5240: rem "VAI"
 5260  if  right$(pp$,2) = "re"  then  print : print "- Dammi del tu, per favore.": goto 5180
-5270  rem <ctrl-j><ctrl-j>per uso test<ctrl-j>
+5270  rem per uso test
 5280  if cp% = 29  then a =  val(sp$): if a >0  and a < = lu  then l = a: print hh$;:t(1) = 0: goto 5110
-5290  rem <ctrl-j><ctrl-j>parole valide ?<ctrl-j>
+5290  rem parole valide ?
 5300  if cp% = 0  then  print : print "   Eh ? ";: goto 5230: rem  pp??
 5310  if cs% = 0  then  print : print "   "sp$" ???": goto 5180: rem  sp??
-5320  rem <ctrl-j><ctrl-j>pirata?<ctrl-j>
+5320  rem pirata?
 5330  if p3 >1  then  for i = 1 to 2  step 0:m = 218: gosub 460: poke ks,0: gosub 370: next 
-5340  rem <ctrl-j><ctrl-j>salta<ctrl-j>
+5340  rem salta
 5350  if cp% = 31  and cs% < >3  then cs% = 1
-5360  rem <ctrl-j><ctrl-j>varie<ctrl-j>
+5360  rem varie
 5370 tu = tu +1: rem contamosse
 5380  rem 
-5390  rem <ctrl-j><ctrl-j>cerca in azioni<ctrl-j>
+5390  rem cerca in azioni
 5400  for i = 1 to az:a =  peek(la% +i): if   not a  or a = l  then  if cp% =  peek(pa% +i)  then  if cs% =  peek(sa% +i)  then 5420
 5410  next : goto 5470
 5420  if   not  peek(la% +i)  then  if cs% < >1  then  if cs% <100  then a = cs%: gosub 2360: if s = 0  then  gosub 2640:dy = 40: gosub 2950: goto 5110
 5430 a =  peek(ra% +i): if  peek(ta% +i)  then a =  -a
 5440  gosub 20040: if mo  then 3070
 5450  goto 5110
-5460  rem <ctrl-j><ctrl-j>basta<ctrl-j>
+5460  rem basta
 5470  if cp% < >8  then 5510
 5480 m = 143: gosub 3000: if   not s  then 5180
 5490 m = 189: gosub 460: gosub 2830: goto 3200
-5500  rem <ctrl-j><ctrl-j>dove<ctrl-j>
+5500  rem dove
 5510  if cp% = 9  then 5110
-5520  rem <ctrl-j><ctrl-j>guarda<ctrl-j>
+5520  rem guarda
 5530  if cp% = 102  then  if cs% = 1  or cs% = 146  then  print : goto 5150: rem  des.lunga 
-5540  rem <ctrl-j><ctrl-j>cosa<ctrl-j>
+5540  rem cosa
 5550  if cp% = 10  then  gosub 2070: goto 5180
-5560  rem <ctrl-j><ctrl-j>prendi<ctrl-j>
+5560  rem prendi
 5570  if cp% = 100  then  if cs% >1  and cs% <100  then a = cs%: gosub 2550: goto 5180
-5580  rem <ctrl-j><ctrl-j>lascia<ctrl-j>
+5580  rem lascia
 5590  if cp% < >101  then 5640
 5600  if cs% = 1  then 5640
 5610  if l >25  and l <33  then l1 = l:l = 24:a = cs%: gosub 2610:l = l1: goto 5180
 5620 a = cs%: gosub 2610: goto 5180
-5630  rem <ctrl-j><ctrl-j>mosse<ctrl-j>
+5630  rem mosse
 5640  if cp% = 19  then m = 150: gosub 460: print tu" mosse.": goto 5180
-5650  rem <ctrl-j><ctrl-j>punti<ctrl-j>
+5650  rem punti
 5660  if cp% = 20  then  gosub 2810: goto 5180
-5670  rem <ctrl-j><ctrl-j>load<ctrl-j>
+5670  rem load
 5680  if cp% = 14  then  if cs% = 1  then fc = 1: goto 30010: rem chain filer
-5690  rem <ctrl-j><ctrl-j>save<ctrl-j>
+5690  rem save
 5700  if cp% = 15  then  if cs% = 1  then fc = 2: goto 30010: rem chain filer
-5710  rem <ctrl-j><ctrl-j>direzioni<ctrl-j>
+5710  rem direzioni
 5720  if cp% >6  then 5840
 5730  if p3 >2  then 5730: rem pirata
 5740 co = l:tp = 5: rem mappa
 5750  gosub 1300: rem diz 2
 5760 a =  val( mid$ (a$,2 *cp% -1,2))
 5770  if a < >0  then l = a: goto 5110
-5780  rem <ctrl-j><ctrl-j>non puoi andare<ctrl-j>
+5780  rem non puoi andare
 5790 tp = 1:co = cp%
 5800  gosub 1300: rem diz 2
 5810  print : print "- "a$" non puoi andare.": goto 5180
-5820  rem <ctrl-j><ctrl-j>default intrans.<ctrl-j>
-5830  rem (o trans. speciali)<ctrl-j>
+5820  rem default intrans.
+5830  rem (o trans. speciali)
 5840 df = 0: gosub 10030: if df  then 5180
-5850  rem <ctrl-j><ctrl-j>trans. senza oggetto ?<ctrl-j>
+5850  rem trans. senza oggetto ?
 5860  if cs% = 1  then  if cp% > = 100  then  print : print "- "pp$" che cosa ? ";:vp$ = pp$: goto 5230
-5870  rem <ctrl-j><ctrl-j>intrans. con oggetto ?<ctrl-j>
+5870  rem intrans. con oggetto ?
 5880  if cp% <100  then  if cs% < >1  then 5960
-5890  rem <ctrl-j><ctrl-j>sp presente ?<ctrl-j>
+5890  rem sp presente ?
 5900  if cp% <100  then 5980: rem test solo se transitivo
 5910 a = cs%: gosub 2360: if e = 0  then 5980: rem  eh? (non elencato)
 5920  if s = 0  then  gosub 2640: goto 5180: rem   elencato ma assente
-5930  rem <ctrl-j><ctrl-j>default transitivi<ctrl-j>
+5930  rem default transitivi
 5940 df = 0: gosub 11050: if df  then 5180
-5950  rem <ctrl-j><ctrl-j>altrimenti<ctrl-j>
+5950  rem altrimenti
 5960  print : print "- Non capisco.": goto 5180
-5970  rem <ctrl-j><ctrl-j>garbage<ctrl-j>
+5970  rem garbage
 5980  print : print "   Eh ? ";: goto 5230
-10000  rem <ctrl-j><ctrl-j><ctrl-j>### avventura ###<ctrl-j><ctrl-j>
-10010  rem <ctrl-j><ctrl-j>default intrans.<ctrl-j>
+10000  rem ### avventura ###
+10010  rem default intrans.
 10020  rem insulti:
 10030  if cp% < >11  then 10120
 10040  print : print : print hi$" ";: for i = 1 to  len(pp$):a =  asc( mid$ (pp$,i,1)): print  chr$(a -32 *(a >95));: next 
@@ -429,59 +429,59 @@
 10080  print  chr$(32 +96 * rnd(1));: for j = 1 to 20: next 
 10090  print hn$;: next 
 10100  print hh$: print hi$" Tie'!"be$be$: print :fc = 3: goto 30010: rem chain filer
-10110  rem <ctrl-j>aiuto:
+10110  rem aiuto:
 10120  if cp% < >16  then 10170
 10130 m = 2
 10140  gosub 460: rem punto comune
 10150 df = 1: return : rem pure questo
-10160  rem <ctrl-j>piangi:
+10160  rem piangi:
 10170  if cp% = 17  then m = 3: goto 10140
-10180  rem <ctrl-j>prega:
+10180  rem prega:
 10190  if cp% = 18  then m = 4: goto 10140
-10200  rem <ctrl-j>atterra:
+10200  rem atterra:
 10210  if cp% = 30  then m = 5: goto 10140
-10220  rem <ctrl-j>salta:
+10220  rem salta:
 10230  if cp% = 31  then m = 6: goto 10140
-10240  rem <ctrl-j>siedi:
+10240  rem siedi:
 10250  if cp% = 33  then m = 8: goto 10140
-10260  rem <ctrl-j>buongiorno:
+10260  rem buongiorno:
 10270  if cp% = 35  then m = 9: goto 10140
-10280  rem <ctrl-j>scava:
+10280  rem scava:
 10290  if cp% = 27  then m = 135: goto 10140
-10300  rem <ctrl-j>senno:
+10300  rem senno:
 10310  if cp% = 23  then m = 136: goto 10140
-10320  rem <ctrl-j>entra, esci etc.:
+10320  rem entra, esci etc.:
 10330  if cp% = 39  or cp% = 37  then m = 201: goto 10140
-10340  rem <ctrl-j>usa:
+10340  rem usa:
 10350  if cp% = 129  then m = 133: goto 10140
-10360  rem <ctrl-j>cerca:
+10360  rem cerca:
 10370  if cp% < >121  then 10420
 10380  if cs% < >18  then m = 134: goto 10140
 10390  if l < >11  then m = 115: goto 10140
 10400 m = 63: goto 10140
 10410  rem 
 10420  return 
-11000  rem <ctrl-j><ctrl-j>default transitivi<ctrl-j>
+11000  rem default transitivi
 11010  rem in: cp%,a=cs%
 11020  rem     s=stato
-11030  rem     mb=mobilita'<ctrl-j>
+11030  rem     mb=mobilita'
 11040  rem guarda:
 11050  if cp% = 102  then m = 10: goto 10140
-11060  rem <ctrl-j>infila:
+11060  rem infila:
 11070  if cp% = 117  then  if l = 17  then m = 176: goto 10140
-11080  rem <ctrl-j>prendi:
+11080  rem prendi:
 11090  if cp% = 100  then m = 96: goto 10140
-11100  rem <ctrl-j>mangia:
+11100  rem mangia:
 11110  if cp% = 134  then m = 170: goto 10140
-11120  rem <ctrl-j>rompi:
+11120  rem rompi:
 11130  if cp% = 124  then m = 96: goto 10140
-11140  rem <ctrl-j>spingi:
+11140  rem spingi:
 11150  if cp% < >115  then 11210
 11160  if cs% > = 100  then m = 96: goto 10140
 11170  if s = 2  then m = 11: goto 10140
 11180  if mb = 1  then 11250
 11190 m = 12: goto 10140
-11200  rem <ctrl-j>alza:
+11200  rem alza:
 11210  if cp% < >119  then 11270
 11220  if cs% > = 100  then m = 96: goto 10140
 11230  if s = 2  then m = 11: goto 10140
@@ -489,7 +489,7 @@
 11250 m = 211: goto 10140
 11260  rem 
 11270  return 
-15000  rem <ctrl-j><ctrl-j>temporizzatori<ctrl-j>
+15000  rem temporizzatori
 15010  rem t1:
 15020  if t(1) = 0  then 15090
 15030 t(1) = t(1) -1: if t(1) = 3  then m = 17: goto 460
@@ -497,11 +497,11 @@
 15050  if t(1) = 1  then m = 19: goto 460
 15060  if t(1)  then  return 
 15070 mo = 1:m = 16: goto 460
-15080  rem <ctrl-j>t2:
+15080  rem t2:
 15090  if t(2)  then t(2) = t(2) -1: return 
-15100  rem <ctrl-j>t3:
+15100  rem t3:
 15110  if t(3)  then m = 142: goto 460
-15120  rem <ctrl-j>t4:
+15120  rem t4:
 15130  if t(4) = 0  then 15200
 15140 t(4) = t(4) -1
 15150  if t(4) = 2  then m = 203: goto 460
@@ -510,10 +510,10 @@
 15180 m = 205: goto 460
 15190  rem 
 15200 ti = 0:tt = 0: return 
-20000  rem <ctrl-j><ctrl-j>azioni<ctrl-j>
+20000  rem azioni
 20010  rem a=n.azione se >0
 20020  rem   n.messaggio se <0
-20030  rem cp%,cs% validi<ctrl-j>
+20030  rem cp%,cs% validi
 20040  if a <0  then m =  -a: goto 460
 20050  rem 
 20060 r = a:a = cs%: gosub 2360: rem  determina s (0/1/2)
@@ -537,16 +537,16 @@
 20240 r = r -20
 20250  rem 
 20260  return 
-20270  rem <ctrl-j>1:
+20270  rem 1:
 20280  if s = 0  then 2640
 20290 m = 161: goto 460
-20300  rem <ctrl-j>2:
+20300  rem 2:
 20310  if s = 0  then 2640
 20320 m = 168: goto 460
-20330  rem <ctrl-j>3:
+20330  rem 3:
 20340 a = 3: gosub 2360: if s = 2  then m = 26:t(1) = 0:l = 2: gosub 2790: goto 460
 20350 m = 24: gosub 460:mo = 1: goto 20370
-20360  rem <ctrl-j>aaaa...splat:<ctrl-j>
+20360  rem aaaa...splat:
 20370  speed= 180
 20380  print "aaaa": print  tab( 13)"aaa": print  tab( 16)"aa": print  tab( 18)"a": print  tab( 19)"a"
 20390  for i = 1 to 4: print  tab( 20)"a": next : for i = 1 to 4: print  tab( 20)":": next 
@@ -554,19 +554,19 @@
 20410  print  tab( 16);"\   :   /": print  tab( 15);"- "hi$" splat!"hn$" -"; chr$(7)
 20420 dy = 40: gosub 2950
 20430  return 
-20440  rem <ctrl-j>4:
+20440  rem 4:
 20450  if s = 0  then 2640
 20460 m = 170: goto 460
-20470  rem <ctrl-j>5:
+20470  rem 5:
 20480  if s = 2  then m = 182: goto 460
 20490 m = 28: gosub 460: gosub 2790:a = 3: gosub 2140: goto 2450
-20500  rem <ctrl-j>6:
+20500  rem 6:
 20510 a = 138: gosub 1830: if s = 1  then m = 29: goto 460
 20520 l = 3: gosub 2790:m = 30: goto 460
-20530  rem <ctrl-j>7:
+20530  rem 7:
 20540  if   not f(1)  then 5790
 20550 l = 18: goto 2790
-20560  rem <ctrl-j>8:
+20560  rem 8:
 20570 a = 25: gosub 2360: if s < >2  then 2640
 20580  gosub 1830: if s = 2  then m = 92: goto 460
 20590 a = 19: gosub 2360: if s  then m = 126: gosub 460:a = 25:s = 2: goto 1920
@@ -574,120 +574,120 @@
 20610  if l = 16  then a = 141: gosub 2360: if s  then m = 168: goto 460
 20620  if l = 21  then a = 143: gosub 2360: if s  then m = 180: goto 460
 20630 m = 179: goto 460
-20640  rem <ctrl-j>9:
+20640  rem 9:
 20650  gosub 2790:a = 138:s = 2: goto 1920
-20660  rem <ctrl-j>10:
+20660  rem 10:
 20670 a = 138:s = 1: goto 1920
-20680  rem <ctrl-j>11:
+20680  rem 11:
 20690  if   not f(4)  then 5790
 20700 l = 33: goto 2790
-20710  rem <ctrl-j>12:
+20710  rem 12:
 20720  if   not f(7)  then 5790
 20730  gosub 2790:l = 34: return 
-20740  rem <ctrl-j>13:
+20740  rem 13:
 20750 f(8) = 1: gosub 2790:m = 101: goto 460
-20760  rem <ctrl-j>14:
+20760  rem 14:
 20770 m = 145: gosub 3000
 20780  if s = 1  then m = 40: gosub 460:mo = 1
 20790  return 
-20800  rem <ctrl-j>15:
+20800  rem 15:
 20810  if s < >2  then 2640
 20820  if f(1)  then m = 70: goto 460
 20830 a = 10:s = 2: gosub 1920:m = 43:f(1) = 1: gosub 2790: goto 460
-20840  rem <ctrl-j>16:
+20840  rem 16:
 20850  gosub 1830: if s = 1  then m = 49: goto 460
 20860 m = 100: goto 460
-20870  rem <ctrl-j>17:
+20870  rem 17:
 20880 m = 20: gosub 3000: if s  then 22800
 20890  return 
-20900  rem <ctrl-j>18:
+20900  rem 18:
 20910 a = 13: gosub 1830: if s = 2  then m = 45: goto 460
 20920 a = 13:s = 2: gosub 1920: gosub 2790:m = 46: gosub 460:a = 12: goto 2140
-20930  rem <ctrl-j>19:
+20930  rem 19:
 20940  if s = 1  then m = 47: goto 460
 20950 f(9) = 1: gosub 2790:m = 48: goto 460
-20960  rem <ctrl-j>20:
+20960  rem 20:
 20970 a = 13: gosub 1830: if s = 1  then m = 49: goto 460
 20980 m = 50:f(2) = 1: gosub 2790: goto 460
-20990  rem <ctrl-j>21:
+20990  rem 21:
 21000  if   not (f(8)  and f(9))  then m = 173: goto 460
 21010  if (l < >11)  or f(4)  then m = 7: goto 460
 21020 m = 52:f(4) = 1: gosub 2790: goto 460
-21030  rem <ctrl-j>22:
+21030  rem 22:
 21040  if f(12)  then l = 25: goto 2790
 21050  print hh$;:m = 183: goto 460
-21060  rem <ctrl-j>23:
+21060  rem 23:
 21070 m = 54: gosub 460: gosub 2790:a = 16: goto 2140
-21080  rem <ctrl-j>24:
+21080  rem 24:
 21090  return 
-21100  rem <ctrl-j>25:
+21100  rem 25:
 21110  if s = 0  then 2640
 21120 a = 16: gosub 1830: if s = 2  then m = 45: goto 460
 21130 m = 57: gosub 460: gosub 2790:a = 17: gosub 2140:a = 16:s = 2: goto 1920
-21140  rem <ctrl-j>26:
+21140  rem 26:
 21150  if s = 2  then m = 58: goto 460
 21160 m = 59: goto 460
-21170  rem <ctrl-j>27:
+21170  rem 27:
 21180  if s < >2  then 2640
 21190  if l < >11  or f(2) = 0  then m = 61: goto 460
 21200  gosub 2790:m = 62:f(12) = 1: goto 460
-21210  rem <ctrl-j>28:
+21210  rem 28:
 21220  gosub 2790:m = 33: goto 460
-21230  rem <ctrl-j>29:
+21230  rem 29:
 21240  if s = 2  then m = 64: goto 460
 21250  if nt <nm  then m = 65: gosub 460: gosub 2450:s = 2: goto 1920
 21260 m = 156: gosub 460: goto 2070
-21270  rem <ctrl-j>30:
+21270  rem 30:
 21280  if s = 1  then m = 67: goto 460
 21290  if l < >53  then m = 68: goto 460
 21300  if f(3)  then m = 70: goto 460
 21310 m = 71:f(3) = 1: gosub 2790: goto 460
-21320  rem <ctrl-j>31:
+21320  rem 31:
 21330  if f(3)  then m = 45: goto 460
 21340 m = 72: goto 460
-21350  rem <ctrl-j>32:
+21350  rem 32:
 21360  if f(3) = 0  then m = 49: goto 460
 21370 f(10) = 1: gosub 2790:m = 73: goto 460
-21380  rem <ctrl-j>33:
+21380  rem 33:
 21390  gosub 2790:m = 36: goto 460
-21400  rem <ctrl-j>34:
+21400  rem 34:
 21410 a = 141: gosub 2360: if s = 0  then l = 19: return 
 21420 m = 75:mo = 1: goto 460
-21430  rem <ctrl-j>35:
+21430  rem 35:
 21440  if   not f(10)  then m = 173: goto 460
 21450 a = 19: gosub 2360: if s = 0  then m = 7: goto 460
 21460 m = 77: gosub 460
 21470  if l < >16  then m = 78:mo = 1: goto 460
 21480 m = 79: gosub 460: gosub 2790:a = 19: gosub 2200:a = 141: goto 2200
-21490  rem <ctrl-j>36:
+21490  rem 36:
 21500 a = 142: gosub 1830: if s = 2  then m = 81: goto 460
 21510 m = 82: gosub 460: gosub 2790:a = 142:s = 2: gosub 1920:a = 23: goto 2140
-21520  rem <ctrl-j>37:
+21520  rem 37:
 21530 a = 142: gosub 1830: if s = 1  then m = 83: goto 460
 21540  gosub 2790:a = 23: goto 2550
-21550  rem <ctrl-j>38:
+21550  rem 38:
 21560 a = 11: gosub 2360: if s < >2  then m = 84: goto 460
 21570 m = 85: gosub 460: gosub 2790:a = 23: gosub 2200:a = 24: goto 2140
-21580  rem <ctrl-j>39:
+21580  rem 39:
 21590 m = 86: gosub 460
 21600 a = 27: gosub 2360: if s < >1  then  print ".": return 
 21610 m = 184: goto 460
-21620  rem <ctrl-j>40:
+21620  rem 40:
 21630  if l = 33  and s = 1  then  gosub 2550:re = 23: goto 21070
 21640  goto 2550
-21650  rem <ctrl-j>41:
+21650  rem 41:
 21660  if s = 1  then m = 121: goto 460
 21670 m = 87: gosub 460: gosub 2790:s = 2: goto 1920
-21680  rem <ctrl-j>42:
+21680  rem 42:
 21690  if f(5) = 1  then  gosub 2790:a = 28:s = 2: goto 1920
 21700 a = 143: gosub 2360: if s = 1  then m = 88:mo = 1: goto 460
 21710 m = 89: gosub 460:a = 143: goto 2140
-21720  rem <ctrl-j>43:
+21720  rem 43:
 21730 a = 25: gosub 2360: if s = 0  then 2640
 21740  if s = 1  then m = 91: goto 460
 21750 a = 25: gosub 1830: if s = 2  then m = 92: goto 460
 21760 m = 93: gosub 460:t(2) = 3:ti = 1:s = 2: goto 1920
-21770  rem <ctrl-j>44:
+21770  rem 44:
 21780 a = 27: gosub 2360: if s < >2  and l = 21  then m = 94: goto 460
 21790  if s < >2  then 2640
 21800  gosub 1830: if s = 1  then 2640
@@ -696,43 +696,43 @@
 21830  if l < >21  then m = 7: goto 460
 21840  if t(2) = 0  then m = 97:mo = 1: goto 460
 21850 m = 98: gosub 460:f(5) = 1: gosub 2790:a = 143: goto 2200
-21860  rem <ctrl-j>45:
+21860  rem 45:
 21870 a = 28: gosub 1830: if s = 1  then m = 49: goto 460
 21880 a = 29: gosub 2360: if s < >1  then  if f(11)  then m = 23: goto 460
 21890 m = 99: gosub 460:f(11) = 1: gosub 2790:a = 29: goto 2140
-21900  rem <ctrl-j>46:
+21900  rem 46:
 21910  if s = 2  then re = 3: goto 20340
 21920 m = 212: goto 460
 21930  return 
-21940  rem <ctrl-j>47:
+21940  rem 47:
 21950  if f(1)  then m = 214: goto 460
 21960 m = 213: goto 460
 21970  return 
-21980  rem <ctrl-j>48:
+21980  rem 48:
 21990  if f(1)  then re = 7: goto 20540
 22000 m = 213: goto 460
 22010  return 
-22020  rem <ctrl-j>49:
+22020  rem 49:
 22030  if s = 2  then m = 215: goto 460
 22040 m = 216: goto 460
 22050  return 
-22060  rem <ctrl-j>50:
+22060  rem 50:
 22070  if f(6) = 0  then m = 104: goto 460
 22080 f(6) = f(6) +1: if f(6) = 5  then m = 105: gosub 460: for j = 1 to 12: print be$;:dy = 32: gosub 2950: next :m = 106:f(7) = 1: gosub 2790: goto 460
 22090  if f(6) >5  then m = 107: goto 460
 22100 m = 106 +f(6): goto 460: rem   57,58,59
 22110  return 
-22120  rem <ctrl-j>51:
+22120  rem 51:
 22130 a = 24: gosub 2360: if s < >2  then m = 111: goto 460
 22140  if f(6) >5  then m = 112: goto 460
 22150  if f(6)  then m = 113: goto 460
 22160  for k = 1 to 4: for j = 1 to 15:a =  peek( -16336):dy = .6: gosub 2950: next :dy = 20: gosub 2950: next 
 22170 m = 114: gosub 460:f(6) = 1: gosub 2790:a = 32:s = 2: goto 1920
-22180  rem <ctrl-j>52:
+22180  rem 52:
 22190  if s = 2  then m = 217: goto 460
 22200 m = 212: goto 460
 22210  return 
-22220  rem <ctrl-j>53:
+22220  rem 53:
 22230  if s = 1  then m = 117: goto 460
 22240  if l = 61  then m = 206: gosub 460: goto 3200
 22250  if l < >34  then m = 118: goto 460
@@ -743,79 +743,79 @@
 22300  poke ks,0
 22310 a = 3: gosub 2360: if s < >2  then m = 25: gosub 460: gosub 20370:m = 34:mo = 1: goto 460
 22320 pt = 999:t(4) = 4:ti = 1:m = 200: goto 460
-22330  rem <ctrl-j>54:
+22330  rem 54:
 22340  return 
-22350  rem <ctrl-j>55:
+22350  rem 55:
 22360  return 
-22370  rem <ctrl-j>56:
+22370  rem 56:
 22380  return 
-22390  rem <ctrl-j>57:
+22390  rem 57:
 22400  return 
-22410  rem <ctrl-j>58:
+22410  rem 58:
 22420  return 
-22430  rem <ctrl-j>59:
+22430  rem 59:
 22440  return 
-22450  rem <ctrl-j>60:
+22450  rem 60:
 22460 m = 147: gosub 3000: if s = 1  then m = 124: goto 460
 22470 : return 
-22480  rem <ctrl-j>61:
+22480  rem 61:
 22490 m = 148: gosub 3000: if s = 1  then m = 53: goto 460
 22500  return 
-22510  rem <ctrl-j>62:
+22510  rem 62:
 22520  if s < >2  then 2640
 22530 m = 127: goto 460
-22540  rem <ctrl-j>63:
+22540  rem 63:
 22550  if s < >2  then 2640
 22560  goto 22530
-22570  rem <ctrl-j>64:
+22570  rem 64:
 22580  return 
-22590  rem <ctrl-j>65:
+22590  rem 65:
 22600  if l <24  or l >32  then m = 129: goto 460
 22610 m = 130: gosub 460:j = 1
 22620  speed= 120: for i = 1 to 30 *j: print "mumble...";: next 
 22630  print :m = 131: gosub 460:m = 149: gosub 3000: if s = 1  then j = j *2: goto 22620
 22640  return 
-22650  rem <ctrl-j>66:
+22650  rem 66:
 22660  return 
-22670  rem <ctrl-j>67:
+22670  rem 67:
 22680  return 
-22690  rem <ctrl-j>68:
+22690  rem 68:
 22700  return 
-22710  rem <ctrl-j>69:
+22710  rem 69:
 22720 m = 95: gosub 460: goto 2200
-22730  rem <ctrl-j>70:
+22730  rem 70:
 22740 a = 25: gosub 2360: if s < >2  then m = 125: goto 460
 22750  gosub 1830: if s = 2  then m = 92: goto 460
 22760 m = 126: gosub 460:s = 2: goto 1920
-22770  rem <ctrl-j>71:
+22770  rem 71:
 22780  return 
-22790  rem <ctrl-j>72:
+22790  rem 72:
 22800 t(3) = 1:ti = 1:m = 93: goto 460
-22810  rem <ctrl-j>73:
+22810  rem 73:
 22820 a = 100 * rnd(1): if a <21  then l = 58: return 
 22830 m = 140: goto 460
-22840  rem <ctrl-j>74:
+22840  rem 74:
 22850  if tu%(l) <50  then tu%(l) = 50:l = 21: return 
 22860 mo = 1:m = 137: goto 460
-22870  rem <ctrl-j>75:
+22870  rem 75:
 22880  if t(3)  then mo = 1:m = 139: goto 460
 22890 l = 22: return 
-22900  rem <ctrl-j>76:
+22900  rem 76:
 22910  gosub 2790:a = 19: gosub 2360: if s < >2  then 22950
 22920 a = 25: gosub 2360: if s < >2  then 22950
 22930  gosub 1830: if s = 2  then 22950
 22940 s = 2: gosub 1920:m = 126: gosub 460
 22950 l = 35: return 
-22960  rem <ctrl-j>77:
+22960  rem 77:
 22970  return 
-22980  rem <ctrl-j>78:
+22980  rem 78:
 22990  return 
-23000  rem <ctrl-j>79:
+23000  rem 79:
 23010  return 
-23020  rem <ctrl-j>80:
+23020  rem 80:
 23030  return 
-30000  rem <ctrl-j><ctrl-j>chain filer<ctrl-j>
-30010  rem in: fc=comando filer<ctrl-j>
+30000  rem chain filer
+30010  rem in: fc=comando filer
 30020  print cl$: rem l,m
 30030  in# 0: pr# 0: call sh: rem unlink hrcg
 30040  if ts  then  print ch$: call 520"filer": rem applesoft -----
