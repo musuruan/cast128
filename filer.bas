@@ -4,15 +4,6 @@
 130 rem by enrico colombini
 135 rem libera distribuzione
 140 rem purche' non alterata
-150 rem !usecommon ck,kb,ks,m0,m1
-160 rem !usecommon d$,sh,br$,op$,rd$,wr$,cl$,ve$,ch$
-170 rem !usecommon bs$,cr$,hi$,hn$,hh$
-180 rem !usecommon fv$,fl$,fm$,ff$,fg$
-190 rem !usecommon lu,nr,du,rp,nm,u
-200 rem !usecommon az,og,la%,pa%,sa%,ta%,ra%,co%,mo%
-210 rem !usecommon be$,nn$,fc,ts
-220 rem !usecommon f(20),t(10),tu%(70),lo%(150),so%(150),vo%(150),pt%(80)
-230 rem !usecommon l,nt,pt,ti,tt,tu,gi,mo
 240 rem - entry (chained):
 250 rem fc=0: new game, load v
 260 rem fc=1: "load" command

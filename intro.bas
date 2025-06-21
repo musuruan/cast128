@@ -5,15 +5,6 @@
 140 rem by enrico colombini
 145 rem libera distribuzione
 150 rem purche' non alterata
-160 rem !defcommon ck,kb,ks,m0,m1
-170 rem !defcommon d$,sh,br$,op$,rd$,wr$,cl$,ve$,ch$
-180 rem !defcommon bs$,cr$,hi$,hn$,hh$
-190 rem !defcommon fv$,fl$,fm$,ff$,fg$
-200 rem !defcommon lu,nr,du,rp,nm,u
-210 rem !defcommon az,og,la%,pa%,sa%,ta%,ra%,co%,mo%
-220 rem !defcommon be$,nn$,fc,ts
-230 rem !defcommon f(20),t(10),tu%(70),lo%(150),so%(150),vo%(150),pt%(80)
-240 rem !defcommon l,nt,pt,ti,tt,tu,gi,mo
 250 rem - entry:
 260 print  chr$(4)"nomoncio"
 270 onerr  goto 1090
