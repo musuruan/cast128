@@ -302,7 +302,7 @@
 3190 rem stop
 3200 poke ks,0
 3210 gosub 370: rem get
-3220 in# 0: pr# 0: call sh: text : print : print "CIAO!": print d$"fp": rem exit
+3220 print : print "CIAO!": end: rem exit
 3230 rem decri p2 test
 3240 i1 = 7424:i2 = i1 +127
 3250 for i = 576 to 676 step 2

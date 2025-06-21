@@ -159,7 +159,7 @@
 1760 goto 360: rem restart
 1770 rem stop
 1780 poke ks,0: print 
-1790 in# 0: pr# 0: call sh: text : print : print "CIAO!": print d$"fp": rem exit
+1790 print : print "CIAO!": end: rem exit
 30000 rem chain game
 30010 vtab 10: rem no scrolling
 30020 :

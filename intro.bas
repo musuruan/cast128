@@ -16,7 +16,7 @@
 330 m1 = m0 +1: rem motor on
 340 rem costanti dos
 350 d$ = chr$(4)
-360 sh = 1002: rem shooks
+360 :
 370 br$ = d$ +"brun"
 380 op$ = d$ +"open"
 390 rd$ = d$ +"read"
@@ -89,7 +89,7 @@
 1060 vtab 1: print nn$
 1070 goto 30010: rem chain filer
 1080 rem error
-1090 call 50688: rem boot 6
+1090 end
 30000 rem chain filer
 30010 :
 30020 fc = 0: rem filer command 
