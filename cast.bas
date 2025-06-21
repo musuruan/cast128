@@ -10,4 +10,4 @@
 190 print d$"bload b, a$800"
 200 print d$"bload logo, a$2000"
 210 rem ready
-220 print d$"run intro"
+220 dload"intro"
