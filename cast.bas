@@ -1,13 +1,13 @@
-100  REM <CTRL-J><CTRL-J><CTRL-J># STARTER #<CTRL-J><CTRL-J>
-110  REM PER PROVE CASTELLO<CTRL-J>
-120  REM (C) DINOSOFT 1984-2001
-130  REM BY ENRICO COLOMBINI
-140  REM <CTRL-J><CTRL-J>SET BASIC BASE<CTRL-J>
-150  IF  PEEK(104) < >64  THEN  POKE 104,64: POKE 16384,0: PRINT  CHR$(4)"RUN CAST"
-160  PRINT  CHR$(4)"MAXFILES 2"
-170 D$ =  CHR$(4)
-180  REM <CTRL-J><CTRL-J>LOAD B,LOGO<CTRL-J>
-190  PRINT D$"BLOAD B, A$800"
-200  PRINT D$"BLOAD LOGO, A$2000"
-210  REM <CTRL-J><CTRL-J>READY<CTRL-J>
-220  PRINT D$"RUN INTRO"
+100  rem <ctrl-j><ctrl-j><ctrl-j># starter #<ctrl-j><ctrl-j>
+110  rem per prove castello<ctrl-j>
+120  rem (c) dinosoft 1984-2001
+130  rem by enrico colombini
+140  rem <ctrl-j><ctrl-j>set basic base<ctrl-j>
+150  if  peek(104) < >64  then  poke 104,64: poke 16384,0: print  chr$(4)"run cast"
+160  print  chr$(4)"maxfiles 2"
+170 d$ =  chr$(4)
+180  rem <ctrl-j><ctrl-j>load b,logo<ctrl-j>
+190  print d$"bload b, a$800"
+200  print d$"bload logo, a$2000"
+210  rem <ctrl-j><ctrl-j>ready<ctrl-j>
+220  print d$"run intro"

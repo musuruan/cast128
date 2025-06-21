@@ -1,177 +1,177 @@
-100  REM <CTRL-J><CTRL-J><CTRL-J># FILER #<CTRL-J><CTRL-J>
-110  REM PER CASTELLO REV.2<CTRL-J>
-120  REM (C) DINOSOFT 1984-2001
-130  REM BY ENRICO COLOMBINI<CTRL-J><CTRL-J>
-135  REM LIBERA DISTRIBUZIONE
-140  REM PURCHE' NON ALTERATA<CTRL-J><CTRL-J>
-150  REM !USECOMMON CK,KB,KS,M0,M1
-160  REM !USECOMMON D$,SH,BR$,OP$,RD$,WR$,CL$,VE$,CH$
-170  REM !USECOMMON BS$,CR$,HI$,HN$,HH$
-180  REM !USECOMMON FV$,FL$,FM$,FF$,FG$
-190  REM !USECOMMON LU,NR,DU,RP,NM,U
-200  REM !USECOMMON AZ,OG,LA%,PA%,SA%,TA%,RA%,CO%,MO%
-210  REM !USECOMMON BE$,NN$,FC,TS
-220  REM !USECOMMON F(20),T(10),TU%(70),LO%(150),SO%(150),VO%(150),PT%(80)
-230  REM !USECOMMON L,NT,PT,TI,TT,TU,GI,MO
-240  REM <CTRL-J><CTRL-J>- ENTRY (CHAINED):<CTRL-J>
-250  REM FC=0: NEW GAME, LOAD V
-260  REM FC=1: "LOAD" COMMAND
-270  REM FC=2: "SAVE" COMMAND
-280  REM FC=3: MORTO<CTRL-J>
-290  ONERR  GOTO 1620
-300  CALL U: REM LINK HRCG
-310  POKE 1010,188: POKE 1011,23: CALL 64367: REM PWR-UP BYTE
-320  POKE 1008,188: POKE 1009,23: REM BREAK
-330 DC = 1: REM DISCO CAST
-340  IF FC = 0  THEN  GOSUB 1530: REM TITOLI
-350  REM <CTRL-J><CTRL-J>REENTRY (ON ERROR)<CTRL-J>
-360  PRINT : PRINT CL$: REM CHIUDE TUTTO
-370  ON FC +1 GOSUB 400,470,530,590: REM ESEGUE ROUTINE
-380  GOTO 30010: REM CHAIN GAME
-390  REM <CTRL-J><CTRL-J>NEW GAME<CTRL-J>
-400 A$(1) = "Iniziare una nuova avventura"
-410 A$(2) = "Riprendere una situazione da disco"
-420 A = 2: GOSUB 1030
-430  IF A = 1  THEN  GOSUB 870:F$ = FV$: GOSUB 1230: GOTO 450: REM START NEW GAME
-440  GOSUB 470: IF F$ = ""  THEN 400: REM LOAD OR RESTART
-450  RETURN 
-460  REM <CTRL-J><CTRL-J>LOAD COMMAND<CTRL-J>
-470 A$ = "Quale situazione vuoi riprendere ?": GOSUB 710: REM INPUT F$
-480  IF F$ = ""  THEN 500: REM ANNULLATO
-490  GOSUB 1230: REM LOAD GAME
-500  GOSUB 870: REM RESTORE DISK
-510  RETURN 
-520  REM <CTRL-J><CTRL-J>SAVE COMMAND<CTRL-J>
-530 A$ = "Come vuoi chiamare questa situazione ?": GOSUB 710: REM INPUT F
-540  IF F$ = ""  THEN 560: REM ANNULLATO
-550  GOSUB 1390: REM SAVE GAME
-560  GOSUB 870: REM RESTORE DISK
-570  RETURN 
-580  REM <CTRL-J><CTRL-J>MORTO<CTRL-J>
-590  GOSUB 940: REM SPAZIO
-600 A$(1) = "Smettere di giocare"
-610 A$(2) = "Iniziare una nuova avventura"
-620 A$(3) = "Riprendere una situazione da disco"
-630 A = 3: GOSUB 1030
-640  IF A = 1  THEN 1780: REM STOP
-650  IF A = 2  THEN  GOSUB 870:F$ = FV$: GOSUB 1230: GOTO 670: REM START NEW GAME
-660  IF A = 3  THEN  GOSUB 470: IF F$ = ""  THEN 590: REM LOAD OR RESTART
-670  RETURN 
-680  REM <CTRL-J><CTRL-J>INPUT F$<CTRL-J>
-690  REM IN: A$=MESSAGGIO NOME
-700  REM OUT:F$=NOME FILE O ""<CTRL-J>
-710  PRINT : PRINT 
-720  IF   NOT DC  THEN 760: REM USER DISK
-730  PRINT HI$" Togli AVVENTURA NEL CASTELLO "HN$
-740  PRINT : PRINT HI$" Inserisci un dischetto DOS 3.3 "HN$
-750 DC = 0: REM DISCO USER
-760  PRINT : PRINT A$: REM NOME?
-770  PRINT "(CAT mostra il catalogo, X annulla)"
-780  PRINT : PRINT "Situazione: ";
-790 LI = 25: GOSUB 1140: REM INPUT
-800  IF IN$ = "CAT"  THEN  PRINT D$"CATALOG": GOTO 760
-810  IF IN$ = "X"  THEN F$ = "": GOTO 840
-820 F$ = IN$: IF  LEFT$(F$,5) = "CAST."  AND  LEN(F$) >5  THEN F$ =  MID$ (F$,6)
-830 F$ = "CAST." +F$
-840  RETURN 
-850  PRINT 
-860  REM <CTRL-J><CTRL-J>RESTORE DISK<CTRL-J>
-870  IF DC  THEN 920: REM CAST DISK
-880  PRINT : PRINT 
-890  PRINT HI$" Rimetti AVVENTURA NEL CASTELLO "HN$
-900  GOSUB 940: REM SPAZIO
-910 DC = 1: REM DISCO CAST
-920  RETURN 
-930  REM <CTRL-J><CTRL-J>SPAZIO<CTRL-J>
-940  PRINT 
-950  PRINT "Premi <spazio> quando sei pronto: ";
-960  POKE KS,0
-970  GET A$: IF A$ < >" "  THEN 970
-980  PRINT : RETURN 
-990  REM <CTRL-J><CTRL-J>SCELTA<CTRL-J>
-1000  REM IN: A=N.SCELTE
-1010  REM     A$(A)=SCELTE
-1020  REM OUT:A=SCELTA<CTRL-J>
-1030  PRINT : PRINT : PRINT "VUOI:": PRINT : PRINT 
-1040  FOR I = 1 TO A: PRINT "<"; LEFT$(A$(I),1);"> "A$(I)".": PRINT : NEXT 
-1050  PRINT : PRINT "QUALE ?  "BS$;
-1060  POKE KS,0:LI = 1: GOSUB 1140
-1070 T = 0: FOR I = 1 TO A
-1080  IF IN$ =  LEFT$(A$(I),1)  THEN T = I
-1090  NEXT : IF   NOT T  THEN  POKE 37, PEEK(37) -2: GOTO 1050
-1100 A = T: RETURN 
-1110  REM <CTRL-J><CTRL-J>INPUT IN$<CTRL-J>
-1120  REM IN: LI=LEN MAX INPUT
-1130  REM SOLO UPPER (ANCHE IN$)<CTRL-J>
-1140 IN$ = " "
-1150  GET B$:C =  ASC(B$):LL =  LEN(IN$) -1
-1160  IF C <123  AND C >96  THEN C = C -32: REM TOUPPER
-1170  IF (C = 8  OR C = 127)  AND LL  THEN IN$ =  LEFT$(IN$,LL): PRINT  CHR$(8)" " CHR$(8);: GOTO 1150: REM DELETE
-1180  IF C = 13  AND LL  THEN  PRINT :IN$ =  MID$ (IN$,2): RETURN : REM REMOVE BLANK
-1190  IF LL <LI  THEN  IF (C >32  AND C <91  AND C < >44)  THEN  PRINT  CHR$(C);:IN$ = IN$ + CHR$(C): REM ACCETTA !-Z ESCLUSA VIRGOLA
-1200  GOTO 1150
-1210  REM <CTRL-J><CTRL-J>LOAD VAR FILE<CTRL-J>
-1220  REM IN: F$=NOME FILE<CTRL-J>
-1230  PRINT : IF F$ = FV$  THEN  PRINT "Un attimo che mi preparo...": GOTO 1260
-1240  PRINT "Un attimo che rileggo la situazione..."
-1250  PRINT 
-1260  PRINT VE$F$: REM ERROR SE NON C'E'
-1270  PRINT OP$F$: PRINT RD$F$
-1280  FOR I = 1 TO LU: INPUT TU%(I): POKE M1,0: NEXT 
-1290  FOR I = 1 TO OG: INPUT LO%(I),SO%(I),VO%(I): POKE M1,0: NEXT 
-1300  FOR I = 1 TO NR: INPUT PT%(I): POKE M1,0: NEXT 
-1310  FOR I = 1 TO 20: INPUT F(I): POKE M1,0: NEXT 
-1320  FOR I = 1 TO 10: INPUT T(I): POKE M1,0: NEXT 
-1330  INPUT L,NT,PT,TI,TT,TU
-1340  POKE M0,0: REM MOTOR OFF
-1350  PRINT CL$F$
-1360  RETURN 
-1370  REM <CTRL-J><CTRL-J>SAVE VAR FILE<CTRL-J>
-1380  REM IN: F$=NOME FILE<CTRL-J>
-1390  PRINT : PRINT "Un attimo che salvo la situazione...": PRINT 
-1400  PRINT OP$F$
-1410  PRINT D$"UNLOCK"F$
-1420  PRINT WR$F$
-1430  FOR I = 1 TO LU: PRINT TU%(I): POKE M1,0: NEXT 
-1440  FOR I = 1 TO OG: PRINT LO%(I): PRINT SO%(I): PRINT VO%(I): POKE M1,0: NEXT : REM CO,MO NON CAMBIANO
-1450  FOR I = 1 TO NR: PRINT PT%(I): POKE M1,0: NEXT 
-1460  FOR I = 1 TO 20: PRINT F(I): POKE M1,0: NEXT 
-1470  FOR I = 1 TO 10: PRINT T(I): POKE M1,0: NEXT 
-1480  PRINT L: PRINT NT: PRINT PT: PRINT TI: PRINT TT: PRINT TU
-1490  POKE M0,0: REM MOTOR OFF
-1500  PRINT CL$F$: PRINT VE$F$
-1510  RETURN 
-1520  REM <CTRL-J><CTRL-J>TITOLI<CTRL-J>
-1530  PRINT HH$: REM CLEAR
-1540  HCOLOR= 3
-1550  HPLOT 0,14 TO 279,14 TO 279,72 TO 0,72 TO 0,14
-1560  VTAB 4: HTAB 7: PRINT HI$" * AVVENTURA NEL CASTELLO * "HN$
-1570  VTAB 6: HTAB 3: PRINT "di: Enrico Colombini e Chiara Tovena"
-1580  VTAB 8: HTAB 7: PRINT "Copyright Dinosoft 1982-2001"
-1590  VTAB 10
-1600  RETURN 
-1610  REM <CTRL-J><CTRL-J>ERROR<CTRL-J>
-1620  CALL U +3: REM RECOVERY
-1630  CALL U: VTAB 24: HTAB 1: REM RELINK HRCG 
-1640 E =  PEEK(222): REM ERROR
-1650  PRINT : PRINT HI$;
-1660  IF E = 255  THEN  PRINT " Perche' mi hai ucciso? "HN$: GOTO 1780: REM STOP
-1670  IF DC  AND E >0  AND E <16  THEN  PRINT " Problemi con il disco! "HN$BE$BE$: PRINT : PRINT "Verifica che sia inserito il dischetto": PRINT HI$" AVVENTURA NEL CASTELLO ";: GOTO 1730
-1680  IF E = 8  OR E = 5  THEN  PRINT " Problemi con il disco! ";: GOTO 1730
-1690  IF E = 4  THEN  PRINT " Il disco e' protetto dalla scrittura! ";: GOTO 1730
-1700  IF E = 6  THEN  PRINT " "F$" non c'e' su questo disco! ";: GOTO 1730
-1710  IF E = 9  THEN  PRINT HN$: PRINT D$"DELETE"F$: PRINT HI$" Su questo disco non c'e' posto! ";: GOTO 1730
-1720  PRINT " Errore "E"-" PEEK(218) +256 * PEEK(219)" "HN$BE$BE$: POKE 216,0: GOTO 1780: REM STOP
-1730  PRINT HN$BE$BE$
-1740  IF FC = 1  OR FC = 2  THEN  GOSUB 940: REM SPAZIO SE LOAD O SAVE
-1750  IF FC = 0  OR FC = 3  THEN A = DC: GOSUB 870: IF (A)  THEN  GOSUB 940: REM RESTORE DISK SE NEW GAME O MORTO 
-1760  GOTO 360: REM RESTART
-1770  REM <CTRL-J><CTRL-J>STOP<CTRL-J>
-1780  POKE KS,0: PRINT 
-1790  IN# 0: PR# 0: CALL SH: TEXT : PRINT : PRINT "CIAO!": PRINT D$"FP": REM EXIT
-30000  REM <CTRL-J><CTRL-J>CHAIN GAME<CTRL-J>
-30010  VTAB 10: REM NO SCROLLING
-30020  IN# 0: PR# 0: CALL SH: REM UNLINK HRCG
-30030  IF TS  THEN  PRINT CH$: CALL 520"GAME": REM  APPLESOFT
-30040  REM !CLEAR CHAIN
-30050  PRINT BR$FG$: REM TASC
+100  rem <ctrl-j><ctrl-j><ctrl-j># filer #<ctrl-j><ctrl-j>
+110  rem per castello rev.2<ctrl-j>
+120  rem (c) dinosoft 1984-2001
+130  rem by enrico colombini<ctrl-j><ctrl-j>
+135  rem libera distribuzione
+140  rem purche' non alterata<ctrl-j><ctrl-j>
+150  rem !usecommon ck,kb,ks,m0,m1
+160  rem !usecommon d$,sh,br$,op$,rd$,wr$,cl$,ve$,ch$
+170  rem !usecommon bs$,cr$,hi$,hn$,hh$
+180  rem !usecommon fv$,fl$,fm$,ff$,fg$
+190  rem !usecommon lu,nr,du,rp,nm,u
+200  rem !usecommon az,og,la%,pa%,sa%,ta%,ra%,co%,mo%
+210  rem !usecommon be$,nn$,fc,ts
+220  rem !usecommon f(20),t(10),tu%(70),lo%(150),so%(150),vo%(150),pt%(80)
+230  rem !usecommon l,nt,pt,ti,tt,tu,gi,mo
+240  rem <ctrl-j><ctrl-j>- entry (chained):<ctrl-j>
+250  rem fc=0: new game, load v
+260  rem fc=1: "load" command
+270  rem fc=2: "save" command
+280  rem fc=3: morto<ctrl-j>
+290  onerr  goto 1620
+300  call u: rem link hrcg
+310  poke 1010,188: poke 1011,23: call 64367: rem pwr-up byte
+320  poke 1008,188: poke 1009,23: rem break
+330 dc = 1: rem disco cast
+340  if fc = 0  then  gosub 1530: rem titoli
+350  rem <ctrl-j><ctrl-j>reentry (on error)<ctrl-j>
+360  print : print cl$: rem chiude tutto
+370  on fc +1 gosub 400,470,530,590: rem esegue routine
+380  goto 30010: rem chain game
+390  rem <ctrl-j><ctrl-j>new game<ctrl-j>
+400 a$(1) = "Iniziare una nuova avventura"
+410 a$(2) = "Riprendere una situazione da disco"
+420 a = 2: gosub 1030
+430  if a = 1  then  gosub 870:f$ = fv$: gosub 1230: goto 450: rem start new game
+440  gosub 470: if f$ = ""  then 400: rem load or restart
+450  return 
+460  rem <ctrl-j><ctrl-j>load command<ctrl-j>
+470 a$ = "Quale situazione vuoi riprendere ?": gosub 710: rem input f$
+480  if f$ = ""  then 500: rem annullato
+490  gosub 1230: rem load game
+500  gosub 870: rem restore disk
+510  return 
+520  rem <ctrl-j><ctrl-j>save command<ctrl-j>
+530 a$ = "Come vuoi chiamare questa situazione ?": gosub 710: rem input f
+540  if f$ = ""  then 560: rem annullato
+550  gosub 1390: rem save game
+560  gosub 870: rem restore disk
+570  return 
+580  rem <ctrl-j><ctrl-j>morto<ctrl-j>
+590  gosub 940: rem spazio
+600 a$(1) = "Smettere di giocare"
+610 a$(2) = "Iniziare una nuova avventura"
+620 a$(3) = "Riprendere una situazione da disco"
+630 a = 3: gosub 1030
+640  if a = 1  then 1780: rem stop
+650  if a = 2  then  gosub 870:f$ = fv$: gosub 1230: goto 670: rem start new game
+660  if a = 3  then  gosub 470: if f$ = ""  then 590: rem load or restart
+670  return 
+680  rem <ctrl-j><ctrl-j>input f$<ctrl-j>
+690  rem in: a$=messaggio nome
+700  rem out:f$=nome file o ""<ctrl-j>
+710  print : print 
+720  if   not dc  then 760: rem user disk
+730  print hi$" Togli AVVENTURA NEL CASTELLO "hn$
+740  print : print hi$" Inserisci un dischetto DOS 3.3 "hn$
+750 dc = 0: rem disco user
+760  print : print a$: rem nome?
+770  print "(CAT mostra il catalogo, X annulla)"
+780  print : print "Situazione: ";
+790 li = 25: gosub 1140: rem input
+800  if in$ = "CAT"  then  print d$"catalog": goto 760
+810  if in$ = "X"  then f$ = "": goto 840
+820 f$ = in$: if  left$(f$,5) = "cast."  and  len(f$) >5  then f$ =  mid$ (f$,6)
+830 f$ = "cast." +f$
+840  return 
+850  print 
+860  rem <ctrl-j><ctrl-j>restore disk<ctrl-j>
+870  if dc  then 920: rem cast disk
+880  print : print 
+890  print hi$" Rimetti AVVENTURA NEL CASTELLO "hn$
+900  gosub 940: rem spazio
+910 dc = 1: rem disco cast
+920  return 
+930  rem <ctrl-j><ctrl-j>spazio<ctrl-j>
+940  print 
+950  print "Premi <spazio> quando sei pronto: ";
+960  poke ks,0
+970  get a$: if a$ < >" "  then 970
+980  print : return 
+990  rem <ctrl-j><ctrl-j>scelta<ctrl-j>
+1000  rem in: a=n.scelte
+1010  rem     a$(a)=scelte
+1020  rem out:a=scelta<ctrl-j>
+1030  print : print : print "VUOI:": print : print 
+1040  for i = 1 to a: print "<"; left$(a$(i),1);"> "a$(i)".": print : next 
+1050  print : print "quale ?  "bs$;
+1060  poke ks,0:li = 1: gosub 1140
+1070 t = 0: for i = 1 to a
+1080  if in$ =  left$(a$(i),1)  then t = i
+1090  next : if   not t  then  poke 37, peek(37) -2: goto 1050
+1100 a = t: return 
+1110  rem <ctrl-j><ctrl-j>input in$<ctrl-j>
+1120  rem in: li=len max input
+1130  rem solo upper (anche in$)<ctrl-j>
+1140 in$ = " "
+1150  get b$:c =  asc(b$):ll =  len(in$) -1
+1160  if c <123  and c >96  then c = c -32: rem toupper
+1170  if (c = 8  or c = 127)  and ll  then in$ =  left$(in$,ll): print  chr$(8)" " chr$(8);: goto 1150: rem delete
+1180  if c = 13  and ll  then  print :in$ =  mid$ (in$,2): return : rem remove blank
+1190  if ll <li  then  if (c >32  and c <91  and c < >44)  then  print  chr$(c);:in$ = in$ + chr$(c): rem accetta !-z esclusa virgola
+1200  goto 1150
+1210  rem <ctrl-j><ctrl-j>load var file<ctrl-j>
+1220  rem in: f$=nome file<ctrl-j>
+1230  print : if f$ = fv$  then  print "Un attimo che mi preparo...": goto 1260
+1240  print "Un attimo che rileggo la situazione..."
+1250  print 
+1260  print ve$f$: rem error se non c'e'
+1270  print op$f$: print rd$f$
+1280  for i = 1 to lu: input tu%(i): poke m1,0: next 
+1290  for i = 1 to og: input lo%(i),so%(i),vo%(i): poke m1,0: next 
+1300  for i = 1 to nr: input pt%(i): poke m1,0: next 
+1310  for i = 1 to 20: input f(i): poke m1,0: next 
+1320  for i = 1 to 10: input t(i): poke m1,0: next 
+1330  input l,nt,pt,ti,tt,tu
+1340  poke m0,0: rem motor off
+1350  print cl$f$
+1360  return 
+1370  rem <ctrl-j><ctrl-j>save var file<ctrl-j>
+1380  rem in: f$=nome file<ctrl-j>
+1390  print : print "Un attimo che salvo la situazione...": print 
+1400  print op$f$
+1410  print d$"unlock"f$
+1420  print wr$f$
+1430  for i = 1 to lu: print tu%(i): poke m1,0: next 
+1440  for i = 1 to og: print lo%(i): print so%(i): print vo%(i): poke m1,0: next : rem co,mo non cambiano
+1450  for i = 1 to nr: print pt%(i): poke m1,0: next 
+1460  for i = 1 to 20: print f(i): poke m1,0: next 
+1470  for i = 1 to 10: print t(i): poke m1,0: next 
+1480  print l: print nt: print pt: print ti: print tt: print tu
+1490  poke m0,0: rem motor off
+1500  print cl$f$: print ve$f$
+1510  return 
+1520  rem <ctrl-j><ctrl-j>titoli<ctrl-j>
+1530  print hh$: rem clear
+1540  hcolor= 3
+1550  hplot 0,14 to 279,14 to 279,72 to 0,72 to 0,14
+1560  vtab 4: htab 7: print hi$" * AVVENTURA NEL CASTELLO * "hn$
+1570  vtab 6: htab 3: print "di: Enrico Colombini e Chiara Tovena"
+1580  vtab 8: htab 7: print "Copyright Dinosoft 1982-2001"
+1590  vtab 10
+1600  return 
+1610  rem <ctrl-j><ctrl-j>error<ctrl-j>
+1620  call u +3: rem recovery
+1630  call u: vtab 24: htab 1: rem relink hrcg 
+1640 e =  peek(222): rem error
+1650  print : print hi$;
+1660  if e = 255  then  print " Perche' mi hai ucciso? "hn$: goto 1780: rem stop
+1670  if dc  and e >0  and e <16  then  print " Problemi con il disco! "hn$be$be$: print : print "verifica che sia inserito il dischetto": print hi$" AVVENTURA NEL CASTELLO ";: goto 1730
+1680  if e = 8  or e = 5  then  print " Problemi con il disco! ";: goto 1730
+1690  if e = 4  then  print " Il disco e' protetto dalla scrittura! ";: goto 1730
+1700  if e = 6  then  print " "f$" non c'e' su questo disco! ";: goto 1730
+1710  if e = 9  then  print hn$: print d$"delete"f$: print hi$" Su questo disco non c'e' posto! ";: goto 1730
+1720  print " errore "e"-" peek(218) +256 * peek(219)" "hn$be$be$: poke 216,0: goto 1780: rem stop
+1730  print hn$be$be$
+1740  if fc = 1  or fc = 2  then  gosub 940: rem spazio se load o save
+1750  if fc = 0  or fc = 3  then a = dc: gosub 870: if (a)  then  gosub 940: rem restore disk se new game o morto 
+1760  goto 360: rem restart
+1770  rem <ctrl-j><ctrl-j>stop<ctrl-j>
+1780  poke ks,0: print 
+1790  in# 0: pr# 0: call sh: text : print : print "CIAO!": print d$"fp": rem exit
+30000  rem <ctrl-j><ctrl-j>chain game<ctrl-j>
+30010  vtab 10: rem no scrolling
+30020  in# 0: pr# 0: call sh: rem unlink hrcg
+30030  if ts  then  print ch$: call 520"game": rem  applesoft
+30040  rem !clear chain
+30050  print br$fg$: rem tasc

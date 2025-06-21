@@ -1,108 +1,108 @@
-100  REM <CTRL-J><CTRL-J><CTRL-J># INTRO #<CTRL-J><CTRL-J>
-110  REM INTRODUZIONE PER
-120  REM CASTELLO REV.2<CTRL-J>
-130  REM (C) DINOSOFT 1984-2001
-140  REM BY ENRICO COLOMBINI<CTRL-J><CTRL-J>
-145  REM LIBERA DISTRIBUZIONE
-150  REM PURCHE' NON ALTERATA<CTRL-J><CTRL-J>
-160  REM !DEFCOMMON CK,KB,KS,M0,M1
-170  REM !DEFCOMMON D$,SH,BR$,OP$,RD$,WR$,CL$,VE$,CH$
-180  REM !DEFCOMMON BS$,CR$,HI$,HN$,HH$
-190  REM !DEFCOMMON FV$,FL$,FM$,FF$,FG$
-200  REM !DEFCOMMON LU,NR,DU,RP,NM,U
-210  REM !DEFCOMMON AZ,OG,LA%,PA%,SA%,TA%,RA%,CO%,MO%
-220  REM !DEFCOMMON BE$,NN$,FC,TS
-230  REM !DEFCOMMON F(20),T(10),TU%(70),LO%(150),SO%(150),VO%(150),PT%(80)
-240  REM !DEFCOMMON L,NT,PT,TI,TT,TU,GI,MO
-250  REM <CTRL-J><CTRL-J>- ENTRY:<CTRL-J>
-260  PRINT  CHR$(4)"NOMONCIO"
-270  ONERR  GOTO 1090
-280  REM <CTRL-J><CTRL-J>COSTANTI APPLE<CTRL-J>
-290 CK = 49200: REM SPEAKER
-300 KB = 49152: REM KEYB
-310 KS = 49168: REM STROBE
-320 M0 = 49288 + PEEK(47081): REM MOTOR OFF
-330 M1 = M0 +1: REM MOTOR ON
-340  REM <CTRL-J><CTRL-J>COSTANTI DOS<CTRL-J>
-350 D$ =  CHR$(4)
-360 SH = 1002: REM SHOOKS
-370 BR$ = D$ +"BRUN"
-380 OP$ = D$ +"OPEN"
-390 RD$ = D$ +"READ"
-400 WR$ = D$ +"WRITE"
-410 CL$ = D$ +"CLOSE"
-420 VE$ = D$ +"VERIFY"
-430 CH$ = D$ +"BLOADCHAIN,A520"
-440  REM <CTRL-J><CTRL-J>COSTANTI HRCG<CTRL-J>
-450 BS$ =  CHR$(8)
-460 CR$ =  CHR$(13)
-470 HI$ =  CHR$(9): REM INVERSE
-480 HN$ =  CHR$(14): REM NORMAL
-490 HH$ =  CHR$(16): REM HOME
-500  REM <CTRL-J><CTRL-J>NOMI FILES<CTRL-J>
-510 FV$ = "V": REM VARIABILI
-520 FL$ = "L": REM LUOGHI
-530 FM$ = "M": REM MESSAGGI
-540 FF$ = "F": REM FILER
-550 FG$ = "G": REM GIOCO
-560  REM <CTRL-J><CTRL-J>COSTANTI NUM CAST<CTRL-J>
-570 LU = 61: REM N. LUOGHI ***
-580 NR = 80: REM N. ROUTINE
-590 DU = 60: REM UN.RITARDO
-600 RP = 2: REM UN.RIT.STAMPA
-610 NM = 4: REM MAX.OGG.TRASP.
-620  REM 
-630 U = 6064: REM UTILITY
-640 M = 6400: REM $1900
-650 AZ =  PEEK(M)
-660 OG =  PEEK(M +1)
-670 LA% = M +1
-680 PA% = LA% +AZ
-690 SA% = PA% +AZ
-700 TA% = SA% +AZ
-710 RA% = TA% +AZ
-720 CO% = RA% +AZ
-730 MO% = CO% +OG
-740  REM <CTRL-J><CTRL-J>COSTANTI STR CAST<CTRL-J>
-750 BE$ =  CHR$(7): REM  BEEP
-760 NN$ =  CHR$(20) + CHR$(20): REM PER MESSAGGI
-770  REM <CTRL-J><CTRL-J>DIMENSION VARIABILI<CTRL-J>
-780  DIM F(20)
-790  DIM TU%(70)
-800  DIM LO%(150)
-810  DIM SO%(150),VO%(150)
-820  DIM PT%(80): REM NR
-830  REM <CTRL-J><CTRL-J>INIT<CTRL-J>
-840  HTAB 1: VTAB 1
-850 RR = 49281: REM  ROM/RAM
-860  POKE RR,0: POKE RR,0
-870 D0 = 53248: REM $D000
-880  PRINT D$"BLOAD R, A"D0
-890  POKE 230,32: REM HIRES PAGE
-900  POKE 228,0: REM HCOLOR
-910  CALL U: REM LINK HRCG
-920  REM <CTRL-J><CTRL-J>TITOLI<CTRL-J>
-930  HCOLOR= 1: REM GREEN
-940  HPLOT 0,171 TO 279,171
-950  HPLOT 0,187 TO 279,187
-960  POKE KS,0:A3 = 0
-970 A$ = "       * Avventura nel castello! *     Edizione freeware 2001 - libera distribuzione purche' non venga alterata "
-980 A1 =  LEN(A$):A$ = A$ +A$ +" "
-990 A2 = 1
-1000  VTAB 23: HTAB 1: PRINT  MID$ (A$,A2,40);
-1010  FOR I = 1 TO 150: NEXT 
-1020 A2 = A2 +1: IF A2 = A1  THEN A2 = 1
-1030 A3 = A3 +1
-1040  IF  PEEK(KB) <128  THEN 1000
-1050 A3 =  SQR(A3)/10:A3 =  RND( -A3): REM INIT RND
-1060  VTAB 1: PRINT NN$
-1070  GOTO 30010: REM CHAIN FILER
-1080  REM <CTRL-J><CTRL-J>ERROR<CTRL-J>
-1090  CALL 50688: REM BOOT 6
-30000  REM <CTRL-J><CTRL-J>CHAIN FILER<CTRL-J>
-30010  IN# 0: PR# 0: CALL SH: REM UNLINK HRCG
-30020 FC = 0: REM FILER COMMAND 
-30030 TS = 0: REM TASC
-30040 TS = 1: PRINT CH$: CALL 520"FILER": REM APPLESOFT -- TOGLIERE PER TASC --
-30050  REM !CLEAR CHAIN
-30060  PRINT BR$FF$: REM TASC
+100  rem <ctrl-j><ctrl-j><ctrl-j># intro #<ctrl-j><ctrl-j>
+110  rem introduzione per
+120  rem castello rev.2<ctrl-j>
+130  rem (c) dinosoft 1984-2001
+140  rem by enrico colombini<ctrl-j><ctrl-j>
+145  rem libera distribuzione
+150  rem purche' non alterata<ctrl-j><ctrl-j>
+160  rem !defcommon ck,kb,ks,m0,m1
+170  rem !defcommon d$,sh,br$,op$,rd$,wr$,cl$,ve$,ch$
+180  rem !defcommon bs$,cr$,hi$,hn$,hh$
+190  rem !defcommon fv$,fl$,fm$,ff$,fg$
+200  rem !defcommon lu,nr,du,rp,nm,u
+210  rem !defcommon az,og,la%,pa%,sa%,ta%,ra%,co%,mo%
+220  rem !defcommon be$,nn$,fc,ts
+230  rem !defcommon f(20),t(10),tu%(70),lo%(150),so%(150),vo%(150),pt%(80)
+240  rem !defcommon l,nt,pt,ti,tt,tu,gi,mo
+250  rem <ctrl-j><ctrl-j>- entry:<ctrl-j>
+260  print  chr$(4)"nomoncio"
+270  onerr  goto 1090
+280  rem <ctrl-j><ctrl-j>costanti apple<ctrl-j>
+290 ck = 49200: rem speaker
+300 kb = 49152: rem keyb
+310 ks = 49168: rem strobe
+320 m0 = 49288 + peek(47081): rem motor off
+330 m1 = m0 +1: rem motor on
+340  rem <ctrl-j><ctrl-j>costanti dos<ctrl-j>
+350 d$ =  chr$(4)
+360 sh = 1002: rem shooks
+370 br$ = d$ +"brun"
+380 op$ = d$ +"open"
+390 rd$ = d$ +"read"
+400 wr$ = d$ +"write"
+410 cl$ = d$ +"close"
+420 ve$ = d$ +"verify"
+430 ch$ = d$ +"bloadchain,a520"
+440  rem <ctrl-j><ctrl-j>costanti hrcg<ctrl-j>
+450 bs$ =  chr$(8)
+460 cr$ =  chr$(13)
+470 hi$ =  chr$(9): rem inverse
+480 hn$ =  chr$(14): rem normal
+490 hh$ =  chr$(16): rem home
+500  rem <ctrl-j><ctrl-j>nomi files<ctrl-j>
+510 fv$ = "v": rem variabili
+520 fl$ = "l": rem luoghi
+530 fm$ = "m": rem messaggi
+540 ff$ = "f": rem filer
+550 fg$ = "g": rem gioco
+560  rem <ctrl-j><ctrl-j>costanti num cast<ctrl-j>
+570 lu = 61: rem n. luoghi ***
+580 nr = 80: rem n. routine
+590 du = 60: rem un.ritardo
+600 rp = 2: rem un.rit.stampa
+610 nm = 4: rem max.ogg.trasp.
+620  rem 
+630 u = 6064: rem utility
+640 m = 6400: rem $1900
+650 az =  peek(m)
+660 og =  peek(m +1)
+670 la% = m +1
+680 pa% = la% +az
+690 sa% = pa% +az
+700 ta% = sa% +az
+710 ra% = ta% +az
+720 co% = ra% +az
+730 mo% = co% +og
+740  rem <ctrl-j><ctrl-j>costanti str cast<ctrl-j>
+750 be$ =  chr$(7): rem  beep
+760 nn$ =  chr$(20) + chr$(20): rem per messaggi
+770  rem <ctrl-j><ctrl-j>dimension variabili<ctrl-j>
+780  dim f(20)
+790  dim tu%(70)
+800  dim lo%(150)
+810  dim so%(150),vo%(150)
+820  dim pt%(80): rem nr
+830  rem <ctrl-j><ctrl-j>init<ctrl-j>
+840  htab 1: vtab 1
+850 rr = 49281: rem  rom/ram
+860  poke rr,0: poke rr,0
+870 d0 = 53248: rem $d000
+880  print d$"bload r, a"d0
+890  poke 230,32: rem hires page
+900  poke 228,0: rem hcolor
+910  call u: rem link hrcg
+920  rem <ctrl-j><ctrl-j>titoli<ctrl-j>
+930  hcolor= 1: rem green
+940  hplot 0,171 to 279,171
+950  hplot 0,187 to 279,187
+960  poke ks,0:a3 = 0
+970 a$ = "       * Avventura nel castello! *     Edizione freeware 2001 - libera distribuzione purche' non venga alterata "
+980 a1 =  len(a$):a$ = a$ +a$ +" "
+990 a2 = 1
+1000  vtab 23: htab 1: print  mid$ (a$,a2,40);
+1010  for i = 1 to 150: next 
+1020 a2 = a2 +1: if a2 = a1  then a2 = 1
+1030 a3 = a3 +1
+1040  if  peek(kb) <128  then 1000
+1050 a3 =  sqr(a3)/10:a3 =  rnd( -a3): rem init rnd
+1060  vtab 1: print nn$
+1070  goto 30010: rem chain filer
+1080  rem <ctrl-j><ctrl-j>error<ctrl-j>
+1090  call 50688: rem boot 6
+30000  rem <ctrl-j><ctrl-j>chain filer<ctrl-j>
+30010  in# 0: pr# 0: call sh: rem unlink hrcg
+30020 fc = 0: rem filer command 
+30030 ts = 0: rem tasc
+30040 ts = 1: print ch$: call 520"filer": rem applesoft -- togliere per tasc --
+30050  rem !clear chain
+30060  print br$ff$: rem tasc
