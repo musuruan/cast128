@@ -25,7 +25,7 @@
 420 ve$ = d$ +"verify"
 430 :
 440 rem costanti - TODO: Spostare nel listato per migliorare le performance
-450 bs$ = "{del}"
+450 bs$ = "{left}"
 460 cr$ = chr$(13)
 470 hi$ = "{rvon}": rem inverse
 480 hn$ = "{rvof}": rem normal
