@@ -6,8 +6,8 @@
 145 rem libera distribuzione
 150 rem purche' non alterata
 250 rem - entry:
-260 print  chr$(4)"nomoncio"
-270 onerr  goto 1090
+260 print chr$(4)"nomoncio"
+270 onerr goto 1090
 280 rem costanti apple
 290 ck = 49200: rem speaker
 300 kb = 49152: rem keyb
@@ -15,7 +15,7 @@
 320 m0 = 49288 + peek(47081): rem motor off
 330 m1 = m0 +1: rem motor on
 340 rem costanti dos
-350 d$ =  chr$(4)
+350 d$ = chr$(4)
 360 sh = 1002: rem shooks
 370 br$ = d$ +"brun"
 380 op$ = d$ +"open"
@@ -25,11 +25,11 @@
 420 ve$ = d$ +"verify"
 430 ch$ = d$ +"bloadchain,a520"
 440 rem costanti hrcg
-450 bs$ =  chr$(8)
-460 cr$ =  chr$(13)
-470 hi$ =  chr$(9): rem inverse
-480 hn$ =  chr$(14): rem normal
-490 hh$ =  chr$(16): rem home
+450 bs$ = chr$(8)
+460 cr$ = chr$(13)
+470 hi$ = chr$(9): rem inverse
+480 hn$ = chr$(14): rem normal
+490 hh$ = chr$(16): rem home
 500 rem nomi files
 510 fv$ = "v": rem variabili
 520 fl$ = "l": rem luoghi
@@ -45,8 +45,8 @@
 620 rem 
 630 u = 6064: rem utility
 640 m = 6400: rem $1900
-650 az =  peek(m)
-660 og =  peek(m +1)
+650 az = peek(m)
+660 og = peek(m +1)
 670 la% = m +1
 680 pa% = la% +az
 690 sa% = pa% +az
@@ -55,8 +55,8 @@
 720 co% = ra% +az
 730 mo% = co% +og
 740 rem costanti str cast
-750 be$ =  chr$(7): rem  beep
-760 nn$ =  chr$(20) + chr$(20): rem per messaggi
+750 be$ = chr$(7): rem beep
+760 nn$ = chr$(20) + chr$(20): rem per messaggi
 770 rem dimension variabili
 780 dim f(20)
 790 dim tu%(70)
@@ -65,7 +65,7 @@
 820 dim pt%(80): rem nr
 830 rem init
 840 htab 1: vtab 1
-850 rr = 49281: rem  rom/ram
+850 rr = 49281: rem rom/ram
 860 poke rr,0: poke rr,0
 870 d0 = 53248: rem $d000
 880 print d$"bload r, a"d0
@@ -78,14 +78,14 @@
 950 hplot 0,187 to 279,187
 960 poke ks,0:a3 = 0
 970 a$ = "       * Avventura nel castello! *     Edizione freeware 2001 - libera distribuzione purche' non venga alterata "
-980 a1 =  len(a$):a$ = a$ +a$ +" "
+980 a1 = len(a$):a$ = a$ +a$ +" "
 990 a2 = 1
-1000 vtab 23: htab 1: print  mid$ (a$,a2,40);
+1000 vtab 23: htab 1: print mid$ (a$,a2,40);
 1010 for i = 1 to 150: next 
-1020 a2 = a2 +1: if a2 = a1  then a2 = 1
+1020 a2 = a2 +1: if a2 = a1 then a2 = 1
 1030 a3 = a3 +1
-1040 if  peek(kb) <128  then 1000
-1050 a3 =  sqr(a3)/10:a3 =  rnd( -a3): rem init rnd
+1040 if peek(kb) <128 then 1000
+1050 a3 = sqr(a3)/10:a3 = rnd( -a3): rem init rnd
 1060 vtab 1: print nn$
 1070 goto 30010: rem chain filer
 1080 rem error
