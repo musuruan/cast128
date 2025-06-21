@@ -6,8 +6,8 @@
 145 rem libera distribuzione
 150 rem purche' non alterata
 250 rem - entry:
-260 print chr$(4)"nomoncio"
-270 onerr goto 1090
+260 :
+270 trap 1090
 280 rem costanti apple
 290 ck = 49200: rem speaker
 300 kb = 49152: rem keyb
@@ -64,28 +64,26 @@
 810 dim so%(150),vo%(150)
 820 dim pt%(80): rem nr
 830 rem init
-840 htab 1: vtab 1
-850 rr = 49281: rem rom/ram
-860 poke rr,0: poke rr,0
-870 d0 = 53248: rem $d000
-880 print d$"bload r, a"d0
-890 poke 230,32: rem hires page
-900 poke 228,0: rem hcolor
-910 call u: rem link hrcg
+840 graphic 4,0,21
+870 :
+880 :
+890 :
+900 :
+910 :
 920 rem titoli
-930 hcolor= 1: rem green
-940 hplot 0,171 to 279,171
-950 hplot 0,187 to 279,187
-960 poke ks,0:a3 = 0
+930 printchr$(14)chr$(147):color0,1:color 4,1:color5,6:
+940 sys 65520,,22,1:print"{38 SHIFT-*}";
+950 sys 65520,,24,1:print"{38 SHIFT-*}";
+960 color 5,2
 970 a$ = "       * Avventura nel castello! *     Edizione freeware 2001 - libera distribuzione purche' non venga alterata "
 980 a1 = len(a$):a$ = a$ +a$ +" "
 990 a2 = 1
-1000 vtab 23: htab 1: print mid$ (a$,a2,40);
-1010 for i = 1 to 150: next 
+1000 do:sys 65520,,23,1: print mid$(a$,a2,38);
+1010 for i = 1 to 55: next 
 1020 a2 = a2 +1: if a2 = a1 then a2 = 1
-1030 a3 = a3 +1
-1040 if peek(kb) <128 then 1000
-1050 a3 = sqr(a3)/10:a3 = rnd( -a3): rem init rnd
+1030 :
+1040 get k$: loop until k$<>""
+1050 graphic 0:scnclr
 1060 :
 1070 goto 30010: rem chain filer
 1080 rem error
