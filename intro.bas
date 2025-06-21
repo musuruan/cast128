@@ -24,12 +24,12 @@
 410 cl$ = d$ +"close"
 420 ve$ = d$ +"verify"
 430 :
-440 rem costanti hrcg
-450 bs$ = chr$(8)
+440 rem costanti - TODO: Spostare nel listato per migliorare le performance
+450 bs$ = "{del}"
 460 cr$ = chr$(13)
-470 hi$ = chr$(9): rem inverse
-480 hn$ = chr$(14): rem normal
-490 hh$ = chr$(16): rem home
+470 hi$ = "{rvon}": rem inverse
+480 hn$ = "{rvof}": rem normal
+490 hh$ = "{clr}": rem home
 500 rem nomi files
 510 fv$ = "v": rem variabili
 520 fl$ = "l": rem luoghi
