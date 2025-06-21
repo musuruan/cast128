@@ -56,7 +56,7 @@
 730 mo% = co% +og
 740 rem costanti str cast
 750 be$ = chr$(7): rem beep
-760 nn$ = chr$(20) + chr$(20): rem per messaggi
+760 :
 770 rem dimension variabili
 780 dim f(20)
 790 dim tu%(70)
@@ -86,7 +86,7 @@
 1030 a3 = a3 +1
 1040 if peek(kb) <128 then 1000
 1050 a3 = sqr(a3)/10:a3 = rnd( -a3): rem init rnd
-1060 vtab 1: print nn$
+1060 :
 1070 goto 30010: rem chain filer
 1080 rem error
 1090 end

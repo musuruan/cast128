@@ -41,16 +41,16 @@
 580 rem analisi comandi:
 590 a1 = asc(a$)
 600 if a1 >29 then a1 = 156 -a1: goto 700
-610 if a1 = 14 then print nn$hn$;: goto 720: rem normal
-620 if a1 = 9 then print nn$hi$;: goto 720: rem inverse
-630 if a1 = 6 then print nn$hi$;: goto 720: rem flash=inverse
+610 if a1 = 14 then print hn$;: goto 720: rem normal
+620 if a1 = 9 then print hi$;: goto 720: rem inverse
+630 if a1 = 6 then print hi$;: goto 720: rem flash=inverse
 640 if a1 = 15 then mo = 1: goto 720
 650 if a1 = 16 then print : print : htab 32: print ">> ";: poke m0,0: poke ks,0: gosub 370: print : print : poke m1,0: goto 720
 660 if a1 = 25 then input dy: poke m0,0: gosub 2950:c = c + len( str$(dy)) +1: goto 720: rem delay
 670 if a1 = 12 then input l:c = c + len( str$(l)) +1: goto 720
 680 if a1 = 19 then input vp:c = c + len( str$(vp)) +1:vp = ((256 -vp) *rp)/4: goto 720
 690 rem stampa su video:
-700 print nn$; chr$(a1);
+700 print chr$(a1);
 710 for i = 1 to vp: next 
 720 next : rem c
 730 rem chiude lettura mantenendo cursore:
@@ -58,7 +58,7 @@
 750 print : print d$: rem finisce read
 760 if pv < >23 then pv = pv +1: rem l'ultima riga scrolla
 770 htab (ph +1): vtab (pv): rem si riporta in fondo alla linea
-780 speed= 255: print nn$hn$;
+780 speed= 255: print hn$;
 790 poke m0,0: rem motor off
 800 if p2 >pl then poke 767,3: call u +15: rem seek t3
 810 ct = 0: return 
@@ -255,7 +255,7 @@
 2720 print rd$;fl$",r"n1
 2730 for c = n1 to n2 -1: get a$:a1 = asc(a$): if a1 < >13 then a1 = 158 -a1
 2740 poke m1,0: rem motor on
-2750 print nn$; chr$(a1);: next 
+2750 print chr$(a1);: next
 2760 p2 = 0: rem (p2 = p2 + 1) protezione disattivata 4/2001
 2770 goto 740: rem chiude e torna
 2780 rem somma punti
