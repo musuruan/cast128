@@ -1,0 +1,5 @@
+bootsect
+*.o
+*.prg
+*.d64
+
