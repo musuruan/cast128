@@ -85,7 +85,7 @@
 1020 rem out:a=scelta
 1030 print : print : print "VUOI:": print : print 
 1040 for i = 1 to a: print "<"; left$(a$(i),1);"> "a$(i)".": print : next 
-1050 print : print "quale ?  "bs$;
+1050 print : print "QUALE ?  "bs$;
 1060 poke ks,0:li = 1: gosub 1140
 1070 t = 0: for i = 1 to a
 1080 if in$ =  left$(a$(i),1)  then t = i
