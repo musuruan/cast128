@@ -17,7 +17,7 @@
 340 rem costanti dos
 350 d$ = chr$(4)
 360 :
-370 br$ = d$ +"brun"
+370 :
 380 op$ = d$ +"open"
 390 rd$ = d$ +"read"
 400 wr$ = d$ +"write"
