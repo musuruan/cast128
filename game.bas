@@ -808,5 +808,5 @@
 30000 rem chain filer
 30010 rem in: fc=comando filer
 30020 print cl$: rem l,m
-30030 in# 0: pr# 0: call sh: rem unlink hrcg
-30040 print ch$: call 520"filer"
+30030 :
+30040 dload"filer"

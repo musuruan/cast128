@@ -162,5 +162,5 @@
 1790 in# 0: pr# 0: call sh: text : print : print "CIAO!": print d$"fp": rem exit
 30000 rem chain game
 30010 vtab 10: rem no scrolling
-30020 in# 0: pr# 0: call sh: rem unlink hrcg
-30030 print ch$: call 520"game"
+30020 :
+30030 dload"game"

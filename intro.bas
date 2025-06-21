@@ -23,7 +23,7 @@
 400 wr$ = d$ +"write"
 410 cl$ = d$ +"close"
 420 ve$ = d$ +"verify"
-430 ch$ = d$ +"bloadchain,a520"
+430 :
 440 rem costanti hrcg
 450 bs$ = chr$(8)
 460 cr$ = chr$(13)
@@ -91,6 +91,6 @@
 1080 rem error
 1090 call 50688: rem boot 6
 30000 rem chain filer
-30010 in# 0: pr# 0: call sh: rem unlink hrcg
+30010 :
 30020 fc = 0: rem filer command 
-30040 print ch$: call 520"filer"
+30040 dload"filer"
