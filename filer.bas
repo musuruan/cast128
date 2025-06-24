@@ -67,7 +67,7 @@
 840 return 
 850 print 
 860 rem restore disk
-870 if dc then 920: rem cast disk
+870 if dc >= 1 then 920: rem cast disk
 880 print : print 
 890 print hi$" Rimetti AVVENTURA NEL CASTELLO "hn$
 900 gosub 940: rem spazio
