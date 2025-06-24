@@ -95,11 +95,11 @@
 1120 rem in: li=len max input
 1130 rem solo upper (anche in$)
 1140 in$ = " "
-1150 get b$:c = asc(b$):ll = len(in$) -1
-1160 if c <123 and c >96 then c = c -32: rem toupper
-1170 if (c = 8 or c = 127) and ll then in$ = left$(in$,ll): print chr$(8)" " chr$(8);: goto 1150: rem delete
-1180 if c = 13 and ll then print :in$ = mid$ (in$,2): return : rem remove blank
-1190 if ll <li then if (c >32 and c <91 and c < >44) then print chr$(c);:in$ = in$ + chr$(c): rem accetta !-z esclusa virgola
+1150 getkey b$:c = asc(b$):ll = len(in$) -1
+1160 if c <91 and c >64 then c = c +128: rem toupper
+1170 if c = 20 and ll >= 1 then in$ = left$(in$,ll): print "{left} {left}";: goto 1150: rem delete
+1180 if c = 13 and ll >= 1 then print :in$ = mid$(in$,2): return : rem remove blank
+1190 if ll <li and ((c >192 and c <219) or (c > 32 and c < 65 and c <> 44)) then print chr$(c);:in$ = in$ + chr$(c): rem accetta !-z esclusa virgola
 1200 goto 1150
 1210 rem load var file
 1220 rem in: f$=nome file
