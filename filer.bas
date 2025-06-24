@@ -133,13 +133,17 @@
 1500 print cl$f$: print ve$f$
 1510 return 
 1520 rem titoli
-1530 print hh$: rem clear
-1540 hcolor= 3
-1550 hplot 0,14 to 279,14 to 279,72 to 0,72 to 0,14
-1560 vtab 4: htab 7: print hi$" * AVVENTURA NEL CASTELLO * "hn$
-1570 vtab 6: htab 3: print "di: Enrico Colombini e Chiara Tovena"
-1580 vtab 8: htab 7: print "Copyright Dinosoft 1982-2001"
-1590 vtab 10
+1530 scnclr: rem clear
+1540 color0,1:color 4,1:color 5,2
+1550 print"{swlc}{down}{CBM-A}{38 SHIFT-*}{CBM-S}";
+1555 print"{SHIFT--}                                      {SHIFT--}";
+1560 print"{SHIFT--}     {rvon} * AVVENTURA NEL CASTELLO * {rvof}     {SHIFT--}";
+1565 print"{SHIFT--}                                      {SHIFT--}";
+1570 print"{SHIFT--} di: Enrico Colombini e Chiara Tovena {SHIFT--}";
+1575 print"{SHIFT--}                                      {SHIFT--}";
+1580 print"{SHIFT--}     Copyright Dinosoft 1982-2001     {SHIFT--}";
+1585 print"{SHIFT--}                                      {SHIFT--}";
+1590 print"{CBM-Z}{38 SHIFT-*}{CBM-X}";
 1600 return 
 1610 rem error
 1620 call u +3: rem recovery
