@@ -9,14 +9,14 @@
 260 rem fc=1: "load" command
 270 rem fc=2: "save" command
 280 rem fc=3: morto
-290 onerr goto 1620
-300 call u: rem link hrcg
-310 poke 1010,188: poke 1011,23: call 64367: rem pwr-up byte
-320 poke 1008,188: poke 1009,23: rem break
+290 rem trap 1620
+300 :
+310 rem poke 1010,188: poke 1011,23: call 64367: rem pwr-up byte
+320 rem poke 1008,188: poke 1009,23: rem break
 330 dc = 1: rem disco cast
 340 if fc = 0 then gosub 1530: rem titoli
 350 rem reentry (on error)
-360 print : print cl$: rem chiude tutto
+360 print
 370 on fc +1 gosub 400,470,530,590: rem esegue routine
 380 goto 30010: rem chain game
 390 rem new game
@@ -52,7 +52,7 @@
 690 rem in: a$=messaggio nome
 700 rem out:f$=nome file o ""
 710 print : print 
-720 if not dc then 760: rem user disk
+720 if dc=0 then 760: rem user disk
 730 print hi$" Togli AVVENTURA NEL CASTELLO "hn$
 740 print : print hi$" Inserisci un dischetto DOS 3.3 "hn$
 750 dc = 0: rem disco user
@@ -60,7 +60,7 @@
 770 print "(CAT mostra il catalogo, X annulla)"
 780 print : print "Situazione: ";
 790 li = 25: gosub 1140: rem input
-800 if in$ = "CAT" then print d$"catalog": goto 760
+800 if in$ = "CAT" then catalog: goto 760
 810 if in$ = "X" then f$ = "": goto 840
 820 f$ = in$: if left$(f$,5) = "cast." and len(f$) >5 then f$ = mid$ (f$,6)
 830 f$ = "cast." +f$
@@ -76,8 +76,8 @@
 930 rem spazio
 940 print 
 950 print "Premi <spazio> quando sei pronto: ";
-960 poke ks,0
-970 get a$: if a$ < >" " then 970
+960 :
+970 getkey a$: if a$ <>" " then 970
 980 print : return 
 990 rem scelta
 1000 rem in: a=n.scelte
@@ -86,10 +86,10 @@
 1030 print : print : print "VUOI:": print : print 
 1040 for i = 1 to a: print "<"; left$(a$(i),1);"> "a$(i)".": print : next 
 1050 print : print "QUALE ?  "bs$;
-1060 poke ks,0:li = 1: gosub 1140
+1060 li = 1: gosub 1140
 1070 t = 0: for i = 1 to a
 1080 if in$ = left$(a$(i),1) then t = i
-1090 next : if not t then poke 37, peek(37) -2: goto 1050
+1090 next : if t=0 then print"{up}{up}";: goto 1050
 1100 a = t: return 
 1110 rem input in$
 1120 rem in: li=len max input
@@ -146,8 +146,8 @@
 1590 print"{CBM-Z}{38 SHIFT-*}{CBM-X}";
 1600 return 
 1610 rem error
-1620 call u +3: rem recovery
-1630 call u: vtab 24: htab 1: rem relink hrcg 
+1620 rem call u +3: rem recovery
+1630 :
 1640 e = peek(222): rem error
 1650 print : print hi$;
 1660 if e = 255 then print " Perche' mi hai ucciso? "hn$: goto 1780: rem stop
@@ -162,9 +162,9 @@
 1750 if fc = 0 or fc = 3 then a = dc: gosub 870: if (a) then gosub 940: rem restore disk se new game o morto 
 1760 goto 360: rem restart
 1770 rem stop
-1780 poke ks,0: print 
+1780 print 
 1790 print : print "CIAO!": end: rem exit
 30000 rem chain game
-30010 vtab 10: rem no scrolling
+30010 :
 30020 :
 30030 dload"game"
