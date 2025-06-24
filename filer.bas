@@ -59,7 +59,7 @@
 760 print : print a$: rem nome?
 770 print "(CAT mostra il catalogo, X annulla)"
 780 print : print "Situazione: ";
-790 li = 25: gosub 1140: rem input
+790 li = 11: gosub 1140: rem input
 800 if in$ = "CAT" then catalog: goto 760
 810 if in$ = "X" then f$ = "": goto 840
 820 f$ = in$: if left$(f$,5) = "cast." and len(f$) >5 then f$ = mid$ (f$,6)
