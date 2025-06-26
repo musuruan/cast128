@@ -150,7 +150,7 @@
 1640 e = peek(222): rem error
 1650 print : print hi$;
 1660 if e = 255 then print " Perche' mi hai ucciso? "hn$: goto 1780: rem stop
-1670 if dc and e >0 and e <16 then print " Problemi con il disco! "hn$be$be$: print : print "verifica che sia inserito il dischetto": print hi$" AVVENTURA NEL CASTELLO ";: goto 1730
+1670 if dc=1 and e >0 and e <16 then print " Problemi con il disco! "hn$be$be$: print : print "verifica che sia inserito il dischetto": print hi$" AVVENTURA NEL CASTELLO ";: goto 1730
 1680 if e = 8 or e = 5 then print " Problemi con il disco! ";: goto 1730
 1690 if e = 4 then print " Il disco e' protetto dalla scrittura! ";: goto 1730
 1700 if e = 6 then print " "f$" non c'e' su questo disco! ";: goto 1730
@@ -158,7 +158,7 @@
 1720 print " Errore "e"-" peek(218) +256 * peek(219)" "hn$be$be$: trap: goto 1780: rem stop
 1730 print hn$be$be$
 1740 if fc = 1 or fc = 2 then gosub 940: rem spazio se load o save
-1750 if fc = 0 or fc = 3 then a = dc: gosub 870: if (a) then gosub 940: rem restore disk se new game o morto 
+1750 if fc = 0 or fc = 3 then a = dc: gosub 870: if a=1 then gosub 940: rem restore disk se new game o morto
 1760 goto 360: rem restart
 1770 rem stop
 1780 print 
