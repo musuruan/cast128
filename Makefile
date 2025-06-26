@@ -32,8 +32,8 @@ cast128.d64: bootsect cast.prg intro.prg filer.prg game.prg v.seq
 	c1541 -attach cast128.d64 -write v.seq v,s
 
 clean:
-	rm bootsect
-	rm *.o
-	rm *.prg *.seq
-	rm cast128.d64
+	rm -f bootsect
+	rm -f *.o
+	rm -f *.prg *.seq
+	rm -f cast128.d64
 
