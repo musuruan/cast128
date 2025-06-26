@@ -42,7 +42,7 @@
 590 du = 60: rem un.ritardo
 600 rp = 2: rem un.rit.stampa
 610 nm = 4: rem max.ogg.trasp.
-620 rem 
+620 rem
 630 u = 6064: rem utility
 640 m = 6400: rem $1900
 650 az = peek(m)
@@ -79,7 +79,7 @@
 980 a1 = len(a$):a$ = a$ +a$ +" "
 990 a2 = 1
 1000 do:sys 65520,,23,1: print mid$(a$,a2,38);
-1010 for i = 1 to 55: next 
+1010 for i = 1 to 55: next
 1020 a2 = a2 +1: if a2 = a1 then a2 = 1
 1030 :
 1040 get k$: loop until k$<>""
@@ -90,5 +90,5 @@
 1090 end
 30000 rem chain filer
 30010 :
-30020 fc = 0: rem filer command 
+30020 fc = 0: rem filer command
 30040 dload"filer"

@@ -25,19 +25,19 @@
 420 a = 2: gosub 1030
 430 if a = 1 then gosub 870:f$ = fv$: gosub 1230: goto 450: rem start new game
 440 gosub 470: if f$ = "" then 400: rem load or restart
-450 return 
+450 return
 460 rem load command
 470 a$ = "Quale situazione vuoi riprendere ?": gosub 710: rem input f$
 480 if f$ = "" then 500: rem annullato
 490 gosub 1230: rem load game
 500 gosub 870: rem restore disk
-510 return 
+510 return
 520 rem save command
 530 a$ = "Come vuoi chiamare questa situazione ?": gosub 710: rem input f
 540 if f$ = "" then 560: rem annullato
 550 gosub 1390: rem save game
 560 gosub 870: rem restore disk
-570 return 
+570 return
 580 rem morto
 590 gosub 940: rem spazio
 600 a$(1) = "Smettere di giocare"
@@ -47,11 +47,11 @@
 640 if a = 1 then 1780: rem stop
 650 if a = 2 then gosub 870:f$ = fv$: gosub 1230: goto 670: rem start new game
 660 if a = 3 then gosub 470: if f$ = "" then 590: rem load or restart
-670 return 
+670 return
 680 rem input f$
 690 rem in: a$=messaggio nome
 700 rem out:f$=nome file o ""
-710 print : print 
+710 print : print
 720 if dc=0 then 760: rem user disk
 730 print hi$" Togli AVVENTURA NEL CASTELLO "hn$
 740 print : print hi$" Inserisci un dischetto DOS 3.3 "hn$
@@ -64,33 +64,33 @@
 810 if in$ = "X" then f$ = "": goto 840
 820 f$ = in$: if left$(f$,5) = "cast." and len(f$) >5 then f$ = mid$ (f$,6)
 830 f$ = "cast." +f$
-840 return 
-850 print 
+840 return
+850 print
 860 rem restore disk
 870 if dc >= 1 then 920: rem cast disk
-880 print : print 
+880 print : print
 890 print hi$" Rimetti AVVENTURA NEL CASTELLO "hn$
 900 gosub 940: rem spazio
 910 dc = 1: rem disco cast
-920 return 
+920 return
 930 rem spazio
-940 print 
+940 print
 950 print "Premi <spazio> quando sei pronto: ";
 960 :
 970 getkey a$: if a$ <>" " then 970
-980 print : return 
+980 print : return
 990 rem scelta
 1000 rem in: a=n.scelte
 1010 rem     a$(a)=scelte
 1020 rem out:a=scelta
-1030 print : print : print "VUOI:": print : print 
-1040 for i = 1 to a: print "<"; left$(a$(i),1);"> "a$(i)".": print : next 
+1030 print : print : print "VUOI:": print : print
+1040 for i = 1 to a: print "<"; left$(a$(i),1);"> "a$(i)".": print : next
 1050 print : print "QUALE ?  "bs$;
 1060 li = 1: gosub 1140
 1070 t = 0: for i = 1 to a
 1080 if in$ = left$(a$(i),1) then t = i
 1090 next : if t=0 then print"{up}{up}";: goto 1050
-1100 a = t: return 
+1100 a = t: return
 1110 rem input in$
 1120 rem in: li=len max input
 1130 rem solo upper (anche in$)
@@ -143,7 +143,7 @@
 1580 print"{SHIFT--}     Copyright Dinosoft 1982-2001     {SHIFT--}";
 1585 print"{SHIFT--}                                      {SHIFT--}";
 1590 print"{CBM-Z}{38 SHIFT-*}{CBM-X}";
-1600 return 
+1600 return
 1610 rem error
 1620 rem call u +3: rem recovery
 1630 :
@@ -161,7 +161,7 @@
 1750 if fc = 0 or fc = 3 then a = dc: gosub 870: if a=1 then gosub 940: rem restore disk se new game o morto
 1760 goto 360: rem restart
 1770 rem stop
-1780 print 
+1780 print
 1790 print : print "CIAO!": end: rem exit
 30000 rem chain game
 30010 :

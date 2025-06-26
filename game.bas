@@ -1,4 +1,4 @@
-100 rem 
+100 rem
 110 rem  #################
 120 rem  #               #
 130 rem  # avventura nel #
@@ -22,14 +22,14 @@
 390 if cc = 0 then print "_"bs$;
 400 if cc = 75 then print " "bs$;:ct = ct +1
 410 cc = cc +1:g = peek(kb) -128: if g <0 then 380
-420 print " "bs$;: poke ks,0: return 
+420 print " "bs$;: poke ks,0: return
 430 rem stampa messaggio
 440 rem in: m=n.messaggio
 450 rem non esegue cr finale
 460 speed= 255:vp = 10
 470 if p2 < = pl or ct <20 then 490: rem no test
 480 p3 = p3 +1: gosub 3240: call 576: poke m1,0:n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and not n2 then p2 = 0:p3 = p3 -1: rem p2 test
-490 ph = pos(ph):pv = peek(37): rem pos.cursore 
+490 ph = pos(ph):pv = peek(37): rem pos.cursore
 500 print : print rd$;fm$",r"30 +m *6
 510 if pv < >23 then pv = pv +1: rem l'ultima riga scrolla
 520 htab (ph +1): vtab (pv): rem si riporta in fondo alla linea
@@ -51,17 +51,17 @@
 680 if a1 = 19 then input vp:c = c + len( str$(vp)) +1:vp = ((256 -vp) *rp)/4: goto 720
 690 rem stampa su video:
 700 print chr$(a1);
-710 for i = 1 to vp: next 
+710 for i = 1 to vp: next
 720 next : rem c
 730 rem chiude lettura mantenendo cursore:
-740 ph = pos(ph):pv = peek(37): rem pos.cursore 
+740 ph = pos(ph):pv = peek(37): rem pos.cursore
 750 print : print d$: rem finisce read
 760 if pv < >23 then pv = pv +1: rem l'ultima riga scrolla
 770 htab (ph +1): vtab (pv): rem si riporta in fondo alla linea
 780 speed= 255: print hn$;
 790 poke m0,0: rem motor off
 800 if p2 >pl then poke 767,3: call u +15: rem seek t3
-810 ct = 0: return 
+810 ct = 0: return
 820 rem scansione parola
 830 rem in: in$=stringa
 840 rem out:a$=parola
@@ -78,7 +78,7 @@
 950 a$ = a$ +b$
 960 c = c +1: if c < = b then 930
 970 in$ = "": rem fine di in$
-980 return 
+980 return
 990 rem cerca codici pp/sp
 1000 rem in: pp$, sp$ (parole)
 1010 rem     vp$ (vecchia pp$)
@@ -88,23 +88,23 @@
 1050 gosub 1190: rem diz 1
 1060 cp% = co: if tp < >1 then cp% = 0
 1070 if tp = 2 then if vp$ < >"" then sp$ = pp$:pp$ = vp$:vp$ = "": goto 1040
-1080 rem 
+1080 rem
 1090 if sp$ = "" then cs% = 1: goto 1140
 1100 a$ = sp$
 1110 gosub 1190: rem diz 1
 1120 cs% = co: if tp < >2 then cs% = 0
 1130 if tp = 1 then cs% = 255
-1140 vp$ = "": return 
+1140 vp$ = "": return
 1150 rem consulta diz 1
 1160 rem in:  a$=entry
 1170 rem out: tp=tipo (0=no)
 1180 rem      co=codice
 1190 if a$ = "" then a$ = " "
-1200 for c = 1 to len(a$): poke 575 +c,125 - asc( mid$ (a$,c,1)): next 
+1200 for c = 1 to len(a$): poke 575 +c,125 - asc( mid$ (a$,c,1)): next
 1210 me = 575 +c -1: poke me, peek(me) +128: rem ultimo char
 1220 call u +3: rem diz.1
 1230 tp = peek(766):co = peek(767)
-1240 return 
+1240 return
 1250 rem consulta diz 2
 1260 rem in:  tp=tipo
 1270 rem      co=codice
@@ -116,7 +116,7 @@
 1330 c = peek(me)
 1340 if c <128 then a$ = a$ + chr$(125 -c):me = me +1: goto 1330
 1350 if c < >255 then a$ = a$ + chr$(253 -c): rem 125-(c-128)
-1360 return 
+1360 return
 1370 rem input in$
 1380 rem in: li=len max input
 1390 rem out:ct=tempo input
@@ -141,69 +141,69 @@
 1580 sp$ = a$
 1590 gosub 1190: if tp = 3 then 1570
 1600 if p3 >2 then 1600: rem pirata
-1610 return 
+1610 return
 1620 rem da cod. sp a nome
 1630 rem in:  a=codice sp
 1640 rem out: a$=nome sp$
 1650 tp = 2:co = a
 1660 gosub 1300: rem diz 2
-1670 return 
+1670 return
 1680 rem cerca nome stato
 1690 rem in:  a=codice sp
 1700 rem      s=stato (0/1/2)
 1710 rem out: s$=nome stato
-1720 if s = 0 then s$ = "": return 
+1720 if s = 0 then s$ = "": return
 1730 co = a:tp = 5 +s: rem 6 o 7
 1740 gosub 1300: rem diz 2
 1750 s$ = a$: if s$ = " " then s$ = ""
-1760 return 
+1760 return
 1770 rem cerca stato ogg.
 1780 rem in: a=codice sp
 1790 rem     l=luogo
 1800 rem out:s=stato (a,l)
 1810 rem      oppure (a,0)
 1820 rem     mb=mobilita'
-1830 for i = 1 to og: if a < > peek(co% +i) then next : return 
-1840 if lo%(i) = l or lo%(i) = 0 then s = so%(i):mb = peek(mo% +i): return 
-1850 next : return 
+1830 for i = 1 to og: if a < > peek(co% +i) then next : return
+1840 if lo%(i) = l or lo%(i) = 0 then s = so%(i):mb = peek(mo% +i): return
+1850 next : return
 1860 rem cambia stato ogg.
 1870 rem in: a=codice sp
 1880 rem     s=stato voluto
 1890 rem     l=luogo
 1900 rem out:cambia stato (a,l)
 1910 rem     oppure stato (a,0)
-1920 for i = 1 to og: if a < > peek(co% +i) then next : return 
-1930 if lo%(i) = l or lo%(i) = 0 then so%(i) = s: return 
-1940 next : return 
+1920 for i = 1 to og: if a < > peek(co% +i) then next : return
+1930 if lo%(i) = l or lo%(i) = 0 then so%(i) = s: return
+1940 next : return
 1950 rem ogg. visibili
 1960 rem in:  l=luogo
 1970 for j = 1 to og
-1980 if lo%(j) < >l then next : return 
-1990 if vo%(j) = 0 then next : return 
+1980 if lo%(j) < >l then next : return
+1990 if vo%(j) = 0 then next : return
 2000 a = peek(co% +j): gosub 1650
 2010 og$ = "Vedo " +a$
 2020 s = so%(j): gosub 1720
 2030 if s$ < >"" then og$ = og$ +" " +s$
 2040 print og$"."
-2050 next : return 
+2050 next : return
 2060 rem ogg. posseduti
 2070 if nt = 0 then m = 154: goto 460: rem nulla
 2080 m = 155: gosub 460
 2090 for i = 1 to og: if lo%(i) = 0 then a = peek(co% +i): gosub 1650:og$ = "- " +a$:s = so%(i): gosub 1720: print og$" "s$
-2100 next : print : return 
+2100 next : print : return
 2110 rem appare oggetto
 2120 rem in:  a=codice sp
 2130 rem      l=luogo
-2140 for i = 1 to og: if lo%(i) = 255 then if a = peek(co% +i) then lo%(i) = l: return 
-2150 next : return 
+2140 for i = 1 to og: if lo%(i) = 255 then if a = peek(co% +i) then lo%(i) = l: return
+2150 next : return
 2160 rem scompare oggetto
 2170 rem (anche trasportato)
 2180 rem in:  a=codice sp
 2190 rem      l=luogo
 2200 for i = 1 to og: if a = peek(co% +i) then if lo%(i) = 0 or lo%(i) = l then 2220
-2210 next : return 
+2210 next : return
 2220 if lo%(i) = 0 then nt = nt -1
-2230 lo%(i) = 255: return 
+2230 lo%(i) = 255: return
 2240 rem ogg. presente ?
 2250 rem in:  a=codice sp
 2260 rem      l=luogo
@@ -217,35 +217,35 @@
 2340 rem se piu' oggetti uguali
 2350 rem devono essere fissi
 2360 e = 0:mb = 0:s = 0: rem se non lo trova
-2370 for j = 1 to og: if a < > peek(co% +j) then next : return 
+2370 for j = 1 to og: if a < > peek(co% +j) then next : return
 2380 mb = peek(mo% +j):e = 1: rem trovato uno
-2390 if lo%(j) = l then s = 1: return 
-2400 if lo%(j) = 0 then s = 2: return 
+2390 if lo%(j) = l then s = 1: return
+2400 if lo%(j) = 0 then s = 2: return
 2410 next : return : rem ne cerca un altro
 2420 rem prende oggetto
 2430 rem in:  a=codice sp
 2440 rem      l=luogo
-2450 for i = 1 to og: if a = peek(co% +i) then if l = lo%(i) then lo%(i) = 0:vo%(i) = 1:nt = nt +1: return 
-2460 next : return 
+2450 for i = 1 to og: if a = peek(co% +i) then if l = lo%(i) then lo%(i) = 0:vo%(i) = 1:nt = nt +1: return
+2460 next : return
 2470 rem lascia oggetto
 2480 rem in:  a=codice sp
 2490 rem      l=luogo
-2500 for i = 1 to og: if a = peek(co% +i) then lo%(i) = l:nt = nt -1: return 
-2510 next : return 
+2500 for i = 1 to og: if a = peek(co% +i) then lo%(i) = l:nt = nt -1: return
+2510 next : return
 2520 rem prende se puo'
 2530 rem in:  a=codice sp
 2540 rem      l=luogo
 2550 gosub 2360: if s = 0 then 2640: rem che?
-2560 if s = 2 then print : print "- Gia' fatto.": return 
+2560 if s = 2 then print : print "- Gia' fatto.": return
 2570 if mb = 0 then m = 157: goto 460: rem impossibile
-2580 if nt > = nm then m = 156: gosub 460: gosub 2070: return 
-2590 gosub 2450: print : print "Fatto.": return 
+2580 if nt > = nm then m = 156: gosub 460: gosub 2070: return
+2590 gosub 2450: print : print "Fatto.": return
 2600 rem lascia se puo'
 2610 gosub 2360: if s < >2 then m = 158: goto 460: rem non l'hai
-2620 gosub 2500: print : print "Fatto.": return 
+2620 gosub 2500: print : print "Fatto.": return
 2630 rem che oggetto ?
 2640 if cs% = 23 then if l = 22 then a = 142: gosub 1830: if s = 1 then m = 83: goto 460: rem diam.del nano
-2650 print : print "- Che "sp$" ?": return 
+2650 print : print "- Che "sp$" ?": return
 2660 rem descr. lunga luogo
 2670 rem in:  l=luogo
 2680 if p2 < = pl or ct <20 then 2700: rem no test
@@ -259,32 +259,32 @@
 2760 p2 = 0: rem (p2 = p2 + 1) protezione disattivata 4/2001
 2770 goto 740: rem chiude e torna
 2780 rem somma punti
-2790 pt = pt +pt%(re):pt%(re) = 0: return 
+2790 pt = pt +pt%(re):pt%(re) = 0: return
 2800 rem stampa punti
 2810 m = 187: gosub 460: print pt;:m = 188: goto 460
 2820 rem punti e titolo
 2830 gosub 2810:m = 102: gosub 460
-2840 print : print 
+2840 print : print
 2850 restore :m = 0
-2860 for m = 0 to 9: read c: if pt > = c then next 
+2860 for m = 0 to 9: read c: if pt > = c then next
 2870 m = m +190: gosub 460
-2880 print : print : print 
+2880 print : print : print
 2890 dy = 40: goto 2950
 2900 rem pt per titoli
 2910 data 35,59,150,300,450
 2920 data 650,899,949,999,1000
 2930 rem ritardo
 2940 rem in: dy = n.unita' rit.
-2950 for d1 = 1 to du *dy: next 
-2960 return 
+2950 for d1 = 1 to du *dy: next
+2960 return
 2970 rem si/no
 2980 rem in:  m=mess.domanda
 2990 rem out: s=1/0 (si/no)
-3000 print 
+3000 print
 3010 li = 2: gosub 460: rem mess
-3020 gosub 1420: rem <ctrl-k>input in$ 
-3030 if left$(in$,1) = "s" or left$(in$,1) = "y" then s = 1: return 
-3040 if left$(in$,1) = "n" then s = 0: return 
+3020 gosub 1420: rem <ctrl-k>input in$
+3030 if left$(in$,1) = "s" or left$(in$,1) = "y" then s = 1: return
+3040 if left$(in$,1) = "n" then s = 0: return
 3050 s = m:m = 132: gosub 460:m = s: goto 3010
 3060 rem morto
 3070 mo = 0:gi = 0
@@ -308,8 +308,8 @@
 3250 for i = 576 to 676 step 2
 3260 poke i, peek(i2):i2 = i2 -1
 3270 poke i +1, peek(i1):i1 = i1 +1
-3280 next 
-3290 return 
+3280 next
+3290 return
 5000 rem ### main prog ###
 5010 call u: rem link hrcg
 5020 print : print op$fl$: print op$fm$
@@ -333,7 +333,7 @@
 5200 tu%(l) = tu%(l) +1: rem turni luogo
 5210 print : print : print " Cosa devo fare ? ";
 5220 rem input e basta
-5230 gosub 1530: rem input 
+5230 gosub 1530: rem input
 5240 gosub 1040: rem codici
 5250 if cp% = 7 then pp$ = sp$:sp$ = "": goto 5240: rem "VAI"
 5260 if right$(pp$,2) = "re" then print : print "- Dammi del tu, per favore.": goto 5180
@@ -343,12 +343,12 @@
 5300 if cp% = 0 then print : print "   Eh ? ";: goto 5230: rem pp??
 5310 if cs% = 0 then print : print "   "sp$" ???": goto 5180: rem sp??
 5320 rem pirata?
-5330 if p3 >1 then for i = 1 to 2 step 0:m = 218: gosub 460: poke ks,0: gosub 370: next 
+5330 if p3 >1 then for i = 1 to 2 step 0:m = 218: gosub 460: poke ks,0: gosub 370: next
 5340 rem salta
 5350 if cp% = 31 and cs% < >3 then cs% = 1
 5360 rem varie
 5370 tu = tu +1: rem contamosse
-5380 rem 
+5380 rem
 5390 rem cerca in azioni
 5400 for i = 1 to az:a = peek(la% +i): if not a or a = l then if cp% = peek(pa% +i) then if cs% = peek(sa% +i) then 5420
 5410 next : goto 5470
@@ -363,7 +363,7 @@
 5500 rem dove
 5510 if cp% = 9 then 5110
 5520 rem guarda
-5530 if cp% = 102 then if cs% = 1 or cs% = 146 then print : goto 5150: rem des.lunga 
+5530 if cp% = 102 then if cs% = 1 or cs% = 146 then print : goto 5150: rem des.lunga
 5540 rem cosa
 5550 if cp% = 10 then gosub 2070: goto 5180
 5560 rem prendi
@@ -413,12 +413,12 @@
 10010 rem default intrans.
 10020 rem insulti:
 10030 if cp% < >11 then 10120
-10040 print : print : print hi$" ";: for i = 1 to len(pp$):a = asc( mid$ (pp$,i,1)): print chr$(a -32 *(a >95));: next 
+10040 print : print : print hi$" ";: for i = 1 to len(pp$):a = asc( mid$ (pp$,i,1)): print chr$(a -32 *(a >95));: next
 10050 print " A ME ?!?"be$be$be$hn$:dy = 50: gosub 2950:m = 80: gosub 460
 10060 for i = 1 to 500:a = peek(ck): htab (1 +38 * rnd(1)): vtab (1 +24 * rnd(1))
 10070 if rnd(1) <.5 then print hi$;
-10080 print chr$(32 +96 * rnd(1));: for j = 1 to 20: next 
-10090 print hn$;: next 
+10080 print chr$(32 +96 * rnd(1));: for j = 1 to 20: next
+10090 print hn$;: next
 10100 print hh$: print hi$" Tie'!"be$be$: print :fc = 3: goto 30010: rem chain filer
 10110 rem aiuto:
 10120 if cp% < >16 then 10170
@@ -450,8 +450,8 @@
 10380 if cs% < >18 then m = 134: goto 10140
 10390 if l < >11 then m = 115: goto 10140
 10400 m = 63: goto 10140
-10410 rem 
-10420 return 
+10410 rem
+10420 return
 11000 rem default transitivi
 11010 rem in: cp%,a=cs%
 11020 rem     s=stato
@@ -478,18 +478,18 @@
 11230 if s = 2 then m = 11: goto 10140
 11240 if mb = 1 then m = 14: goto 10140
 11250 m = 211: goto 10140
-11260 rem 
-11270 return 
+11260 rem
+11270 return
 15000 rem temporizzatori
 15010 rem t1:
 15020 if t(1) = 0 then 15090
 15030 t(1) = t(1) -1: if t(1) = 3 then m = 17: goto 460
 15040 if t(1) = 2 then m = 18: goto 460
 15050 if t(1) = 1 then m = 19: goto 460
-15060 if t(1) then return 
+15060 if t(1) then return
 15070 mo = 1:m = 16: goto 460
 15080 rem t2:
-15090 if t(2) then t(2) = t(2) -1: return 
+15090 if t(2) then t(2) = t(2) -1: return
 15100 rem t3:
 15110 if t(3) then m = 142: goto 460
 15120 rem t4:
@@ -497,37 +497,37 @@
 15140 t(4) = t(4) -1
 15150 if t(4) = 2 then m = 203: goto 460
 15160 if t(4) = 1 then m = 204: goto 460
-15170 if t(4) then return 
+15170 if t(4) then return
 15180 m = 205: goto 460
-15190 rem 
+15190 rem
 15200 t = 0:tt = 0: return
 20000 rem azioni
 20010 rem a=n.azione se >0
 20020 rem   n.messaggio se <0
 20030 rem cp%,cs% validi
 20040 if a <0 then m = -a: goto 460
-20050 rem 
+20050 rem
 20060 r = a:a = cs%: gosub 2360: rem determina s (0/1/2)
-20070 rem 
+20070 rem
 20080 re = r: rem rout.eseguita
 20090 if p3 >3 then call 50688: rem pirata
-20100 rem 
+20100 rem
 20110 on r goto 20280,20310,20340,20450,20480,20510,20540,20570,20650,20670,20690,20720,20750,20770,20810,20850,20880,20910,20940,20970
-20120 rem 
+20120 rem
 20130 r = r -20
-20140 rem 
+20140 rem
 20150 on r goto 21000,21040,21070,21090,21110,21150,21180,21220,21240,21280,21330,21360,21390,21410,21440,21500,21530,21560,21590,21630
-20160 rem 
+20160 rem
 20170 r = r -20
-20180 rem 
+20180 rem
 20190 on r goto 21660,21690,21730,21780,21870,21910,21950,21990,22030,22070,22130,22190,22230,22340,22360,22380,22400,22420,22440,22460
-20200 rem 
+20200 rem
 20210 r = r -20
-20220 rem 
+20220 rem
 20230 on r goto 22490,22520,22550,22580,22600,22660,22680,22700,22720,22740,22780,22800,22820,22850,22880,22910,22970,22990,23010,23030
 20240 r = r -20
-20250 rem 
-20260 return 
+20250 rem
+20260 return
 20270 rem 1:
 20280 if s = 0 then 2640
 20290 m = 161: goto 460
@@ -540,11 +540,11 @@
 20360 rem aaaa...splat:
 20370 speed= 180
 20380 print "aaaa": print tab( 13)"aaa": print tab( 16)"aa": print tab( 18)"a": print tab( 19)"a"
-20390 for i = 1 to 4: print tab( 20)"a": next : for i = 1 to 4: print tab( 20)":": next 
+20390 for i = 1 to 4: print tab( 20)"a": next : for i = 1 to 4: print tab( 20)":": next
 20400 speed= 255
 20410 print tab( 16);"\   :   /": print tab( 15);"- "hi$" splat!"hn$" -"; chr$(7)
 20420 dy = 40: gosub 2950
-20430 return 
+20430 return
 20440 rem 4:
 20450 if s = 0 then 2640
 20460 m = 170: goto 460
@@ -574,13 +574,13 @@
 20700 l = 33: goto 2790
 20710 rem 12:
 20720 if not f(7) then 5790
-20730 gosub 2790:l = 34: return 
+20730 gosub 2790:l = 34: return
 20740 rem 13:
 20750 f(8) = 1: gosub 2790:m = 101: goto 460
 20760 rem 14:
 20770 m = 145: gosub 3000
 20780 if s = 1 then m = 40: gosub 460:mo = 1
-20790 return 
+20790 return
 20800 rem 15:
 20810 if s < >2 then 2640
 20820 if f(1) then m = 70: goto 460
@@ -590,7 +590,7 @@
 20860 m = 100: goto 460
 20870 rem 17:
 20880 m = 20: gosub 3000: if s then 22800
-20890 return 
+20890 return
 20900 rem 18:
 20910 a = 13: gosub 1830: if s = 2 then m = 45: goto 460
 20920 a = 13:s = 2: gosub 1920: gosub 2790:m = 46: gosub 460:a = 12: goto 2140
@@ -610,7 +610,7 @@
 21060 rem 23:
 21070 m = 54: gosub 460: gosub 2790:a = 16: goto 2140
 21080 rem 24:
-21090 return 
+21090 return
 21100 rem 25:
 21110 if s = 0 then 2640
 21120 a = 16: gosub 1830: if s = 2 then m = 45: goto 460
@@ -642,7 +642,7 @@
 21380 rem 33:
 21390 gosub 2790:m = 36: goto 460
 21400 rem 34:
-21410 a = 141: gosub 2360: if s = 0 then l = 19: return 
+21410 a = 141: gosub 2360: if s = 0 then l = 19: return
 21420 m = 75:mo = 1: goto 460
 21430 rem 35:
 21440 if not f(10) then m = 173: goto 460
@@ -661,7 +661,7 @@
 21570 m = 85: gosub 460: gosub 2790:a = 23: gosub 2200:a = 24: goto 2140
 21580 rem 39:
 21590 m = 86: gosub 460
-21600 a = 27: gosub 2360: if s < >1 then print ".": return 
+21600 a = 27: gosub 2360: if s < >1 then print ".": return
 21610 m = 184: goto 460
 21620 rem 40:
 21630 if l = 33 and s = 1 then gosub 2550:re = 23: goto 21070
@@ -682,7 +682,7 @@
 21780 a = 27: gosub 2360: if s < >2 and l = 21 then m = 94: goto 460
 21790 if s < >2 then 2640
 21800 gosub 1830: if s = 1 then 2640
-21810 if cp% = 118 then m = 146: gosub 3000: if s = 0 then return 
+21810 if cp% = 118 then m = 146: gosub 3000: if s = 0 then return
 21820 a = 143: gosub 2360: if s < >1 then m = 7: goto 460
 21830 if l < >21 then m = 7: goto 460
 21840 if t(2) = 0 then m = 97:mo = 1: goto 460
@@ -694,35 +694,35 @@
 21900 rem 46:
 21910 if s = 2 then re = 3: goto 20340
 21920 m = 212: goto 460
-21930 return 
+21930 return
 21940 rem 47:
 21950 if f(1) then m = 214: goto 460
 21960 m = 213: goto 460
-21970 return 
+21970 return
 21980 rem 48:
 21990 if f(1) then re = 7: goto 20540
 22000 m = 213: goto 460
-22010 return 
+22010 return
 22020 rem 49:
 22030 if s = 2 then m = 215: goto 460
 22040 m = 216: goto 460
-22050 return 
+22050 return
 22060 rem 50:
 22070 if f(6) = 0 then m = 104: goto 460
 22080 f(6) = f(6) +1: if f(6) = 5 then m = 105: gosub 460: for j = 1 to 12: print be$;:dy = 32: gosub 2950: next :m = 106:f(7) = 1: gosub 2790: goto 460
 22090 if f(6) >5 then m = 107: goto 460
 22100 m = 106 +f(6): goto 460: rem 57,58,59
-22110 return 
+22110 return
 22120 rem 51:
 22130 a = 24: gosub 2360: if s < >2 then m = 111: goto 460
 22140 if f(6) >5 then m = 112: goto 460
 22150 if f(6) then m = 113: goto 460
-22160 for k = 1 to 4: for j = 1 to 15:a = peek( -16336):dy = .6: gosub 2950: next :dy = 20: gosub 2950: next 
+22160 for k = 1 to 4: for j = 1 to 15:a = peek( -16336):dy = .6: gosub 2950: next :dy = 20: gosub 2950: next
 22170 m = 114: gosub 460:f(6) = 1: gosub 2790:a = 32:s = 2: goto 1920
 22180 rem 52:
 22190 if s = 2 then m = 217: goto 460
 22200 m = 212: goto 460
-22210 return 
+22210 return
 22220 rem 53:
 22230 if s = 1 then m = 117: goto 460
 22240 if l = 61 then m = 206: gosub 460: goto 3200
@@ -735,23 +735,23 @@
 22310 a = 3: gosub 2360: if s < >2 then m = 25: gosub 460: gosub 20370:m = 34:mo = 1: goto 460
 22320 pt = 999:t(4) = 4:t = 1:m = 200: goto 460
 22330 rem 54:
-22340 return 
+22340 return
 22350 rem 55:
-22360 return 
+22360 return
 22370 rem 56:
-22380 return 
+22380 return
 22390 rem 57:
-22400 return 
+22400 return
 22410 rem 58:
-22420 return 
+22420 return
 22430 rem 59:
-22440 return 
+22440 return
 22450 rem 60:
 22460 m = 147: gosub 3000: if s = 1 then m = 124: goto 460
-22470 : return 
+22470 : return
 22480 rem 61:
 22490 m = 148: gosub 3000: if s = 1 then m = 53: goto 460
-22500 return 
+22500 return
 22510 rem 62:
 22520 if s < >2 then 2640
 22530 m = 127: goto 460
@@ -759,19 +759,19 @@
 22550 if s < >2 then 2640
 22560 goto 22530
 22570 rem 64:
-22580 return 
+22580 return
 22590 rem 65:
 22600 if l <24 or l >32 then m = 129: goto 460
 22610 m = 130: gosub 460:j = 1
-22620 speed= 120: for i = 1 to 30 *j: print "mumble...";: next 
+22620 speed= 120: for i = 1 to 30 *j: print "mumble...";: next
 22630 print :m = 131: gosub 460:m = 149: gosub 3000: if s = 1 then j = j *2: goto 22620
-22640 return 
+22640 return
 22650 rem 66:
-22660 return 
+22660 return
 22670 rem 67:
-22680 return 
+22680 return
 22690 rem 68:
-22700 return 
+22700 return
 22710 rem 69:
 22720 m = 95: gosub 460: goto 2200
 22730 rem 70:
@@ -779,32 +779,32 @@
 22750 gosub 1830: if s = 2 then m = 92: goto 460
 22760 m = 126: gosub 460:s = 2: goto 1920
 22770 rem 71:
-22780 return 
+22780 return
 22790 rem 72:
 22800 t(3) = 1:t = 1:m = 93: goto 460
 22810 rem 73:
-22820 a = 100 * rnd(1): if a <21 then l = 58: return 
+22820 a = 100 * rnd(1): if a <21 then l = 58: return
 22830 m = 140: goto 460
 22840 rem 74:
-22850 if tu%(l) <50 then tu%(l) = 50:l = 21: return 
+22850 if tu%(l) <50 then tu%(l) = 50:l = 21: return
 22860 mo = 1:m = 137: goto 460
 22870 rem 75:
 22880 if t(3) then mo = 1:m = 139: goto 460
-22890 l = 22: return 
+22890 l = 22: return
 22900 rem 76:
 22910 gosub 2790:a = 19: gosub 2360: if s < >2 then 22950
 22920 a = 25: gosub 2360: if s < >2 then 22950
 22930 gosub 1830: if s = 2 then 22950
 22940 s = 2: gosub 1920:m = 126: gosub 460
-22950 l = 35: return 
+22950 l = 35: return
 22960 rem 77:
-22970 return 
+22970 return
 22980 rem 78:
-22990 return 
+22990 return
 23000 rem 79:
-23010 return 
+23010 return
 23020 rem 80:
-23030 return 
+23030 return
 30000 rem chain filer
 30010 rem in: fc=comando filer
 30020 print cl$: rem l,m
