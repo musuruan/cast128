@@ -16,7 +16,7 @@
 330 dc = 1: rem disco cast
 340 if fc = 0 then gosub 1530: rem titoli
 350 rem reentry (on error)
-360 print
+360 print: dclose
 370 on fc +1 gosub 400,470,530,590: rem esegue routine
 380 goto 30010: rem chain game
 390 rem new game
@@ -105,33 +105,32 @@
 1220 rem in: f$=nome file
 1230 print : if f$ = fv$ then print "Un attimo che mi preparo...": goto 1260
 1240 print "Un attimo che rileggo la situazione..."
-1250 print 
-1260 print ve$f$: rem error se non c'e'
-1270 print op$f$: print rd$f$
-1280 for i = 1 to lu: input tu%(i): poke m1,0: next 
-1290 for i = 1 to og: input lo%(i),so%(i),vo%(i): poke m1,0: next 
-1300 for i = 1 to nr: input pt%(i): poke m1,0: next 
-1310 for i = 1 to 20: input f(i): poke m1,0: next 
-1320 for i = 1 to 10: input t(i): poke m1,0: next 
-1330 input l,nt,pt,ti,tt,tu
-1340 poke m0,0: rem motor off
-1350 print cl$f$
-1360 return 
+1250 print
+1260 f$=f$+",s":dopen#1,(f$)
+1270 if ds <> 0 then 1620: rem error se non c'e'
+1280 for i = 1 to lu: input#1,tu%(i): next
+1290 for i = 1 to og: input#1,lo%(i),so%(i),vo%(i): next
+1300 for i = 1 to nr: input#1,pt%(i): next
+1310 for i = 1 to 20: input#1,f(i): next
+1320 for i = 1 to 10: input#1,t(i): next
+1330 input#1,l,nt,pt,t,tt,tu
+1350 dclose#1
+1360 return
 1370 rem save var file
 1380 rem in: f$=nome file
-1390 print : print "Un attimo che salvo la situazione...": print 
-1400 print op$f$
-1410 print d$"unlock"f$
-1420 print wr$f$
-1430 for i = 1 to lu: print tu%(i): poke m1,0: next 
-1440 for i = 1 to og: print lo%(i): print so%(i): print vo%(i): poke m1,0: next : rem co,mo non cambiano
-1450 for i = 1 to nr: print pt%(i): poke m1,0: next 
-1460 for i = 1 to 20: print f(i): poke m1,0: next 
-1470 for i = 1 to 10: print t(i): poke m1,0: next 
-1480 print l: print nt: print pt: print ti: print tt: print tu
-1490 poke m0,0: rem motor off
-1500 print cl$f$: print ve$f$
-1510 return 
+1390 print : print "Un attimo che salvo la situazione...": print
+1400 f$=f$+",s":dopen#1,(f$),w
+1410 :
+1420 :
+1430 for i = 1 to lu: print#1,tu%(i): next
+1440 for i = 1 to og: print#1,lo%(i): print so%(i): print vo%(i): next : rem co,mo non cambiano
+1450 for i = 1 to nr: print#1,pt%(i): next
+1460 for i = 1 to 20: print#1,f(i): next
+1470 for i = 1 to 10: print#1,t(i): next
+1480 print#1,l: print#1,nt: print#1,pt: print#1,t: print#1,tt: print#1,tu
+1490 :
+1500 dclose#1
+1510 return
 1520 rem titoli
 1530 scnclr: rem clear
 1540 color0,1:color 4,1:color 5,2
