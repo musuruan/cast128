@@ -26,7 +26,7 @@
 430 :
 440 rem costanti - TODO: Spostare nel listato per migliorare le performance
 450 bs$ = "{left}"
-460 cr$ = chr$(13)
+460 :
 470 hi$ = "{rvon}": rem inverse
 480 hn$ = "{rvof}": rem normal
 490 hh$ = "{clr}": rem home
