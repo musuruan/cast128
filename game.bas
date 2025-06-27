@@ -22,13 +22,13 @@
 390 if cc = 0 then print "_"bs$;
 400 if cc = 75 then print " "bs$;:ct = ct +1
 410 cc = cc +1:g = peek(kb) -128: if g <0 then 380
-420 print " "bs$;: poke ks,0: return
+420 print " "bs$;: return
 430 rem stampa messaggio
 440 rem in: m=n.messaggio
 450 rem non esegue cr finale
 460 speed= 255:vp = 10
 470 if p2 < = pl or ct <20 then 490: rem no test
-480 p3 = p3 +1: gosub 3240: call 576: poke m1,0:n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and not n2 then p2 = 0:p3 = p3 -1: rem p2 test
+480 p3 = p3 +1: gosub 3240: call 576: n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and not n2 then p2 = 0:p3 = p3 -1: rem p2 test
 490 ph = pos(ph):pv = peek(37): rem pos.cursore
 500 print : print rd$;fm$",r"30 +m *6
 510 if pv < >23 then pv = pv +1: rem l'ultima riga scrolla
@@ -37,7 +37,7 @@
 540 input n1,n2
 550 print rd$fm$",r"n1
 560 for c = n1 to n2 -2: get a$
-570 poke m1,0: rem motor on
+570 :
 580 rem analisi comandi:
 590 a1 = asc(a$)
 600 if a1 >29 then a1 = 156 -a1: goto 700
@@ -45,8 +45,8 @@
 620 if a1 = 9 then print hi$;: goto 720: rem inverse
 630 if a1 = 6 then print hi$;: goto 720: rem flash=inverse
 640 if a1 = 15 then mo = 1: goto 720
-650 if a1 = 16 then print : print : htab 32: print ">> ";: poke m0,0: poke ks,0: gosub 370: print : print : poke m1,0: goto 720
-660 if a1 = 25 then input dy: poke m0,0: gosub 2950:c = c + len( str$(dy)) +1: goto 720: rem delay
+650 if a1 = 16 then print : print : htab 32: print ">> ";: gosub 370: print : print : goto 720
+660 if a1 = 25 then input dy: gosub 2950:c = c + len( str$(dy)) +1: goto 720: rem delay
 670 if a1 = 12 then input l:c = c + len( str$(l)) +1: goto 720
 680 if a1 = 19 then input vp:c = c + len( str$(vp)) +1:vp = ((256 -vp) *rp)/4: goto 720
 690 rem stampa su video:
@@ -59,7 +59,7 @@
 760 if pv < >23 then pv = pv +1: rem l'ultima riga scrolla
 770 htab (ph +1): vtab (pv): rem si riporta in fondo alla linea
 780 speed= 255: print hn$;
-790 poke m0,0: rem motor off
+790 :
 800 if p2 >pl then poke 767,3: call u +15: rem seek t3
 810 ct = 0: return
 820 rem scansione parola
@@ -249,12 +249,12 @@
 2660 rem descr. lunga luogo
 2670 rem in:  l=luogo
 2680 if p2 < = pl or ct <20 then 2700: rem no test
-2690 p3 = p3 +1: gosub 3240: call 576: poke m1,0:n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and not n2 then p2 = 0:p3 = p3 -1: rem p2 test
+2690 p3 = p3 +1: gosub 3240: call 576: n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and not n2 then p2 = 0:p3 = p3 -1: rem p2 test
 2700 print rd$;fl$",r"30 +l *6
 2710 input n1,n2
 2720 print rd$;fl$",r"n1
 2730 for c = n1 to n2 -1: get a$:a1 = asc(a$): if a1 < >13 then a1 = 158 -a1
-2740 poke m1,0: rem motor on
+2740 :
 2750 print chr$(a1);: next
 2760 p2 = 0: rem (p2 = p2 + 1) protezione disattivata 4/2001
 2770 goto 740: rem chiude e torna
@@ -300,7 +300,7 @@
 3170 if a = 255 then 3200: rem ctrl-c o reset
 3180 print be$: print "ERR "a" IN LOC "; peek(218) +256 * peek(219): goto 3200
 3190 rem stop
-3200 poke ks,0
+3200 :
 3210 gosub 370: rem get
 3220 print : print "CIAO!": end: rem exit
 3230 rem decri p2 test
@@ -311,9 +311,9 @@
 3280 next
 3290 return
 5000 rem ### main prog ###
-5010 call u: rem link hrcg
+5010 :
 5020 print : print op$fl$: print op$fm$
-5030 print hh$: rem home
+5030 scnclr: rem home
 5040 p2 = 0:p3 = 0:pl = 6: rem p2 counters
 5050 poke 1010,188: poke 1011,23: call 64367: rem pwr-up byte
 5060 poke 1008,188: poke 1009,23: rem break
@@ -343,7 +343,7 @@
 5300 if cp% = 0 then print : print "   Eh ? ";: goto 5230: rem pp??
 5310 if cs% = 0 then print : print "   "sp$" ???": goto 5180: rem sp??
 5320 rem pirata?
-5330 if p3 >1 then for i = 1 to 2 step 0:m = 218: gosub 460: poke ks,0: gosub 370: next
+5330 if p3 >1 then for i = 1 to 2 step 0:m = 218: gosub 460: gosub 370: next
 5340 rem salta
 5350 if cp% = 31 and cs% < >3 then cs% = 1
 5360 rem varie
@@ -728,10 +728,10 @@
 22240 if l = 61 then m = 206: gosub 460: goto 3200
 22250 if l < >34 then m = 118: goto 460
 22260 gosub 2790:m = 119: gosub 460
-22270 print : print : print " Cosa devo fare ? ";: poke ks,0
-22280 get a$
+22270 print : print : print " Cosa devo fare ? ";
+22280 getkey a$
 22290 print be$;be$;be$;:m = 120: gosub 460
-22300 poke ks,0
+22300 :
 22310 a = 3: gosub 2360: if s < >2 then m = 25: gosub 460: gosub 20370:m = 34:mo = 1: goto 460
 22320 pt = 999:t(4) = 4:t = 1:m = 200: goto 460
 22330 rem 54:

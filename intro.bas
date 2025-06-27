@@ -10,10 +10,10 @@
 270 trap 1090
 280 rem costanti apple
 290 ck = 49200: rem speaker
-300 kb = 49152: rem keyb
-310 ks = 49168: rem strobe
-320 m0 = 49288 + peek(47081): rem motor off
-330 m1 = m0 +1: rem motor on
+300 :
+310 :
+320 :
+330 :
 340 rem costanti dos
 350 d$ = chr$(4)
 360 :
