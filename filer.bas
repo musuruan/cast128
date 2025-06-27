@@ -33,7 +33,7 @@
 500 gosub 870: rem restore disk
 510 return
 520 rem save command
-530 a$ = "Come vuoi chiamare questa situazione ?": gosub 710: rem input f
+530 a$ = "Come vuoi chiamare questa situazione ?": gosub 710: rem input f$
 540 if f$ = "" then 560: rem annullato
 550 gosub 1390: rem save game
 560 gosub 870: rem restore disk
