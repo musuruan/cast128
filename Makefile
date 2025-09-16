@@ -15,25 +15,32 @@ filer.prg: filer.bas
 game.prg: game.bas
 	petcat -w70 -o game.prg -- game.bas
 	
-v.seq: V.txt
-	unix2mac -n V.txt v.seq
+v: V.dump ./scripts/conv_variabili.py
+	./scripts/conv_variabili.py
+	
+l: L.dump ./scripts/conv_luoghi.py
+	./scripts/conv_luoghi.py
+	
+m: M.dump ./scripts/conv_messaggi.py
+	./scripts/conv_messaggi.py
 	
 # TODO: Convertire logo
 
-# TODO: Convertire file dati
-
-cast128.d64: bootsect cast.prg intro.prg filer.prg game.prg v.seq
+cast128.d64: bootsect cast.prg intro.prg filer.prg game.prg v l m
 	c1541 -format "cast128,ac" d64 cast128.d64
 	c1541 -attach cast128.d64 -bwrite bootsect 1 0
 	c1541 -attach cast128.d64 -write cast.prg cast
 	c1541 -attach cast128.d64 -write intro.prg intro
 	c1541 -attach cast128.d64 -write filer.prg filer
 	c1541 -attach cast128.d64 -write game.prg game
-	c1541 -attach cast128.d64 -write v.seq v,s
+	c1541 -attach cast128.d64 -write v v,s
+	c1541 -attach cast128.d64 -write l l,l,254
+	c1541 -attach cast128.d64 -write m m,l,254
 
 clean:
 	rm -f bootsect
 	rm -f *.o
-	rm -f *.prg *.seq
+	rm -f *.prg
+	rm -f v l m
 	rm -f cast128.d64
 
