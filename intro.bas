@@ -15,14 +15,14 @@
 320 :
 330 :
 340 rem costanti dos
-350 d$ = chr$(4)
+350 :
 360 :
 370 :
-380 op$ = d$ +"open"
-390 rd$ = d$ +"read"
-400 wr$ = d$ +"write"
-410 cl$ = d$ +"close"
-420 ve$ = d$ +"verify"
+380 :
+390 :
+400 :
+410 :
+420 :
 430 :
 440 rem costanti - TODO: Spostare nel listato per migliorare le performance
 450 bs$ = "{left}"
@@ -32,8 +32,8 @@
 490 hh$ = "{clr}": rem home
 500 rem nomi files
 510 fv$ = "v": rem variabili
-520 fl$ = "l": rem luoghi
-530 fm$ = "m": rem messaggi
+520 fl$ = "l,r": rem luoghi
+530 fm$ = "m,r": rem messaggi
 540 :
 550 :
 560 rem costanti num cast

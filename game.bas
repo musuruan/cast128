@@ -29,14 +29,14 @@
 460 speed= 255:vp = 10
 470 if p2 < = pl or ct <20 then 490: rem no test
 480 p3 = p3 +1: gosub 3240: call 576: n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and not n2 then p2 = 0:p3 = p3 -1: rem p2 test
-490 ph = pos(ph):pv = peek(37): rem pos.cursore
-500 print : print rd$;fm$",r"30 +m *6
-510 if pv <>23 then pv = pv +1: rem l'ultima riga scrolla
-520 htab (ph +1): vtab (pv): rem si riporta in fondo alla linea
+490 :
+500 n0=30+m*6:record#2,int(n0/254)+1,n0-int(n0/254)*254+1
+510 :
+520 :
 530 p2 = 0: rem (p2 = p2 + 1) protezione disattivata 4/2001
-540 input n1,n2
-550 print rd$fm$",r"n1
-560 for c = n1 to n2 -2: get a$
+540 input#2,n1,n2
+550 record#2,int(n1/254)+1,n1-int(n1/254)*254+1
+560 for c = n1 to n2 -2: get#2,a$
 570 :
 580 rem analisi comandi:
 590 a1 = asc(a$)
@@ -45,19 +45,19 @@
 620 if a1 = 9 then print hi$;: goto 720: rem inverse
 630 if a1 = 6 then print hi$;: goto 720: rem flash=inverse
 640 if a1 = 15 then mo = 1: goto 720
-650 if a1 = 16 then print : print : htab 32: print ">> ";: gosub 370: print : print : goto 720
-660 if a1 = 25 then input dy: gosub 2950:c = c + len( str$(dy)) +1: goto 720: rem delay
-670 if a1 = 12 then input l:c = c + len( str$(l)) +1: goto 720
-680 if a1 = 19 then input vp:c = c + len( str$(vp)) +1:vp = ((256 -vp) *rp)/4: goto 720
+650 if a1 = 16 then print : print spc(32);">> ";: gosub 370: print : print : goto 720
+660 if a1 = 25 then input#2, dy: gosub 2950:c = c + len( str$(dy)): goto 720: rem delay
+670 if a1 = 12 then input#2, l:c = c + len( str$(l)) : goto 720
+680 if a1 = 19 then input#2, vp:c = c + len( str$(vp)):vp = ((256 -vp) *rp)/4: goto 720
 690 rem stampa su video:
 700 print chr$(a1);
 710 for i = 1 to vp: next
 720 next : rem c
 730 rem chiude lettura mantenendo cursore:
-740 ph = pos(ph):pv = peek(37): rem pos.cursore
-750 print : print d$: rem finisce read
-760 if pv <>23 then pv = pv +1: rem l'ultima riga scrolla
-770 htab (ph +1): vtab (pv): rem si riporta in fondo alla linea
+740 :
+750 print
+760 :
+770 :
 780 speed= 255: print hn$;
 790 :
 800 if p2 >pl then poke 767,3: call u +15: rem seek t3
@@ -250,10 +250,10 @@
 2670 rem in:  l=luogo
 2680 if p2 < = pl or ct <20 then 2700: rem no test
 2690 p3 = p3 +1: gosub 3240: call 576: n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and not n2 then p2 = 0:p3 = p3 -1: rem p2 test
-2700 print rd$;fl$",r"30 +l *6
-2710 input n1,n2
-2720 print rd$;fl$",r"n1
-2730 for c = n1 to n2 -1: get a$:a1 = asc(a$): if a1 <>13 then a1 = 158 -a1
+2700 n0=30+l*6:record#1,int(n0/254)+1,n0-int(n0/254)*254+1
+2710 input#1,n1,n2
+2720 record#1,int(n1/254)+1,n1-int(n1/254)*254+1
+2730 for c = n1 to n2 -1: get#1, a$:a1 = asc(a$): if a1 <>13 then a1 = 158 -a1
 2740 :
 2750 print chr$(a1);: next
 2760 p2 = 0: rem (p2 = p2 + 1) protezione disattivata 4/2001
@@ -312,7 +312,7 @@
 3290 return
 5000 rem ### main prog ###
 5010 :
-5020 print : print op$fl$: print op$fm$
+5020 dopen#1,(fl$): dopen#2,(fm$)
 5030 scnclr: rem home
 5040 p2 = 0:p3 = 0:pl = 6: rem p2 counters
 5050 :
@@ -807,6 +807,6 @@
 23030 return
 30000 rem chain filer
 30010 rem in: fc=comando filer
-30020 print cl$: rem l,m
+30020 dclose#1:dclose#2: rem l,m
 30030 :
 30040 dload"filer"
