@@ -315,8 +315,8 @@
 5020 print : print op$fl$: print op$fm$
 5030 scnclr: rem home
 5040 p2 = 0:p3 = 0:pl = 6: rem p2 counters
-5050 poke 1010,188: poke 1011,23: call 64367: rem pwr-up byte
-5060 poke 1008,188: poke 1009,23: rem break
+5050 :
+5060 :
 5070 gi = 1: rem gioco iniziato
 5080 if l = 1 and (fc = 0 or fc = 3) then t(1) = 8:t = 1: print hh$;:m = 209: gosub 460: print hh$;:m = 15: gosub 460: rem prologo e precipita
 5090 rem ### main cycle ###
