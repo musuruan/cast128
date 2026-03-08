@@ -55,7 +55,7 @@
 720 next : rem c
 730 rem chiude lettura mantenendo cursore:
 740 :
-750 print
+750 :
 760 :
 770 :
 780 speed= 255: print hn$;
