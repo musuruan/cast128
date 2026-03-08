@@ -7,7 +7,7 @@
 150 rem purche' non alterata
 250 rem - entry:
 260 :
-270 trap 1090
+270 rem trap 1090
 280 rem costanti apple
 290 ck = 49200: rem speaker
 300 :
@@ -43,8 +43,8 @@
 600 rp = 2: rem un.rit.stampa
 610 nm = 4: rem max.ogg.trasp.
 620 rem
-630 u = 6064: rem utility
-640 m = 6400: rem $1900
+630 u = 4864: rem utility
+640 m = 5164: rem TBD
 650 az = peek(m)
 660 og = peek(m +1)
 670 la% = m +1
@@ -64,18 +64,22 @@
 810 dim so%(150),vo%(150)
 820 dim pt%(80): rem nr
 830 rem init
-840 graphic 4,0,21
+840 :
+850 :
+860 :
 870 :
-880 :
-890 :
-900 :
-910 :
+880 bload"r",b1
+890 fast
+900 graphic 3,0:sys u
+910 slow
 920 rem titoli
-930 printchr$(14)chr$(147):color0,1:color 4,1:color5,6:
-940 sys 65520,,22,1:print"{38 SHIFT-*}";
-950 sys 65520,,24,1:print"{38 SHIFT-*}";
-960 color 5,2
+930 rem printchr$(14)chr$(147):color0,1:color 4,1:color5,6:
+940 color 1,6
+950 draw 1,0,180 to 319,180
+960 draw 1,0,196 to 319,196
 970 a$ = "       * Avventura nel castello! *     Edizione freeware 2001 - libera distribuzione purche' non venga alterata "
+975 rem sys 4867,,,,,a$: goto 1050
+977 getkey k$:goto 1050
 980 a1 = len(a$):a$ = a$ +a$ +" "
 990 a2 = 1
 1000 do:sys 65520,,23,1: print mid$(a$,a2,38);

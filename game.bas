@@ -11,7 +11,7 @@
 195 rem libera distribuzione
 200 rem purche' non alterata
 300 rem - entry (chained):
-310 onerr goto 3120
+310 rem trap 3120
 320 goto 5010: rem main prog
 330 rem ### subroutine ###
 340 rem get con cursore
@@ -102,7 +102,7 @@
 1190 if a$ = "" then a$ = " "
 1200 for c = 1 to len(a$): poke 575 +c,125 - asc( mid$ (a$,c,1)): next
 1210 me = 575 +c -1: poke me, peek(me) +128: rem ultimo char
-1220 call u +3: rem diz.1
+1220 sys u +3: rem diz.1
 1230 tp = peek(766):co = peek(767)
 1240 return
 1250 rem consulta diz 2
@@ -111,7 +111,7 @@
 1280 rem out: a$=entry
 1290 rem a$="" se non esiste
 1300 poke 766,tp: poke 767,co
-1310 call u +6: rem diz.2
+1310 sys u +6: rem diz.2
 1320 a$ = "":me = 576
 1330 c = peek(me)
 1340 if c <128 then a$ = a$ + chr$(125 -c):me = me +1: goto 1330
@@ -294,7 +294,7 @@
 3110 rem errori
 3120 a = peek(222)
 3130 if not gi then 3180
-3140 call u +9: rem err.recvry
+3140 rem sys u +9: rem err.recvry
 3150 if tu%(l) = 0 then tu%(l) = 1: rem no descr.lunga
 3160 if a and a <16 then print : print : print be$hi$"PROBLEMI CON IL DISCO!"hn$be$: print : if p3 <2 then 5110: rem not resume if pirate
 3170 if a = 255 then 3200: rem ctrl-c o reset

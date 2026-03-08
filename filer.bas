@@ -145,7 +145,7 @@
 1590 print"{CBM-Z}{38 SHIFT-*}{CBM-X}";
 1600 return
 1610 rem error
-1620 rem call u +3: rem recovery
+1620 rem sys u +3: rem recovery
 1630 :
 1640 e = peek(222): rem error
 1650 print : print hi$;

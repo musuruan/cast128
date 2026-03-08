@@ -7,7 +7,7 @@
 160 :
 170 :
 180 rem load b,logo
-190 rem print d$"bload b, a$800"
-200 rem print d$"bload logo, a$2000"
+190 bload"b"
+200 bload"logo"
 210 rem ready
 220 dload"intro"
