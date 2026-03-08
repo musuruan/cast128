@@ -282,7 +282,7 @@
 2990 rem out: s=1/0 (si/no)
 3000 print
 3010 li = 2: gosub 460: rem mess
-3020 gosub 1420: rem <ctrl-k>input in$
+3020 gosub 1420: rem input in$
 3030 if left$(in$,1) = "s" or left$(in$,1) = "y" then s = 1: return
 3040 if left$(in$,1) = "n" then s = 0: return
 3050 s = m:m = 132: gosub 460:m = s: goto 3010
