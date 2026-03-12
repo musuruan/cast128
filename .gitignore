@@ -2,6 +2,8 @@ bootsect
 *.o
 *.prg
 *.d64
+b
+r
 v
 m
 l
