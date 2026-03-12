@@ -30,14 +30,14 @@ l: L.dump ./scripts/conv_luoghi.py
 m: M.dump ./scripts/conv_messaggi.py
 	./scripts/conv_messaggi.py
 
-cast128.d64: bootsect cast.prg intro.prg filer.prg game.prg logo.koa r b v l m
+cast128.d64: bootsect cast.prg intro.prg filer.prg game.prg logo.kla r b v l m
 	c1541 -format "cast128,ac" d64 cast128.d64
 	c1541 -attach cast128.d64 -bwrite bootsect 1 0
 	c1541 -attach cast128.d64 -write cast.prg cast
 	c1541 -attach cast128.d64 -write intro.prg intro
 	c1541 -attach cast128.d64 -write filer.prg filer
 	c1541 -attach cast128.d64 -write game.prg game
-	c1541 -attach cast128.d64 -write logo.koa logo
+	c1541 -attach cast128.d64 -write logo.kla logo
 	c1541 -attach cast128.d64 -write r
 	c1541 -attach cast128.d64 -write b
 	c1541 -attach cast128.d64 -write v v,s
