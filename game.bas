@@ -315,7 +315,7 @@
 5020 dopen#1,(fl$): dopen#2,(fm$)
 5030 scnclr: rem home
 5040 p2 = 0:p3 = 0:pl = 6: rem p2 counters
-5050 :
+5050 rem poke808,peek(808)-3: rem disabilita run/stop + restore
 5060 :
 5070 gi = 1: rem gioco iniziato
 5080 if l = 1 and (fc = 0 or fc = 3) then t(1) = 8:t = 1: print hh$;:m = 209: gosub 460: print hh$;:m = 15: gosub 460: rem prologo e precipita

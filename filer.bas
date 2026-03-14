@@ -11,8 +11,8 @@
 280 rem fc=3: morto
 290 rem trap 1620
 300 :
-310 rem poke 1010,188: poke 1011,23: call 64367: rem pwr-up byte
-320 rem poke 1008,188: poke 1009,23: rem break
+310 rem poke808,peek(808)-3: rem disabilita run/stop + restore
+320 :
 330 dc = 1: rem disco cast
 340 if fc = 0 then gosub 1530: rem titoli
 350 rem reentry (on error)
