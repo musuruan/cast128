@@ -539,10 +539,10 @@
 20350 m = 24: gosub 460:mo = 1: goto 20370
 20360 rem aaaa...splat:
 20370 speed= 180
-20380 print "aaaa": print tab( 13)"aaa": print tab( 16)"aa": print tab( 18)"a": print tab( 19)"a"
-20390 for i = 1 to 4: print tab( 20)"a": next : for i = 1 to 4: print tab( 20)":": next
+20380 print "aaaa": print tab(12)"aaa": print tab(15)"aa": print tab(17)"a": print tab(18)"a"
+20390 for i = 1 to 4: print tab(19)"a": next : for i = 1 to 4: print tab(19)":": next
 20400 speed= 255
-20410 print tab( 16);"\   :   /": print tab( 15);"- "hi$" splat!"hn$" -"; chr$(7)
+20410 print tab(15);"\   :   /": print tab(14);"- "hi$" splat!"hn$" -"; chr$(7)
 20420 dy = 40: gosub 2950
 20430 return
 20440 rem 4:
