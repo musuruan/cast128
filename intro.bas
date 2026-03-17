@@ -11,7 +11,7 @@
 280 rem costanti apple
 290 ck = 49200: rem speaker
 300 :
-310 :
+310 ks = 208: rem strobe
 320 :
 330 :
 340 rem costanti dos

@@ -21,8 +21,8 @@
 380 if cc = 150 then cc = 0:ct = ct +1
 390 if cc = 0 then print "_"bs$;
 400 if cc = 75 then print " "bs$;:ct = ct +1
-410 cc = cc +1:g = peek(kb) -128: if g <0 then 380
-420 print " "bs$;: return
+410 cc = cc +1:if peek(ks)=0 then 380:else g=peek(842)
+420 print " "bs$;: poke ks,0: return
 430 rem stampa messaggio
 440 rem in: m=n.messaggio
 450 rem non esegue cr finale
@@ -45,7 +45,7 @@
 620 if a1 = 9 then print hi$;: goto 720: rem inverse
 630 if a1 = 6 then print hi$;: goto 720: rem flash=inverse
 640 if a1 = 15 then mo = 1: goto 720
-650 if a1 = 16 then print : print spc(32);">> ";: gosub 370: print : print : goto 720
+650 if a1 = 16 then print : print spc(32);">> ";: poke ks,0: gosub 370: print : print : goto 720
 660 if a1 = 25 then input#2, dy: gosub 2950:c = c + len( str$(dy)): goto 720: rem delay
 670 if a1 = 12 then input#2, l:c = c + len( str$(l)) : goto 720
 680 if a1 = 19 then input#2, vp:c = c + len( str$(vp)):vp = ((256 -vp) *rp)/4: goto 720
@@ -300,7 +300,7 @@
 3170 if a = 255 then 3200: rem ctrl-c o reset
 3180 print be$: print "ERR "a" IN LOC "; peek(218) +256 * peek(219): goto 3200
 3190 rem stop
-3200 :
+3200 poke ks,0
 3210 gosub 370: rem get
 3220 print : print "CIAO!": end: rem exit
 3230 rem decri p2 test
@@ -343,7 +343,7 @@
 5300 if cp% = 0 then print : print "   Eh ? ";: goto 5230: rem pp??
 5310 if cs% = 0 then print : print "   "sp$" ???": goto 5180: rem sp??
 5320 rem pirata?
-5330 if p3 >1 then for i = 1 to 2 step 0:m = 218: gosub 460: gosub 370: next
+5330 if p3 >1 then for i = 1 to 2 step 0:m = 218: gosub 460: poke ks,0: gosub 370: next
 5340 rem salta
 5350 if cp% = 31 and cs% <>3 then cs% = 1
 5360 rem varie
@@ -728,10 +728,10 @@
 22240 if l = 61 then m = 206: gosub 460: goto 3200
 22250 if l <>34 then m = 118: goto 460
 22260 gosub 2790:m = 119: gosub 460
-22270 print : print : print " Cosa devo fare ? ";
-22280 getkey a$
+22270 print : print : print " Cosa devo fare ? ";: poke ks,0
+22280 get a$
 22290 print be$;be$;be$;:m = 120: gosub 460
-22300 :
+22300 poke ks,0
 22310 a = 3: gosub 2360: if s <>2 then m = 25: gosub 460: gosub 20370:m = 34:mo = 1: goto 460
 22320 pt = 999:t(4) = 4:t = 1:m = 200: goto 460
 22330 rem 54:

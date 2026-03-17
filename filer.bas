@@ -76,8 +76,8 @@
 930 rem spazio
 940 print
 950 print "Premi <spazio> quando sei pronto: ";
-960 :
-970 getkey a$: if a$ <>" " then 970
+960 poke ks,0
+970 get a$: if a$ <>" " then 970
 980 print : return
 990 rem scelta
 1000 rem in: a=n.scelte
@@ -86,7 +86,7 @@
 1030 print : print : print "VUOI:": print : print
 1040 for i = 1 to a: print "<"; left$(a$(i),1);"> "a$(i)".": print : next
 1050 print : print "QUALE ?  "bs$;
-1060 li = 1: gosub 1140
+1060 poke ks,0:li = 1: gosub 1140
 1070 t = 0: for i = 1 to a
 1080 if in$ = left$(a$(i),1) then t = i
 1090 next : if t=0 then print"{up}{up}";: goto 1050
@@ -161,7 +161,7 @@
 1750 if fc = 0 or fc = 3 then a = dc: gosub 870: if a=1 then gosub 940: rem restore disk se new game o morto
 1760 goto 360: rem restart
 1770 rem stop
-1780 print
+1780 poke ks,0:print
 1790 print : print "CIAO!": end: rem exit
 30000 rem chain game
 30010 :
