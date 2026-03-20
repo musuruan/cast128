@@ -28,7 +28,7 @@
 450 rem non esegue cr finale
 460 speed= 255:vp = 10
 470 if p2 < = pl or ct <20 then 490: rem no test
-480 p3 = p3 +1: gosub 3240: call 576: n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and not n2 then p2 = 0:p3 = p3 -1: rem p2 test
+480 p3 = p3 +1: gosub 3240: call 576: n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and n2 = 0 then p2 = 0:p3 = p3 -1: rem p2 test
 490 :
 500 n0=30+m*6:record#2,int(n0/254)+1,n0-int(n0/254)*254+1
 510 :
@@ -249,7 +249,7 @@
 2660 rem descr. lunga luogo
 2670 rem in:  l=luogo
 2680 if p2 < = pl or ct <20 then 2700: rem no test
-2690 p3 = p3 +1: gosub 3240: call 576: n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and not n2 then p2 = 0:p3 = p3 -1: rem p2 test
+2690 p3 = p3 +1: gosub 3240: call 576: n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and n2 = 0 then p2 = 0:p3 = p3 -1: rem p2 test
 2700 n0=30+l*6:record#1,int(n0/254)+1,n0-int(n0/254)*254+1
 2710 input#1,n1,n2
 2720 record#1,int(n1/254)+1,n1-int(n1/254)*254+1
@@ -293,7 +293,7 @@
 3100 fc = 3: goto 30010: rem chain filer
 3110 rem errori
 3120 a = peek(222)
-3130 if not gi then 3180
+3130 if gi = 0 then 3180
 3140 rem sys u +9: rem err.recvry
 3150 if tu%(l) = 0 then tu%(l) = 1: rem no descr.lunga
 3160 if a and a <16 then print : print : print be$hi$"PROBLEMI CON IL DISCO!"hn$be$: print : if p3 <2 then 5110: rem not resume if pirate
@@ -350,15 +350,15 @@
 5370 tu = tu +1: rem contamosse
 5380 rem
 5390 rem cerca in azioni
-5400 for i = 1 to az:a = peek(la% +i): if not a or a = l then if cp% = peek(pa% +i) then if cs% = peek(sa% +i) then 5420
+5400 for i = 1 to az:a = peek(la% +i): if a = 0 or a = l then if cp% = peek(pa% +i) then if cs% = peek(sa% +i) then 5420
 5410 next : goto 5470
-5420 if not peek(la% +i) then if cs% <>1 then if cs% <100 then a = cs%: gosub 2360: if s = 0 then gosub 2640:dy = 40: gosub 2950: goto 5110
+5420 if peek(la% +i) = 0 then if cs% <>1 then if cs% <100 then a = cs%: gosub 2360: if s = 0 then gosub 2640:dy = 40: gosub 2950: goto 5110
 5430 a = peek(ra% +i): if peek(ta% +i) then a = -a
 5440 gosub 20040: if mo then 3070
 5450 goto 5110
 5460 rem basta
 5470 if cp% <>8 then 5510
-5480 m = 143: gosub 3000: if not s then 5180
+5480 m = 143: gosub 3000: if s = 0 then 5180
 5490 m = 189: gosub 460: gosub 2830: goto 3200
 5500 rem dove
 5510 if cp% = 9 then 5110
@@ -555,7 +555,7 @@
 20510 a = 138: gosub 1830: if s = 1 then m = 29: goto 460
 20520 l = 3: gosub 2790:m = 30: goto 460
 20530 rem 7:
-20540 if not f(1) then 5790
+20540 if f(1) = 0 then 5790
 20550 l = 18: goto 2790
 20560 rem 8:
 20570 a = 25: gosub 2360: if s <>2 then 2640
@@ -570,10 +570,10 @@
 20660 rem 10:
 20670 a = 138:s = 1: goto 1920
 20680 rem 11:
-20690 if not f(4) then 5790
+20690 if f(4) = 0 then 5790
 20700 l = 33: goto 2790
 20710 rem 12:
-20720 if not f(7) then 5790
+20720 if f(7) = 0 then 5790
 20730 gosub 2790:l = 34: return
 20740 rem 13:
 20750 f(8) = 1: gosub 2790:m = 101: goto 460
@@ -601,7 +601,7 @@
 20970 a = 13: gosub 1830: if s = 1 then m = 49: goto 460
 20980 m = 50:f(2) = 1: gosub 2790: goto 460
 20990 rem 21:
-21000 if not (f(8) and f(9)) then m = 173: goto 460
+21000 if f(8) = 0 or f(9) = 0 then m = 173: goto 460
 21010 if (l <>11) or f(4) then m = 7: goto 460
 21020 m = 52:f(4) = 1: gosub 2790: goto 460
 21030 rem 22:
@@ -645,7 +645,7 @@
 21410 a = 141: gosub 2360: if s = 0 then l = 19: return
 21420 m = 75:mo = 1: goto 460
 21430 rem 35:
-21440 if not f(10) then m = 173: goto 460
+21440 if f(10) = 0 then m = 173: goto 460
 21450 a = 19: gosub 2360: if s = 0 then m = 7: goto 460
 21460 m = 77: gosub 460
 21470 if l <>16 then m = 78:mo = 1: goto 460
