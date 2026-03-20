@@ -318,7 +318,7 @@
 5050 rem poke808,peek(808)-3: rem disabilita run/stop + restore
 5060 :
 5070 gi = 1: rem gioco iniziato
-5080 if l = 1 and (fc = 0 or fc = 3) then t(1) = 8:t = 1: print hh$;:m = 209: gosub 460: print hh$;:m = 15: gosub 460: rem prologo e precipita
+5080 if l = 1 and (fc = 0 or fc = 3) then t(1) = 8:tm = 1: print hh$;:m = 209: gosub 460: print hh$;:m = 15: gosub 460: rem prologo e precipita
 5090 rem ### main cycle ###
 5100 rem input e descriz.
 5110 tp = 4:co = l: gosub 1300: rem a$=des.corta
@@ -328,7 +328,7 @@
 5150 gosub 2680: rem descr. lunga
 5160 gosub 1970: rem vedo oggetti
 5170 rem input e chiede
-5180 if t then gosub 15020: if tt then 5110: rem event. timer
+5180 if tm then gosub 15020: if tt then 5110: rem event. timer
 5190 if mo then 3070
 5200 tu%(l) = tu%(l) +1: rem turni luogo
 5210 print : print : print " Cosa devo fare ? ";
@@ -500,7 +500,7 @@
 15170 if t(4) then return
 15180 m = 205: goto 460
 15190 rem
-15200 t = 0:tt = 0: return
+15200 tm = 0:tt = 0: return
 20000 rem azioni
 20010 rem a=n.azione se >0
 20020 rem   n.messaggio se <0
@@ -677,7 +677,7 @@
 21730 a = 25: gosub 2360: if s = 0 then 2640
 21740 if s = 1 then m = 91: goto 460
 21750 a = 25: gosub 1830: if s = 2 then m = 92: goto 460
-21760 m = 93: gosub 460:t(2) = 3:t = 1:s = 2: goto 1920
+21760 m = 93: gosub 460:t(2) = 3:tm = 1:s = 2: goto 1920
 21770 rem 44:
 21780 a = 27: gosub 2360: if s <>2 and l = 21 then m = 94: goto 460
 21790 if s <>2 then 2640
@@ -733,7 +733,7 @@
 22290 print be$;be$;be$;:m = 120: gosub 460
 22300 poke ks,0
 22310 a = 3: gosub 2360: if s <>2 then m = 25: gosub 460: gosub 20370:m = 34:mo = 1: goto 460
-22320 pt = 999:t(4) = 4:t = 1:m = 200: goto 460
+22320 pt = 999:t(4) = 4:tm = 1:m = 200: goto 460
 22330 rem 54:
 22340 return
 22350 rem 55:
@@ -781,7 +781,7 @@
 22770 rem 71:
 22780 return
 22790 rem 72:
-22800 t(3) = 1:t = 1:m = 93: goto 460
+22800 t(3) = 1:tm = 1:m = 93: goto 460
 22810 rem 73:
 22820 a = 100 * rnd(1): if a <21 then l = 58: return
 22830 m = 140: goto 460

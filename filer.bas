@@ -113,7 +113,7 @@
 1300 for i = 1 to nr: input#1,pt%(i): next
 1310 for i = 1 to 20: input#1,f(i): next
 1320 for i = 1 to 10: input#1,t(i): next
-1330 input#1,l,nt,pt,t,tt,tu
+1330 input#1,l,nt,pt,tm,tt,tu
 1350 dclose#1
 1360 return
 1370 rem save var file
@@ -127,7 +127,7 @@
 1450 for i = 1 to nr: print#1,pt%(i): next
 1460 for i = 1 to 20: print#1,f(i): next
 1470 for i = 1 to 10: print#1,t(i): next
-1480 print#1,l: print#1,nt: print#1,pt: print#1,t: print#1,tt: print#1,tu
+1480 print#1,l: print#1,nt: print#1,pt: print#1,tm: print#1,tt: print#1,tu
 1490 :
 1500 dclose#1
 1510 return
