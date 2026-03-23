@@ -46,9 +46,9 @@
 630 if a1 = 6 then print hi$;: goto 720: rem flash=inverse
 640 if a1 = 15 then mo = 1: goto 720
 650 if a1 = 16 then print : print spc(32);">> ";: poke ks,0: gosub 370: print : print : goto 720
-660 if a1 = 25 then input#2, dy: gosub 2950:c = c + len( str$(dy)): goto 720: rem delay
-670 if a1 = 12 then input#2, l:c = c + len( str$(l)) : goto 720
-680 if a1 = 19 then input#2, vp:c = c + len( str$(vp)):vp = ((256 -vp) *rp)/4: goto 720
+660 if a1 = 25 then input#2, dy: gosub 2950:c = c + len( str$(dy)) -1: goto 720: rem delay
+670 if a1 = 12 then input#2, l:c = c + len( str$(l)) -1: goto 720
+680 if a1 = 19 then input#2, vp:c = c + len( str$(vp)) -1:vp = ((256 -vp) *rp)/4: goto 720
 690 rem stampa su video:
 700 print chr$(a1);
 710 for i = 1 to vp: next
