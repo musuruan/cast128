@@ -60,7 +60,7 @@
 770 :
 780 speed= 255: print hn$;
 790 :
-800 if p2 >pl then poke 767,3: call u +15: rem seek t3
+800 if p2 >pl then poke 767,3: sys u +15: rem seek t3
 810 ct = 0: return
 820 rem scansione parola
 830 rem in: in$=stringa
@@ -510,7 +510,7 @@
 20060 r = a:a = cs%: gosub 2360: rem determina s (0/1/2)
 20070 rem
 20080 re = r: rem rout.eseguita
-20090 if p3 >3 then call 50688: rem pirata
+20090 if p3 >3 then end: rem pirata
 20100 rem
 20110 on r goto 20280,20310,20340,20450,20480,20510,20540,20570,20650,20670,20690,20720,20750,20770,20810,20850,20880,20910,20940,20970
 20120 rem
