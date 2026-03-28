@@ -413,7 +413,7 @@
 10010 rem default intrans.
 10020 rem insulti:
 10030 if cp% <>11 then 10120
-10040 print : print : print hi$" ";: for i = 1 to len(pp$):a = asc( mid$ (pp$,i,1)): print chr$(a -32 *(a >95));: next
+10040 print : print : print hi$" ";: for i = 1 to len(pp$):a = asc( mid$ (pp$,i,1)): print chr$(a or 128);: next
 10050 print " A ME ?!?"be$be$be$hn$:dy = 50: gosub 2950:m = 80: gosub 460
 10060 for i = 1 to 500:a = peek(ck): htab (1 +38 * rnd(1)): vtab (1 +24 * rnd(1))
 10070 if rnd(1) <.5 then print hi$;
