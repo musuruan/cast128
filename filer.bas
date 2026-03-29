@@ -96,7 +96,7 @@
 1130 rem solo upper (anche in$)
 1140 in$ = " "
 1150 getkey b$:c = asc(b$):ll = len(in$) -1
-1160 if c <91 and c >64 then c = c +128: rem toupper
+1160 if c <91 and c >64 then c = c or 128: rem toupper
 1170 if c = 20 and ll >= 1 then in$ = left$(in$,ll): print "{left} {left}";: goto 1150: rem delete
 1180 if c = 13 and ll >= 1 then print :in$ = mid$(in$,2): return : rem remove blank
 1190 if ll <li and ((c >192 and c <219) or (c > 32 and c < 65 and c <> 44)) then print chr$(c);:in$ = in$ + chr$(c): rem accetta !-z esclusa virgola

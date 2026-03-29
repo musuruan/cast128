@@ -124,11 +124,11 @@
 1410 rem echo upper, in$ lower
 1420 in$ = " ":ct = 0
 1430 gosub 370:c = g:ll = len(in$) -1
-1440 if c = 96 then c = 39: rem "`"
-1450 if c <123 and c >96 then c = c -32: rem toupper
-1460 if (c = 8 or c = 127) and ll then in$ = left$(in$,ll): print chr$(8)" " chr$(8);: goto 1430: rem delete
+1440 :
+1450 if c <91 and c >64 then c = c or 128: rem toupper
+1460 if c = 20 and ll then in$ = left$(in$,ll): print "{left} {left}";: goto 1430: rem delete
 1470 if c = 13 and ll then print :in$ = mid$ (in$,2):ct = ct +9 *ct : return : rem remove blank
-1480 if ll <li then if (c >31) or (c >64 and c <91) or c = 32 or c = 39 or c = 45 then print chr$(c);:in$ = in$ + chr$(c +32 *(c >64)): rem accetta a-z,sp,"'","-" e tolower
+1480 if ll <li then if (c >192 and c <219) or c = 32 or c = 39 or c = 45 then print chr$(c);:in$ = in$ + chr$(c and 127): rem accetta a-z,sp,"'","-" e tolower
 1490 goto 1430
 1500 rem input linea
 1510 rem esce con pp$, sp$
