@@ -415,10 +415,10 @@
 10030 if cp% <>11 then 10120
 10040 print : print : print hi$" ";: for i = 1 to len(pp$):a = asc( mid$ (pp$,i,1)): print chr$(a or 128);: next
 10050 print " A ME ?!?"be$be$be$hn$:dy = 50: gosub 2950:m = 80: gosub 460
-10060 for i = 1 to 500:a = peek(ck): htab (1 +38 * rnd(1)): vtab (1 +24 * rnd(1))
-10070 if rnd(1) <.5 then print hi$;
-10080 print chr$(32 +96 * rnd(1));: for j = 1 to 20: next
-10090 print hn$;: next
+10060 for i = 1 to 500:a = peek(ck)
+10070 :
+10080 poke 1024+int(1000 * rnd(0)),int(91 * rnd(0)) or 128 * int(rnd(0) * 2)
+10090 next
 10100 print hh$: print hi$" Tie'!"be$be$: print :fc = 3: goto 30010: rem chain filer
 10110 rem aiuto:
 10120 if cp% <>16 then 10170
