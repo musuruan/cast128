@@ -70,7 +70,7 @@
 870 :
 880 bload"r",b1
 890 fast
-900 graphic 3,0:sys u
+900 color 4,1:graphic 3,0:sys u
 910 slow
 920 rem titoli
 930 rem printchr$(14)chr$(147):color0,1:color 4,1:color5,6:
