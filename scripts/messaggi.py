@@ -3,7 +3,6 @@
 f = open("M.dump", "rb")
 m = 1
 while (m<=218):
-    print(m)
     f.seek(30+m*6)
     data = f.read(12)
     string = ""
@@ -14,10 +13,11 @@ while (m<=218):
     i = string.splitlines()
     i1 = int(i[0])
     i2 = int(i[1])
-    print(i1,i2)
+    print("%d: %d-%d" % (m,i1,i2-1))
     
     f.seek(i1)
-    while i1<i2:
+    # non stampa CR finale
+    while i1<i2-1:
         b = f.read(1)
         i1 = i1+1
         d = b[0]
@@ -29,7 +29,7 @@ while (m<=218):
             d = 156 - d
             print(chr(d), end='')
         if d == 13:
-            print()
+            print("↩")
         if d == 14:
             # Normal
             print("\033[27m\033[0m", end='')
