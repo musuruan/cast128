@@ -123,7 +123,7 @@
 1410 :
 1420 :
 1430 for i = 1 to lu: print#1,tu%(i): next
-1440 for i = 1 to og: print#1,lo%(i): print so%(i): print vo%(i): next : rem co,mo non cambiano
+1440 for i = 1 to og: print#1,lo%(i): print#1,so%(i): print#1,vo%(i): next : rem co,mo non cambiano
 1450 for i = 1 to nr: print#1,pt%(i): next
 1460 for i = 1 to 20: print#1,f(i): next
 1470 for i = 1 to 10: print#1,t(i): next
