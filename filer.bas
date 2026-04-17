@@ -64,7 +64,8 @@
 790 li = 11: gosub 1140: rem input
 800 if in$ = "CAT" then catalog: goto 760
 810 if in$ = "X" then f$ = "": goto 840
-820 f$ = in$: if left$(f$,5) = "cast." and len(f$) >5 then f$ = mid$ (f$,6)
+815 f$="":for i = 1 to len(in$):f$=f$+chr$(asc(mid$(in$,i,1)) and 127):next
+820 if left$(f$,5) = "cast." and len(f$) >5 then f$ = mid$ (f$,6)
 830 f$ = "cast." +f$
 840 return
 850 print
