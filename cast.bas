@@ -2,8 +2,8 @@
 110 rem avventura nel castello
 120 rem (c) dinosoft 1984-2001
 130 rem by enrico colombini
-140 rem commodore 128 port 
-150 rem (c) andrea musuruane 2025
+140 rem versione per commodore 128
+150 rem (c) andrea musuruane 2025-2026
 160 :
 170 :
 180 rem load b,logo

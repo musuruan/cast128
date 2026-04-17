@@ -5,6 +5,8 @@
 140 rem by enrico colombini
 145 rem libera distribuzione
 150 rem purche' non alterata
+160 rem versione per commodore 128
+170 rem (c) andrea musuruane 2025-2026
 250 rem - entry:
 260 :
 270 rem trap 1090
@@ -77,7 +79,7 @@
 940 color 1,6
 950 draw 1,0,180 to 319,180
 960 draw 1,0,196 to 319,196
-970 a$ = "       * Avventura nel castello! *     Edizione freeware 2001 - libera distribuzione purche' non venga alterata "
+970 a$ = "       * Avventura nel castello! *     Edizione freeware 2026 - libera distribuzione purche' non venga alterata "
 975 rem sys 4867,,,,,a$: goto 1050
 977 getkey k$:goto 1050
 980 a1 = len(a$):a$ = a$ +a$ +" "

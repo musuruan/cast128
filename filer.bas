@@ -4,6 +4,8 @@
 130 rem by enrico colombini
 135 rem libera distribuzione
 140 rem purche' non alterata
+150 rem versione per commodore 128
+160 rem (c) andrea musuruane 2025-2026
 240 rem - entry (chained):
 250 rem fc=0: new game, load v
 260 rem fc=1: "load" command
@@ -140,7 +142,7 @@
 1565 print"{SHIFT--}                                      {SHIFT--}";
 1570 print"{SHIFT--} di: Enrico Colombini e Chiara Tovena {SHIFT--}";
 1575 print"{SHIFT--}                                      {SHIFT--}";
-1580 print"{SHIFT--}     Copyright Dinosoft 1982-2001     {SHIFT--}";
+1580 print"{SHIFT--}     Copyright Dinosoft 1982-2026     {SHIFT--}";
 1585 print"{SHIFT--}                                      {SHIFT--}";
 1590 print"{CBM-Z}{38 SHIFT-*}{CBM-X}";
 1600 return

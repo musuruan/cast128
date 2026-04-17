@@ -10,6 +10,8 @@
 190 rem     & chiara tovena
 195 rem libera distribuzione
 200 rem purche' non alterata
+210 rem versione per commodore 128
+220 rem (c) andrea musuruane 2025-2026
 300 rem - entry (chained):
 310 rem trap 3120
 320 goto 5010: rem main prog
