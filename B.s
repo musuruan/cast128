@@ -16,7 +16,7 @@ BACKGROUND = PICTURE+$2710
 ME = $0240 ; 576-676?-765?
 TP = $02fe ; 766
 CO = $02ff ; 767
-DIZ = $4000 ; in BANK1
+DIZ = $d800 ; in BANK1
 
 ; Commodore Load Address
 LOADADDR = $1300

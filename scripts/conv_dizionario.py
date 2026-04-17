@@ -38,7 +38,7 @@ fi = open("R.dump", "rb")
 fo = open("r", "wb")
 
 fo.write(b'\x00')
-fo.write(b'\x40')
+fo.write(b'\xd8')
 
 fi.seek(2048) # $d800
 while (True):
