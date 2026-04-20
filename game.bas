@@ -720,7 +720,7 @@
 22130 a = 24: gosub 2360: if s <>2 then m = 111: goto 460
 22140 if f(6) >5 then m = 112: goto 460
 22150 if f(6) then m = 113: goto 460
-22160 for k = 1 to 4: for j = 1 to 15:a = peek( -16336):dy = .6: gosub 2950: next :dy = 20: gosub 2950: next
+22160 for k = 1 to 4: for j = 1 to 15:a = peek(ck):dy = .6: gosub 2950: next :dy = 20: gosub 2950: next
 22170 m = 114: gosub 460:f(6) = 1: gosub 2790:a = 32:s = 2: goto 1920
 22180 rem 52:
 22190 if s = 2 then m = 217: goto 460
