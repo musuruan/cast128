@@ -38,7 +38,7 @@ fi = open("L.dump", "rb")
 fo = open("l", "wb")
 
 # Legge indice
-index = fi.read(30+62*6-1)
+index = fi.read(30+63*6-1)
 for b in index:
     # converte da Apple II a ASCII
     d = b & 127

@@ -38,7 +38,7 @@ fi = open("M.dump", "rb")
 fo = open("m", "wb")
 
 # Legge indice
-index = fi.read(30+219*6-1)
+index = fi.read(30+220*6-1)
 for b in index:
     # converte da Apple II a ASCII
     d = b & 127
