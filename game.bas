@@ -786,7 +786,7 @@
 22790 rem 72:
 22800 t(3) = 1:tm = 1:m = 93: goto 460
 22810 rem 73:
-22820 a = 100 * rnd(1): if a <21 then l = 58: return
+22820 a = 100 * rnd(0): if a <21 then l = 58: return
 22830 m = 140: goto 460
 22840 rem 74:
 22850 if tu%(l) <50 then tu%(l) = 50:l = 21: return
