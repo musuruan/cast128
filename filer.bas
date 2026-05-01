@@ -11,7 +11,7 @@
 260 rem fc=1: "load" command
 270 rem fc=2: "save" command
 280 rem fc=3: morto
-290 rem trap 1620
+290 trap 1620
 300 :
 310 rem poke808,peek(808)-3: rem disabilita run/stop + restore
 320 :
@@ -56,7 +56,7 @@
 710 print : print
 720 if dc=0 then 760: rem user disk
 730 print hi$" Togli AVVENTURA NEL CASTELLO "hn$
-740 print : print hi$" Inserisci un dischetto DOS 3.3 "hn$
+740 print : print hi$" Inserisci un disco dati "hn$
 750 dc = 0: rem disco user
 760 print : print a$: rem nome?
 770 print "(CAT mostra il catalogo, X annulla)"
@@ -110,7 +110,7 @@
 1240 print "Un attimo che rileggo la situazione..."
 1250 print
 1260 f$=f$+",s":dopen#1,(f$)
-1270 if ds <> 0 then 1620: rem error se non c'e'
+1270 if ds <> 0 then 1650
 1280 for i = 1 to lu: input#1,tu%(i): next
 1290 for i = 1 to og: input#1,lo%(i),so%(i),vo%(i): next
 1300 for i = 1 to nr: input#1,pt%(i): next
@@ -123,7 +123,7 @@
 1380 rem in: f$=nome file
 1390 print : print "Un attimo che salvo la situazione...": print
 1400 f$=f$+",s":dopen#1,(f$),w
-1410 :
+1410 if ds <> 0 then 1650
 1420 :
 1430 for i = 1 to lu: print#1,tu%(i): next
 1440 for i = 1 to og: print#1,lo%(i): print#1,so%(i): print#1,vo%(i): next : rem co,mo non cambiano
@@ -148,20 +148,20 @@
 1590 print"{CBM-Z}{38 SHIFT-*}{CBM-X}";
 1600 return
 1610 rem error
-1620 rem sys u +3: rem recovery
-1630 :
-1640 e = peek(222): rem error
+1620 print : print hi$;
+1630 print err$(er);" error in line";el;hn$be$be$: goto 1780: rem stop
+1640 :
 1650 print : print hi$;
-1660 if e = 255 then print " Perche' mi hai ucciso? "hn$: goto 1780: rem stop
-1670 if dc=1 and e >0 and e <16 then print " Problemi con il disco! "hn$be$be$: print : print "verifica che sia inserito il dischetto": print hi$" AVVENTURA NEL CASTELLO ";: goto 1730
-1680 if e = 8 or e = 5 then print " Problemi con il disco! ";: goto 1730
-1690 if e = 4 then print " Il disco e' protetto dalla scrittura! ";: goto 1730
-1700 if e = 6 then print " "f$" non c'e' su questo disco! ";: goto 1730
-1710 if e = 9 then print hn$: print d$"delete"f$: print hi$" Su questo disco non c'e' posto! ";: goto 1730
-1720 print " Errore "e"-" peek(218) +256 * peek(219)" "hn$be$be$: trap: goto 1780: rem stop
+1660 :
+1670 if dc then print " Problemi con il disco! "hn$be$be$: print : print "verifica che sia inserito il dischetto": print hi$" AVVENTURA NEL CASTELLO ";: goto 1730
+1680 :
+1690 if ds = 26 then print " Il disco e' protetto dalla scrittura! ";: goto 1730
+1700 if ds = 62 then print " "f$" non c'e' su questo disco! ";: goto 1730
+1710 if ds = 72 then print hn$: print hi$" Su questo disco non c'e' posto! ";: goto 1730
+1720 print " Errore ";ds;"-";ds$
 1730 print hn$be$be$
 1740 if fc = 1 or fc = 2 then gosub 940: rem spazio se load o save
-1750 if fc = 0 or fc = 3 then a = dc: gosub 870: if a=1 then gosub 940: rem restore disk se new game o morto
+1750 if fc = 0 or fc = 3 then a = dc: gosub 870: if a then gosub 940: rem restore disk se new game o morto
 1760 goto 360: rem restart
 1770 rem stop
 1780 poke ks,0:print

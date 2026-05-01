@@ -13,7 +13,7 @@
 210 rem versione per commodore 128
 220 rem (c) andrea musuruane 2025-2026
 300 rem - entry (chained):
-310 rem trap 3120
+310 trap 3120
 320 goto 5010: rem main prog
 330 rem ### subroutine ###
 340 rem get con cursore
@@ -296,13 +296,13 @@
 3090 gosub 2830: rem titolo
 3100 fc = 3: goto 30010: rem chain filer
 3110 rem errori
-3120 a = peek(222)
+3120 :
 3130 if gi = 0 then 3180
 3140 rem sys u +9: rem err.recvry
 3150 if tu%(l) = 0 then tu%(l) = 1: rem no descr.lunga
-3160 if a and a <16 then print : print : print be$hi$"PROBLEMI CON IL DISCO!"hn$be$: print : if p3 <2 then 5110: rem not resume if pirate
-3170 if a = 255 then 3200: rem ctrl-c o reset
-3180 print be$: print "ERR "a" IN LOC "; peek(218) +256 * peek(219): goto 3200
+3160 :
+3170 :
+3180 print be$: print err$(er);" error in line";el: goto 3200
 3190 rem stop
 3200 poke ks,0
 3210 gosub 370: rem get
