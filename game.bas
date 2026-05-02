@@ -29,13 +29,13 @@
 440 rem in: m=n.messaggio
 450 rem non esegue cr finale
 460 speed= 255:vp = 10
-470 if p2 < = pl or ct <20 then 490: rem no test
-480 p3 = p3 +1: gosub 3240: call 576: n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and n2 = 0 then p2 = 0:p3 = p3 -1: rem p2 test
+470 :
+480 :
 490 :
 500 n0=30+m*6:record#2,int(n0/254)+1,n0-int(n0/254)*254+1
 510 :
 520 :
-530 p2 = 0: rem (p2 = p2 + 1) protezione disattivata 4/2001
+530 :
 540 gosub 815: n1=val(b$): gosub 815: n2=val(b$)
 550 record#2,int(n1/254)+1,n1-int(n1/254)*254+1
 560 c = n1: do while c<= n2-2: get#2,a$
@@ -62,7 +62,7 @@
 770 :
 780 speed= 255: print hn$;
 790 :
-800 if p2 >pl then poke 767,3: sys u +15: rem seek t3
+800 :
 810 ct = 0: return
 815 b$="":do:get#2,a$:b$=b$+a$:loop until asc(a$)=13:return
 820 rem scansione parola
@@ -143,7 +143,7 @@
 1570 gosub 860: rem 2. parola
 1580 sp$ = a$
 1590 gosub 1190: if tp = 3 then 1570
-1600 if p3 >2 then 1600: rem pirata
+1600 :
 1610 return
 1620 rem da cod. sp a nome
 1630 rem in:  a=codice sp
@@ -251,15 +251,15 @@
 2650 print : print "- Che "sp$" ?": return
 2660 rem descr. lunga luogo
 2670 rem in:  l=luogo
-2680 if p2 < = pl or ct <20 then 2700: rem no test
-2690 p3 = p3 +1: gosub 3240: call 576: n1 = peek(579): gosub 3240:dy = 5: gosub 2950: call 576:n2 = peek(579): if n1 and n2 = 0 then p2 = 0:p3 = p3 -1: rem p2 test
+2680 :
+2690 :
 2700 n0=30+l*6:record#1,int(n0/254)+1,n0-int(n0/254)*254+1
 2710 gosub 2775: n1=val(b$): gosub 2775: n2=val(b$)
 2720 record#1,int(n1/254)+1,n1-int(n1/254)*254+1
 2730 for c = n1 to n2 -1: get#1, a$:a1 = asc(a$): if a1 <>13 then a1 = 158 -a1
 2740 :
 2750 print chr$(a1);: next
-2760 p2 = 0: rem (p2 = p2 + 1) protezione disattivata 4/2001
+2760 :
 2770 goto 740: rem chiude e torna
 2775 b$="":do:get#1,a$:b$=b$+a$:loop until asc(a$)=13:return
 2780 rem somma punti
@@ -307,18 +307,18 @@
 3200 poke ks,0
 3210 gosub 370: rem get
 3220 print : print "CIAO!": end: rem exit
-3230 rem decri p2 test
-3240 i1 = 7424:i2 = i1 +127
-3250 for i = 576 to 676 step 2
-3260 poke i, peek(i2):i2 = i2 -1
-3270 poke i +1, peek(i1):i1 = i1 +1
-3280 next
-3290 return
+3230 :
+3240 :
+3250 :
+3260 :
+3270 :
+3280 :
+3290 :
 5000 rem ### main prog ###
 5010 :
 5020 dopen#1,(fl$): dopen#2,(fm$)
 5030 scnclr: rem home
-5040 p2 = 0:p3 = 0:pl = 6: rem p2 counters
+5040 :
 5050 rem poke808,peek(808)-3: rem disabilita run/stop + restore
 5060 :
 5070 gi = 1: rem gioco iniziato
@@ -346,8 +346,8 @@
 5290 rem parole valide ?
 5300 if cp% = 0 then print : print "   Eh ? ";: goto 5230: rem pp??
 5310 if cs% = 0 then print : print "   "sp$" ???": goto 5180: rem sp??
-5320 rem pirata?
-5330 if p3 >1 then for i = 1 to 2 step 0:m = 218: gosub 460: poke ks,0: gosub 370: next
+5320 :
+5330 :
 5340 rem salta
 5350 if cp% = 31 and cs% <>3 then cs% = 1
 5360 rem varie
@@ -387,7 +387,7 @@
 5700 if cp% = 15 then if cs% = 1 then fc = 2: goto 30010: rem chain filer
 5710 rem direzioni
 5720 if cp% >6 then 5840
-5730 if p3 >2 then 5730: rem pirata
+5730 :
 5740 co = l:tp = 5: rem mappa
 5750 gosub 1300: rem diz 2
 5760 a = val( mid$ (a$,2 *cp% -1,2))
@@ -514,7 +514,7 @@
 20060 r = a:a = cs%: gosub 2360: rem determina s (0/1/2)
 20070 rem
 20080 re = r: rem rout.eseguita
-20090 if p3 >3 then end: rem pirata
+20090 :
 20100 rem
 20110 on r goto 20280,20310,20340,20450,20480,20510,20540,20570,20650,20670,20690,20720,20750,20770,20810,20850,20880,20910,20940,20970
 20120 rem
