@@ -18,11 +18,11 @@
 330 rem ### subroutine ###
 340 rem get con cursore
 350 rem out: g=cod.carattere
-360 rem ct+=1 ogni .25 secondi
+360 :
 370 cc = 0: rem cursor counter
-380 if cc = 150 then cc = 0:ct = ct +1
+380 if cc = 150 then cc = 0
 390 if cc = 0 then print "_"bs$;
-400 if cc = 75 then print " "bs$;:ct = ct +1
+400 if cc = 75 then print " "bs$;
 410 cc = cc +1:if peek(ks)=0 then 380:else g=peek(842)
 420 print " "bs$;: poke ks,0: return
 430 rem stampa messaggio
@@ -63,7 +63,7 @@
 780 speed= 255: print hn$;
 790 :
 800 :
-810 ct = 0: return
+810 return
 815 b$="":do:get#2,a$:b$=b$+a$:loop until asc(a$)=13:return
 820 rem scansione parola
 830 rem in: in$=stringa
@@ -122,15 +122,15 @@
 1360 return
 1370 rem input in$
 1380 rem in: li=len max input
-1390 rem out:ct=tempo input
+1390 rem out:
 1400 rem accetta tutto se test
 1410 rem echo upper, in$ lower
-1420 in$ = " ":ct = 0
+1420 in$ = " "
 1430 gosub 370:c = g:ll = len(in$) -1
 1440 :
 1450 if c <91 and c >64 then c = c or 128: rem toupper
 1460 if c = 20 and ll then in$ = left$(in$,ll): print "{left} {left}";: goto 1430: rem delete
-1470 if c = 13 and ll then print :in$ = mid$ (in$,2):ct = ct +9 *ct : return : rem remove blank
+1470 if c = 13 and ll then print :in$ = mid$ (in$,2): return : rem remove blank
 1480 if ll <li then if (c >192 and c <219) or c = 32 or c = 39 or c = 45 then print chr$(c);:in$ = in$ + chr$(c and 127): rem accetta a-z,sp,"'","-" e tolower
 1490 goto 1430
 1500 rem input linea
