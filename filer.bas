@@ -149,7 +149,7 @@
 1600 return
 1610 rem error
 1620 print : print hi$;
-1630 print err$(er);" error in line";el;hn$be$be$: goto 1780: rem stop
+1630 :
 1640 :
 1650 print : print hi$;
 1660 :
@@ -158,7 +158,8 @@
 1690 if ds = 26 then print " Il disco e' protetto dalla scrittura! ";: goto 1730
 1700 if ds = 62 then print " "f$" non c'e' su questo disco! ";: goto 1730
 1710 if ds = 72 then print hn$: print hi$" Su questo disco non c'e' posto! ";: goto 1730
-1720 print " Errore ";ds;"-";ds$
+1720 if ds > 1 then print " Errore ";ds;"-";ds$;: goto 1780: rem stop
+1725 print err$(er);" error in line";el;hn$be$be$: goto 1780: rem stop
 1730 print hn$be$be$
 1740 if fc = 1 or fc = 2 then gosub 940: rem spazio se load o save
 1750 if fc = 0 or fc = 3 then a = dc: gosub 870: if a then gosub 940: rem restore disk se new game o morto
