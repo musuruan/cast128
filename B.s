@@ -1,8 +1,26 @@
+.feature c_comments
+
 CHKKOM = $795c
-GETPOS = $7aaf
+MOVFRM = $7a85
+PTRGET = $7aaf
+PTRGET1 = $7b0b
+FCERR = $7d28
+AYINT = $84B4
+GETSPA = $9299
 JSRFAR = $ff6e
 INDFET = $ff74
+INDSTA = $ff77
+BASIN = $ffcf
+BSOUT = $ffd2
 GETIN = $ffe4
+CURSORON = $cd6f
+CURSOROFF = $cd9f
+
+FRETOP = $35
+VARNAM = $47
+VARPNT = $49
+BUF= $0200
+STAVEC = $02b9
 
 Src  = $fb
 Dest = $fd
@@ -31,11 +49,12 @@ Diz1:
         jmp _Diz1	; RECOVERY/DIZ.1
 Diz2:
         jmp _Diz2	; DIZ.2
+GetChar:
+;	jmp _GetChar
+Input:
+	jmp _Input
 Scroller:
 ;	jmp _Scroller
-	nop
-	nop
-	nop
 
 _Koala:
 ; Select RAM 0 and IO
@@ -340,6 +359,197 @@ og_table:
         .byte   $00,$00,$00,$00,$00,$00,$00,$00
         .byte   $00,$00
 
+_GetChar:
+	jsr CURSORON
+:	jsr GETIN
+	beq :-
+	pha
+	jsr CURSOROFF
+	pla
+	rts
+
+_Input:
+	; prende il valore di li (lunghezza massima della stringa)
+	lda #$4c ; "l"
+	sta VARNAM
+	lda #$49 ; "i"
+	sta VARNAM+1
+
+	lda #15		; salva in VARPNT il descrittore della variabile li
+	ldy #>PTRGET1
+	ldx #<PTRGET1
+	sta $02
+	sty $03
+	stx $04
+	jsr JSRFAR
+	
+	lda VARPNT	; Copia la variabile in floating point il cui indirizzo è in A e Y in FAC1
+	sta $06
+	ldy VARPNT+1
+	sty $08
+	lda #15
+	ldy #>MOVFRM
+	ldx #<MOVFRM
+	sta $02
+	sty $03
+	stx $04
+	jsr JSRFAR
+
+	lda #15		; Converte il valore in virgola mobile contenuto in FAC1 in un numero intero a due byte, il cui valore viene memorizzato nelle variabili $66 e $67.
+	ldy #>AYINT
+	ldx #<AYINT
+	sta $02
+	sty $03
+	stx $04
+	jsr JSRFAR
+
+	lda $66		; Illegal quantity error se li > 255
+	beq :+
+	jmp FCERR
+:	lda $67
+	sta $fe		; salva la lunghezza in $fe
+
+	ldx #0
+	stx $fd
+	; accetta a-z,sp,"'","-"
+_InputLoop:
+	jsr _GetChar
+	cmp #13		; return
+	beq Return
+	cmp #20		; del
+	beq Del
+	cmp #32		; spazio
+	beq Add
+	cmp #39		; apostrofo
+	beq Add
+	cmp #45		; trattino
+	beq Add
+	cmp #64
+	bcc _InputLoop
+	cmp #91
+	bcs _InputLoop
+    	
+Add:  
+	ldx $fd		; se è stata raggiunta la lunghezza massima della stringa
+	cpx $fe		; non fa inserire altri caratteri
+	bcs _InputLoop
+	sta BUF,x	; stampa il carattere premuto in maiuscolo
+	cmp #64
+	bcc :+
+	cmp #91
+	bcs :+
+	ora #$80
+:	jsr BSOUT
+	inx		; aumenta la lunghezza inserita
+	stx $fd
+	jmp _InputLoop
+	
+Del:
+	ldx $fd
+	beq _InputLoop
+	jsr BSOUT
+	dex
+	stx $fd
+	jmp _InputLoop
+	
+Return:
+	ldx $fd
+	beq _InputLoop	; non esce se la stringa è zero
+	; TODO: trovare un nome per questa routine
+	jsr $558B	; termina la stringa con #$00 e stampa un CR
+
+/*
+	; temporary string descriptor
+	lda $fd
+	sta $03DB	;length of the string
+	lda #<BUF
+	sta $03DC	;lsb
+	lda #>BUF
+	sta $03DD	; msb of the string address
+
+*/
+
+	; riserva spazio per la stringa e abbassa di conseguenza FRETOP ($35)
+	lda #15
+	ldy #>GETSPA
+	ldx #<GETSPA
+	sta $02
+	sty $03
+	stx $04
+	lda $fd
+	sta $06
+	jsr JSRFAR
+	
+	; copia il buffer nello spazio riservato alla stringa
+	lda #FRETOP
+	sta STAVEC
+	ldy #0
+:	lda BUF,y
+	ldx #$01	; bank 1
+	jsr INDSTA
+	iny
+	cpy $fd
+	bne :-
+
+	; cerca "in$"
+	; restituisce VARPNT che punta a un'area di memoria dove, il primo byte è la lunghezza, i successivi 2 sono un puntatore alle locazioni dove è la stringa nel BANK1
+	lda #$49 ; "i"
+	sta VARNAM
+	lda #$ce ; "n" or 128
+	sta VARNAM+1
+
+	lda #15
+	ldy #>PTRGET1
+	ldx #<PTRGET1
+	sta $02
+	sty $03
+	stx $04
+	jsr JSRFAR
+	
+	; TODO: annulla la vecchia stringa
+	
+	; aggiorna i descrittori della variabile
+	lda #VARPNT
+	sta STAVEC
+	ldy #0
+	lda $fd
+	ldx #$01	; bank 1
+	jsr INDSTA
+:	iny
+	lda FRETOP-1,y
+	ldx #$01	; bank 1
+	jsr INDSTA
+        cpy #2
+        bne :-
+
+        ; TODO: LSB, MSB del descrittore della stringa
+        ; (Basic 7 internals p. 25)
+
+/*
+
+
+	; descrittore stringa in 03DB, puntatore in $66
+	lda #<$03DB
+	sta $66
+	lda #>$03DB
+	sta $67
+
+	;  assegna una stringa alla variabile il cui indirizzo è memorizzato nelle posizioni $4B,$4C (VARPNT)
+	lda #15
+	ldy #>$5405
+	ldx #<$5405
+	sta $02
+	sty $03
+	stx $04
+	jsr JSRFAR
+
+*/
+
+	rts
+	
+
+
 .out .sprintf("u: %d", u)
 .out .sprintf("m: %d", m)
+
 
