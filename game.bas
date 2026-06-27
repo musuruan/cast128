@@ -19,12 +19,12 @@
 340 rem get con cursore
 350 rem out: g=cod.carattere
 360 :
-370 cc = 0: rem cursor counter
-380 if cc = 150 then cc = 0
-390 if cc = 0 then print "_"bs$;
-400 if cc = 75 then print " "bs$;
-410 cc = cc +1:if peek(ks)=0 then 380:else g=peek(842)
-420 print " "bs$;: poke ks,0: return
+370 sys u+9
+380 return
+390 :
+400 :
+410 :
+420 :
 430 rem stampa messaggio
 440 rem in: m=n.messaggio
 450 rem non esegue cr finale
@@ -125,7 +125,7 @@
 1390 rem out:
 1400 rem accetta tutto se test
 1410 rem echo upper, in$ lower
-1420 sys u+9
+1420 sys u+12
 1430 return
 1440 :
 1450 :

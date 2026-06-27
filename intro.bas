@@ -46,7 +46,7 @@
 610 nm = 4: rem max.ogg.trasp.
 620 rem
 630 u = 4864: rem utility
-640 m = 5164: rem TBD
+640 m = 5666: rem $1622
 650 az = peek(m)
 660 og = peek(m +1)
 670 la% = m +1
