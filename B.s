@@ -1,12 +1,9 @@
 .feature c_comments
 
-CHKKOM = $795c
 MOVFRM = $7a85
-PTRGET = $7aaf
 PTRGET1 = $7b0b
 FCERR = $7d28
 AYINT = $84B4
-GETSPA = $9299
 JSRFAR = $ff6e
 INDFET = $ff74
 INDSTA = $ff77
@@ -16,11 +13,9 @@ GETIN = $ffe4
 CURSORON = $cd6f
 CURSOROFF = $cd9f
 
-FRETOP = $35
 VARNAM = $47
 VARPNT = $49
 BUF= $0200
-STAVEC = $02b9
 
 Src  = $fb
 Dest = $fd
@@ -454,42 +449,33 @@ Del:
 	
 Return:
 	ldx $fd
-	beq _InputLoop	; non esce se la stringa è zero
-	; TODO: trovare un nome per questa routine
-	jsr $558B	; termina la stringa con #$00 e stampa un CR
+	beq _InputLoop	; non esce se la stringa è lunga zero
+	
+	; stampa un CR (nell'accumulatore c'è ancora il carattere inserito)
+	jsr BSOUT
+	
+	; riserva spazio per la stringa
+	; e sposta la stringa dalla RAM0 alla RAM1
 
-/*
-	; temporary string descriptor
-	lda $fd
-	sta $03DB	;length of the string
-	lda #<BUF
-	sta $03DC	;lsb
-	lda #>BUF
-	sta $03DD	; msb of the string address
+	ldx #<BUF	; indirizzo della stringa
+	ldy #>BUF
+	stx $70
+	sty $71
 
-*/
-
-	; riserva spazio per la stringa e abbassa di conseguenza FRETOP ($35)
+	lda $fd		; lunghezza della stringa
+	sta $06
+	
 	lda #15
-	ldy #>GETSPA
-	ldx #<GETSPA
+	ldy #>$86cc
+	ldx #<$86cc
 	sta $02
 	sty $03
 	stx $04
-	lda $fd
-	sta $06
 	jsr JSRFAR
 	
-	; copia il buffer nello spazio riservato alla stringa
-	lda #FRETOP
-	sta STAVEC
-	ldy #0
-:	lda BUF,y
-	ldx #$01	; bank 1
-	jsr INDSTA
-	iny
-	cpy $fd
-	bne :-
+	; 63 è la lunghezza
+	; ($64) è l'indirizzo della stringa sullo stack
+	; ($66) ?
 
 	; cerca "in$"
 	; restituisce VARPNT che punta a un'area di memoria dove, il primo byte è la lunghezza, i successivi 2 sono un puntatore alle locazioni dove è la stringa nel BANK1
@@ -506,35 +492,14 @@ Return:
 	stx $04
 	jsr JSRFAR
 	
-	; TODO: annulla la vecchia stringa
+	; ora ($61) punta al descrittore della stringa
+	; (VARPNT) punta alla stringa
+	lda VARPNT
+	sta $4b
+	lda VARPNT+1
+	sty $4c
 	
-	; aggiorna i descrittori della variabile
-	lda #VARPNT
-	sta STAVEC
-	ldy #0
-	lda $fd
-	ldx #$01	; bank 1
-	jsr INDSTA
-:	iny
-	lda FRETOP-1,y
-	ldx #$01	; bank 1
-	jsr INDSTA
-        cpy #2
-        bne :-
-
-        ; TODO: LSB, MSB del descrittore della stringa
-        ; (Basic 7 internals p. 25)
-
-/*
-
-
-	; descrittore stringa in 03DB, puntatore in $66
-	lda #<$03DB
-	sta $66
-	lda #>$03DB
-	sta $67
-
-	;  assegna una stringa alla variabile il cui indirizzo è memorizzato nelle posizioni $4B,$4C (VARPNT)
+	; assegna una stringa alla variabile il cui indirizzo è memorizzato in ($4b)
 	lda #15
 	ldy #>$5405
 	ldx #<$5405
@@ -542,8 +507,6 @@ Return:
 	sty $03
 	stx $04
 	jsr JSRFAR
-
-*/
 
 	rts
 	
