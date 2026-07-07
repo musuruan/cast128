@@ -16,6 +16,7 @@ CURSOROFF = $cd9f
 VARNAM = $47
 VARPNT = $49
 BUF= $0200
+IRQVEC =$0314
 
 Src  = $fb
 Dest = $fd
@@ -30,6 +31,20 @@ ME = $0240 ; 576-676?-765?
 TP = $02fe ; 766
 CO = $02ff ; 767
 DIZ = $d800 ; in BANK1
+
+Length = $fb
+Text = Length + 1
+ZPHELPADR = $fe
+
+; sprite storage range between 3584 ($0e00) and 4095 ($0fff)
+sprite0 = $0e00
+sprite1 = sprite0 + 64
+sprite2 = sprite1 + 64
+sprite3 = sprite2 + 64
+sprite4 = sprite3 + 64
+sprite5 = sprite4 + 64
+sprite6 = sprite5 + 64
+sprite7 = sprite6 + 64
 
 ; Commodore Load Address
 LOADADDR = $1300
@@ -49,7 +64,7 @@ GetChar:
 Input:
 	jmp _Input
 Scroller:
-;	jmp _Scroller
+	jmp _Scroller
 
 _Koala:
 ; Select RAM 0 and IO
@@ -381,7 +396,292 @@ Return:
 	jsr JSRFAR
 
 	rts
+
+_Scroller:
+	; disabilita IRQ BASIC
+	lda #$01
+	sta $12fd
+
+	; Clear Sprites
+	ldx #62
+:	lda #$00
+	sta sprite0,x
+	sta sprite1,x
+	sta sprite2,x
+	sta sprite3,x
+	sta sprite4,x
+	sta sprite5,x
+	sta sprite6,x
+	sta sprite7,x
+	dex
+	bpl :-
+
+	;*** Impostazione degli sprite
+	;*** Calcolo dell'indirizzo di partenza
+	ldx #sprite0/64
+	stx $1ff8
+	inx
+	stx $1ff9
+	inx
+	stx $1ffa
+	inx
+	stx $1ffb
+	inx
+	stx $1ffc
+	inx
+	stx $1ffd
+	inx
+	stx $1ffe
 	
+	;*** Imposta la posizione Y per tutti gli sprite
+	lda #234
+	sta $d001
+	sta $d003
+	sta $d005
+	sta $d007
+	sta $d009
+	sta $d00b
+	sta $d00d
+	
+	;*** Imposta la posizione X per tutti gli sprite
+	lda #$18
+	sta $d000
+	lda #$48
+	sta $d002
+	lda #$78
+	sta $d004
+	lda #$a8
+	sta $d006
+	lda #$d8
+	sta $d008
+	lda #$08
+	sta $d00a
+	lda #$38
+	sta $d00c
+	
+	;*** Posizione X per gli sprite 5 e 6 > 255
+	lda #%01100000
+	sta $d010
+	
+	;*** Colore (bianco) per tutti gli sprite
+	lda #$01
+	sta $d027
+	sta $d028
+	sta $d029
+	sta $d02a
+	sta $d02b
+	sta $d02c
+	sta $d02d
+	
+	;*** I primi sette sprite...
+	lda #%01111111
+	sta $d01d                          ;raddoppiare in larghezza
+	ldy #0
+	sty $d017                          ; ma non in altezza
+	sta $d015                          ;e infine rendere visibile
+
+	; cerca "a$"
+	lda #$41 ; "a"
+	sta VARNAM
+	lda #$80 ; 128 per stringa
+	sta VARNAM+1
+
+	lda #15
+	ldy #>PTRGET1
+	ldx #<PTRGET1
+	sta $02
+	sty $03
+	stx $04
+	jsr JSRFAR
+	
+	; Accesso alla stringa A$
+	; bisogna usare https://cx16.dk/c128-kernal-routines/indfet.html
+	; TODO: sicuramente ci sono delle locazioni migliori per memorizzare questi dati
+	lda #VARPNT
+	ldy #0
+	ldx #1	; bank 1
+	jsr INDFET
+	sta Length
+
+	iny
+	lda #VARPNT
+	ldx #1	; bank 1
+	jsr INDFET
+	sta Text
+
+	iny
+	lda #VARPNT
+	ldx #1	; bank 1
+	jsr INDFET
+	sta Text+1
+	
+	sei                                ;disabilita IRQs
+	lda #<rasterIrq                    ;Modifica vettore
+	sta IRQVEC
+	lda #>rasterIrq
+	sta IRQVEC+1
+	lda #%00000001                     ;Consenti IRQ raster
+	sta $d01a
+	lda #$7f                           ;Blocca Timer-IRQ
+	sta $dc0d
+	lda $d011                          ;cancellare il BIT più alto per la linea raster
+	and #%01111111
+	sta $d011
+	lda #$ff                           ;linea desiderata per l'IRQ raster
+	sta $d012
+	cli                                ;riabilita IRQs
+	
+WaitKey:
+	jsr GETIN
+	beq WaitKey
+
+	; Ripristina raster interrupt standard
+	sei
+	lda #<$fa65
+	sta IRQVEC
+	lda #>$fa65
+	sta IRQVEC+1
+	cli
+	
+	; Disabilita tutti gli sprites
+	lda #%00000000
+	sta $d015
+
+	; Riabilita IRQ Basic
+	lda #$00
+	sta $12fd
+	
+	rts
+	
+;*** Raster-IRQ
+rasterIrq:
+	cld
+
+	dec infotextBitPos                 ;sono già stati “spostati” 8 bit
+	bpl shiftAll                       ;Se no, “spostare” tutti i dati sprite.
+	lda #$07                           ;altrimenti azzerare il contatore
+	sta infotextBitPos                 ;e poi prende il carattere successivo
+
+	inc infotextPos                    ;aumenta il puntatore al carattere successivo
+	ldy infotextPos                    ;e lo mette nel registro Y
+	cpy Length			; è la fine del testo?
+	bne :+
+
+	ldy #$00                           ;se si, puntatore sul primo carattere
+	sty infotextPos
+
+	; carattere nell'accumulatore
+:	lda #Text
+	ldx #1	; bank 1
+	jsr INDFET
+	
+	; converte il carattere da PETSCII a SCREEN CODE
+	tax                      ; Transfer PETSCII value from A to X
+	lda screen_code,x        ; Look up the screen code directly
+
+fetchChar:
+	sta ZPHELPADR		; mettiamo in ZPHELPADR il codice del carattere da recuperare
+	lda #$00
+	sta ZPHELPADR+1
+
+	asl ZPHELPADR		; lo moltiplichiamo per 8 (ogni carattere occupa 8 byte)
+	rol ZPHELPADR+1
+	asl ZPHELPADR
+	rol ZPHELPADR+1
+	asl ZPHELPADR
+	rol ZPHELPADR+1
+
+	lda ZPHELPADR+1		; aggiungiamo $d800 per ottenere l'indirizzo del carattere nella Char-ROM (con i caratteri minuscoli)
+	clc
+	adc #$d8
+	sta ZPHELPADR+1
+
+
+; TODO: Magari c'è un modo più furbo per fare questa operazione
+	ldy #$07                           ;Y-Reg. per l'indirizzamento indicizzato Y
+:	
+	ldx #14
+	lda #ZPHELPADR                      ;un BYTE dalla Char-ROM
+	jsr INDFET
+	sta $0100,y			; mettiamo temporaneamente qui
+	dey
+	bpl :-
+	
+        ldy #$07
+        ldx #$15
+:
+        lda $0100,y
+        sta sprite7+2,x				;copiare completamente a destra in sprite7
+        dex
+        dex
+        dex
+        dey
+        bpl :-
+
+;*** Sposta i caratteri attraverso gli sprite
+shiftAll:
+	ldx #3*7                           ;una riga ha 3 byte; un carattere 8 righe
+:                         
+	asl sprite7+2,x                    ;ora “shifta” tutti i dati sprite
+	rol sprite7+1,x                    ;Il flag C viene utilizzato per indicare l'eliminazione del
+	rol sprite7,x                      ;Bit trasferito al byte di dati successivo
+	rol sprite6+2,x
+	rol sprite6+1,x
+	rol sprite6,x
+	rol sprite5+2,x
+	rol sprite5+1,x
+	rol sprite5,x
+	rol sprite4+2,x
+	rol sprite4+1,x
+	rol sprite4,x
+	rol sprite3+2,x
+	rol sprite3+1,x
+	rol sprite3,x
+	rol sprite2+2,x
+	rol sprite2+1,x
+	rol sprite2,x
+	rol sprite1+2,x
+	rol sprite1+1,x
+	rol sprite1,x
+	rol sprite0+2,x
+	rol sprite0+1,x
+	rol sprite0,x
+	dex                                ;ridurre tre volte il registro X
+	dex                                ;poiché in alto abbiamo sempre tre BYTE alla volta
+	dex                                ;'shifta'
+	bpl :-                      ;finché positivo -> ripetere
+	
+	jmp $fa65	; Salta all'usuale routine di interrupt
+
+
+infotextPos:                         ;Puntatore sul carattere corrente
+ .byte $ff
+
+infotextBitPos:
+ .byte 0
+
+
+.align 256
+
+screen_code:
+    .byte $80,$81,$82,$83,$84,$85,$86,$87,$88,$89,$8a,$8b,$8c,$8d,$8e,$8f
+    .byte $90,$91,$92,$93,$94,$95,$96,$97,$98,$99,$9a,$9b,$9c,$9d,$9e,$9f
+    .byte $20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$2A,$2B,$2C,$2D,$2E,$2F
+    .byte $30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$3A,$3B,$3C,$3D,$3E,$3F
+    .byte $00,$01,$02,$03,$04,$05,$06,$07,$08,$09,$0A,$0B,$0C,$0D,$0E,$0F
+    .byte $10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$1A,$1B,$1C,$1D,$1E,$1F
+    .byte $40,$41,$42,$43,$44,$45,$46,$47,$48,$49,$4A,$4B,$4C,$4D,$4E,$4F
+    .byte $50,$51,$52,$53,$54,$55,$56,$57,$58,$59,$5A,$5B,$5C,$5D,$5E,$5F
+    .byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
+    .byte $20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
+    .byte $60,$61,$62,$63,$64,$65,$66,$67,$68,$69,$6A,$6B,$6C,$6D,$6E,$6F
+    .byte $70,$71,$72,$73,$74,$75,$76,$77,$78,$79,$7A,$7B,$7C,$7D,$7E,$7F
+    .byte $40,$41,$42,$43,$44,$45,$46,$47,$48,$49,$4A,$4B,$4C,$4D,$4E,$4F
+    .byte $50,$51,$52,$53,$54,$55,$56,$57,$58,$59,$5A,$5B,$5C,$5D,$5E,$5F
+    .byte $60,$61,$62,$63,$64,$65,$66,$67,$68,$69,$6A,$6B,$6C,$6D,$6E,$6F
+    .byte $70,$71,$72,$73,$74,$75,$76,$77,$78,$79,$7A,$7B,$7C,$7D,$7E,$5E
+
+.align 256
 
 m:
 az:

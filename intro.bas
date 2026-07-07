@@ -46,7 +46,7 @@
 610 nm = 4: rem max.ogg.trasp.
 620 rem
 630 u = 4864: rem utility
-640 m = 5666: rem $1622
+640 m = 6142: rem $17FE
 650 az = peek(m)
 660 og = peek(m +1)
 670 la% = m +1
@@ -75,20 +75,19 @@
 900 color 4,1:graphic 3,0:sys u
 910 slow
 920 rem titoli
-930 rem printchr$(14)chr$(147):color0,1:color 4,1:color5,6:
+930 :
 940 color 1,6
 950 draw 1,0,180 to 319,180
 960 draw 1,0,196 to 319,196
 970 a$ = "       * Avventura nel castello! *     Edizione freeware 2026 - libera distribuzione purche' non venga alterata "
-975 rem sys 4867,,,,,a$: goto 1050
-977 getkey k$:goto 1050
-980 a1 = len(a$):a$ = a$ +a$ +" "
-990 a2 = 1
-1000 do:sys 65520,,23,1: print mid$(a$,a2,38);
-1010 for i = 1 to 55: next
-1020 a2 = a2 +1: if a2 = a1 then a2 = 1
+975 sys u+15
+980 :
+990 :
+1000 :
+1010 :
+1020 :
 1030 :
-1040 get k$: loop until k$<>""
+1040 :
 1050 graphic 0:scnclr
 1060 :
 1070 goto 30010: rem chain filer
