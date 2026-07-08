@@ -1,0 +1,36 @@
+name: Nightly build
+
+on: 
+  schedule:
+    - cron: '0 2 * * *' # run at 2 AM UTC
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    
+  prepare:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+  deploy:
+    needs: prepare
+    
+    steps:
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: nightly
+        name: "Nightly Build"
+        prerelease: true
+        make_latest: true
+        generate_release_notes: true
+        files: |
+          ./artifacts/*      
+
