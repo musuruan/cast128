@@ -23,5 +23,5 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v3
       with:
-        files: cast128*
+        files: cast128.d64
 
