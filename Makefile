@@ -43,6 +43,9 @@ cast128.d64: bootsect cast.prg intro.prg filer.prg game.prg logo.kla r b v l m
 	c1541 -attach cast128.d64 -write v v,s
 	c1541 -attach cast128.d64 -write l l,l,254
 	c1541 -attach cast128.d64 -write m m,l,254
+	
+run: cast128.d64
+	x128 cast128.d64
 
 clean:
 	rm -f bootsect
