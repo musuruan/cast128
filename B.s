@@ -383,7 +383,7 @@ Return:
 	; (VARPNT) punta alla stringa
 	lda VARPNT
 	sta $4b
-	lda VARPNT+1
+	ldy VARPNT+1
 	sty $4c
 	
 	; assegna una stringa alla variabile il cui indirizzo è memorizzato in ($4b)
