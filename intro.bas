@@ -41,7 +41,7 @@
 560 rem costanti num cast
 570 lu = 61: rem n. luoghi ***
 580 nr = 80: rem n. routine
-590 du = 60: rem un.ritardo
+590 du = 30: rem un.ritardo
 600 rp = 2: rem un.rit.stampa
 610 nm = 4: rem max.ogg.trasp.
 620 rem

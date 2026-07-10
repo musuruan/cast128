@@ -28,7 +28,7 @@
 430 rem stampa messaggio
 440 rem in: m=n.messaggio
 450 rem non esegue cr finale
-460 speed= 255:vp = 10
+460 speed= 255:vp = 0
 470 :
 480 :
 490 :
